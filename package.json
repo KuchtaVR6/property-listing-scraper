@@ -1,43 +1,61 @@
 {
   "name": "zoopla-scracher",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.5.2",
-    "@types/node": "^16.18.38",
-    "@types/react": "^18.2.14",
-    "@types/react-dom": "^18.2.6",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
-    "typescript": "^4.9.5",
-    "web-vitals": "^2.1.4"
+  "version": "0.0.1",
+  "author": {
+    "name": "Patryk Kuchta",
+    "url": "https://kuchta.uk"
   },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/"
+  ],
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "build": "npm run clean && npm run lint && tsc",
+    "changelog": "conventional-changelog -p angular -u",
+    "changelog:update": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
+    "clean": "node -e \"var { rmdirSync, existsSync } = require('fs'), path = require('path'); ['./.nyc_output', './coverage', './dist'].forEach(fPath => {if (existsSync(path.join(__dirname, fPath))) rmdirSync(path.join(__dirname, fPath), { recursive: true })}); process.exit(0);\"",
+    "clean:all": "npm run clean && (rm -r ./node_modules || true)",
+    "cover": "nyc npm run test",
+    "cover:check": "nyc --check-coverage --reporter=lcov npm run test",
+    "lint": "eslint --ext .ts --fix src/**/*.ts test/**/*.ts",
+    "preversion": "npm run build && npm run cover:check",
+    "postversion": "git push && git push --tags",
+    "prepare": "npm run build",
+    "serve": "nodemon ./src/index.ts",
+    "test": "mocha",
+    "upgrade": "npx npm-check -u",
+    "version": "npm run build && npm run changelog:update"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+  "devDependencies": {
+    "@types/chai": "^4.3.5",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "^20.4.1",
+    "@typescript-eslint/eslint-plugin": "^5.61.0",
+    "@typescript-eslint/parser": "^5.61.0",
+    "chai": "^4.3.7",
+    "conventional-changelog-cli": "^3.0.0",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^8.44.0",
+    "mocha": "^10.2.0",
+    "nodemon": "^2.0.15",
+    "nyc": "^15.1.0",
+    "source-map-support": "^0.5.21",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.6"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "dependencies": {
+    "jquery": "^3.7.0",
+    "node-html-parser": "^6.1.5",
+    "puppeteer": "^20.8.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-adblocker": "^2.13.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
+    "sitka": "^1.1.1"
   }
 }
