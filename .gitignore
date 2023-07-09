@@ -7,6 +7,12 @@ node_modules/
 # Project files:
 *.sublime-*
 
-.idea
+.idea\
 .env
-htmlDump.html
+.idea/workspace.xml
+.idea/vcs.xml
+.idea/zoopla-scracher.iml
+.idea/jsLinters/eslint.xml
+.idea/inspectionProfiles/Project_Default.xml
+.idea/zoopla-scracher.iml
+.idea/zoopla-scracher.iml

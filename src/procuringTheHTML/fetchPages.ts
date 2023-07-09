@@ -1,11 +1,10 @@
 import {Browser} from "puppeteer";
 import puppeteer from "puppeteer-extra";
-import searchConfig from "../searchConfig";
 import {HTMLElement, parse} from "node-html-parser";
-import * as fs from "fs";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
 import AdblockerPlugin from "puppeteer-extra-plugin-adblocker";
-import {getSelectorBasedOfRequirement} from "../requirementMatcherHelpers";
+import {getSelectorBasedOfSelector} from "../requirementMatcherHelpers";
+import {SearchConfig} from "../types/configTypes";
 
 puppeteer.use(StealthPlugin());
 puppeteer.use(AdblockerPlugin());
@@ -21,14 +20,14 @@ const getBrowser = async () => {
 	return globalBrowser;
 };
 
-export async function fetchWebsiteHTML(url: string): Promise<HTMLElement> {
+export async function fetchWebsiteHTML(givenConfig: SearchConfig, url : string): Promise<HTMLElement> {
 	const browser = await getBrowser();
 
 	const page = await browser.newPage();
 
 	await page.goto(url);
 	try {
-		await page.waitForSelector(getSelectorBasedOfRequirement(searchConfig.requireToEstablishAsLoaded),
+		await page.waitForSelector(getSelectorBasedOfSelector(givenConfig.requireToEstablishAsLoaded),
 			{
 				timeout: 5000
 			});
@@ -38,8 +37,5 @@ export async function fetchWebsiteHTML(url: string): Promise<HTMLElement> {
 
 	const html = await page.content();
 
-	fs.writeFileSync("htmlDump.html", html);
-
-	const document = parse(html);
-	return document;
+	return parse(html);
 }

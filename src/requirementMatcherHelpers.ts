@@ -1,15 +1,18 @@
-import {AttributeRequirement} from "./types/configTypes";
+import {AttributeSelector} from "./types/configTypes";
 import {HTMLElement} from "node-html-parser";
 
-export const getSelectorBasedOfRequirement = (requirement : AttributeRequirement) => {
-	let selector = "[" + requirement.attributeName;
-	if(!requirement.exactMatch) {
+export const getSelectorBasedOfSelector = (providedSelector : AttributeSelector) => {
+	if (providedSelector.isCustomSelector) {
+		return providedSelector.customSelector;
+	}
+	let selector = "[" + providedSelector.attributeName;
+	if(!providedSelector.exactMatch) {
 		selector += "*";
 	}
-	selector += "=" + requirement.expectedValue + "]";
+	selector += "=" + providedSelector.expectedValue + "]";
 	return selector;
 };
 
-export const getElementsMatchingRequirement = (element : HTMLElement, requirement : AttributeRequirement) => {
-	return element.querySelectorAll(getSelectorBasedOfRequirement(requirement));
+export const getElementsMatchingSelector = (element : HTMLElement, providedSelector : AttributeSelector) => {
+	return element.querySelectorAll(getSelectorBasedOfSelector(providedSelector));
 };
