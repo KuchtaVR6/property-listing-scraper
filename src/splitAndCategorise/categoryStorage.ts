@@ -68,14 +68,14 @@ export default class CategoryStorage {
 				if(isSeen? displaySeen : !displaySeen) {
 					const config = this.getConfig(identifier.prefix);
 					if (firstDisplay) {
-						console.log("--------------------- " + categoryName + " ---------------------");
+						console.log("--------------------- " + categoryName + " ---------------------"); //allow
 						firstDisplay = false;
 					}
 
 					if (config.identifierOfElementOfInterest.getURIBasedOnID) {
-						console.log(config.identifierOfElementOfInterest.getURIBasedOnID(identifier.main));
+						console.log(config.identifierOfElementOfInterest.getURIBasedOnID(identifier.main)); //allow
 					} else {
-						console.log(identifier.prefix + "|" + identifier.main);
+						console.log(identifier.prefix + "|" + identifier.main); //allow
 					}
 
 					if(!isSeen) {
@@ -94,15 +94,15 @@ export default class CategoryStorage {
 	}
 
 	public async displayCategories() {
-		console.log("===================== SEEN CATEGORIES =====================");
+		console.log("===================== SEEN CATEGORIES ====================="); //allow
 
 		await this.displayEntries(true);
 
-		console.log("===================== NEW CATEGORIES =====================");
+		console.log("===================== NEW CATEGORIES ====================="); //allow
 
 		await this.displayEntries();
 
-		console.log("===================== END OF CATEGORIES =====================");
+		console.log("===================== END OF CATEGORIES ====================="); //allow
 
 	}
 }

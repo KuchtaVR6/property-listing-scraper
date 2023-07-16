@@ -30,9 +30,9 @@ const rightMoveSearchConfig : SearchConfig = {
 
 	selectElementsOfInterest : {
 		isCustomSelector: false,
-		attributeName: "class",
-		expectedValue: "l-searchResult",
-		exactMatch: false
+		attributeName: "itemtype",
+		expectedValue: "http://schema.org/Residence",
+		exactMatch: true
 	},
 
 	identifierOfElementOfInterest: {

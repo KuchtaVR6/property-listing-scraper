@@ -1,3 +1,6 @@
+import * as fs from "fs";
+import {getUserInputBoolean} from "../getUserInput";
+
 export default class TestingStorage {
 	private expectedNumberOfPages : number | undefined;
 	private expectedNumberOfElementsOfInterest : number | undefined;
@@ -56,24 +59,26 @@ export default class TestingStorage {
 		}
 	}
 
-	public produceReport (encountered : {
+	public async produceReport (encountered : {
 		numberOfPages : number,
 		numberOfElementsOfInterest : number
-	}) {
+	}, configName : string) {
 		const testsArray : {
 			test: string,
 			expected: number | undefined,
 			encountered : number
 		}[] = [];
 
-		let passed = 0;
-		let failed = 0;
-		let omitted = 0;
+		let warned = false;
+		console.log("Testing " + configName + " in progress...");
 
 		if(this.expectedNumberOfPages) {
-			const testOutcome = this.expectedNumberOfPages === encountered.numberOfPages;
-			if(testOutcome) passed+=1;
-			else failed+=1;
+			const difference = Math.abs(this.expectedNumberOfPages - encountered.numberOfPages);
+			if(difference > 0) {
+				warned = true;
+				console.warn("[!] Number of index pages does not match the expected by " + difference +
+					" pages. Expected: " + this.expectedNumberOfPages);
+			}
 
 			testsArray.push(
 				{
@@ -83,7 +88,6 @@ export default class TestingStorage {
 				}
 			);
 		} else {
-			omitted+=1;
 			testsArray.push(
 				{
 					test: "numberOfPages",
@@ -94,9 +98,13 @@ export default class TestingStorage {
 		}
 
 		if(this.expectedNumberOfElementsOfInterest) {
-			const testOutcome = this.expectedNumberOfElementsOfInterest === encountered.numberOfElementsOfInterest;
-			if(testOutcome) passed+=1;
-			else failed+=1;
+			const difference =
+				Math.abs(this.expectedNumberOfElementsOfInterest - encountered.numberOfElementsOfInterest);
+			if(difference > 0) {
+				warned = true;
+				console.warn("[!] Number of elements of interest does not match the expected by "
+					+ difference + " elements. Expected: " + this.expectedNumberOfElementsOfInterest);
+			}
 
 			testsArray.push(
 				{
@@ -106,7 +114,6 @@ export default class TestingStorage {
 				}
 			);
 		} else {
-			omitted+=1;
 			testsArray.push(
 				{
 					test: "numberOfElementsOfInterest",
@@ -116,31 +123,55 @@ export default class TestingStorage {
 			);
 		}
 
-		const testResultsArray = {Passed: passed, Failed: failed, Omitted: omitted};
-
-		const requirementTestsArray : { name: string, fulfilled: number, tested: number, rate : string}[] = [];
+		const requirementTestsArray : string[] = [];
 
 		for(const [requirementName, [passed, tried]] of Array.from(this.requirementsFulfilledRegistry)) {
 			const rate = Math.floor((passed / tried) * 100);
 			const multipleCheckDivider = encountered.numberOfElementsOfInterest / tried;
-			if (rate <= 10) {
-				console.warn(requirementName,
-					"has low pass rate of ",
-					rate,
-					"%. Check if it is defined correctly.");
+			if (rate <= 20) {
+				warned = true;
+				if (rate <= 5) {
+					console.error("[!] '" + requirementName + "' has a very low pass rate of " + rate +
+						"%. Make sure it is defined correctly.");
+				} else {
+					console.warn("[!] '" + requirementName + "' has a low pass rate of " + rate +
+						"%. Check if it is defined correctly.");
+				}
 			}
 
-			requirementTestsArray.push({
-				name: requirementName,
-				fulfilled: passed * multipleCheckDivider,
-				tested: tried * multipleCheckDivider,
-				rate: Math.floor((passed / tried) * 100) + "%"
-			});
+			requirementTestsArray.push(
+				"name: " + requirementName + "\n" +
+				"fulfilled: " + Math.floor(passed * multipleCheckDivider) + "\n" +
+				"tested: " + Math.floor(tried * multipleCheckDivider) + "\n" +
+				"rate: " + Math.floor((passed / tried) * 100) + "%"
+			);
 		}
 
-		console.table(testsArray);
-		console.table(testResultsArray);
-		console.log("Requirements statistics:");
-		console.table(requirementTestsArray);
+		let testsArrayString = "";
+		for(const test of testsArray) {
+			testsArrayString +=
+				"====BAS===" + "\n" +
+				"test: " + test.test + "\n" +
+				"encountered: " + test.encountered + "\n" +
+				"expected: " + test.expected + "\n";
+		}
+
+		fs.appendFileSync("debug-output/tests.txt",
+			"\n\n\n>>>>>>>>>>>>>>>>>>>> " + configName
+			+ " on " + (new Date()).toString() +
+			+ " >>>>>>>>>>>>>>>>>>>> \n\n" +
+			testsArrayString + "\n====REQ====\n" +
+			requirementTestsArray.join("\n====REQ====\n") + "/n"
+		);
+
+		console.log("Testing " + configName + " finished.");
+
+		if(warned) {
+			if (await getUserInputBoolean("Would you like to proceed after reading these warnings?")) {
+				return;
+			} else {
+				throw new Error("Testing ended with warnings that have not been dismissed.");
+			}
+		}
 	}
 }

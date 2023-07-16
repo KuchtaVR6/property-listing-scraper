@@ -5,6 +5,7 @@ import StealthPlugin from "puppeteer-extra-plugin-stealth";
 import AdblockerPlugin from "puppeteer-extra-plugin-adblocker";
 import {getSelectorBasedOfSelector} from "../requirementMatcherHelpers";
 import {SearchConfig} from "../types/configTypes";
+import * as fs from "fs";
 
 puppeteer.use(StealthPlugin());
 puppeteer.use(AdblockerPlugin());
@@ -32,10 +33,12 @@ export async function fetchWebsiteHTML(givenConfig: SearchConfig, url : string):
 				timeout: 5000
 			});
 	} catch (e) {
-		console.log("Timeout! Check *requireToEstablishAsLoaded*");
+		throw new Error("Timeout! Check *requireToEstablishAsLoaded*");
 	}
 
 	const html = await page.content();
+
+	fs.writeFileSync("htmlDump.html",html.toString());
 
 	return parse(html);
 }

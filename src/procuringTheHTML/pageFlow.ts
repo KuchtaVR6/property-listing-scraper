@@ -31,7 +31,6 @@ const checkIfDocumentMeetsParsingRequirements = (givenConfig : SearchConfig, ele
 		case EndOfPagesIndicator.AllPointOfInterestIDsRepeated: {
 			const elementsInteresting = getElementsMatchingSelector(element, givenConfig.selectElementsOfInterest);
 			for (const element of elementsInteresting) {
-				console.log(element); //f
 				if(!seenIdsStorage.includes(extractElementId(givenConfig,element))) {
 					return true;
 				}
@@ -80,13 +79,10 @@ const iterateThroughPages = async (
 		currentPage -= pageStep;
 	}
 
-
-	console.log(">>>>>",givenConfig.name, "tests");
-	TestingStorage.getInstance().produceReport({
+	await TestingStorage.getInstance().produceReport({
 		numberOfPages : Math.ceil(currentPage/pageStep),
-		numberOfElementsOfInterest: arrayOfPages.length
-	});
-	console.log(">>>>> end of tests");
+		numberOfElementsOfInterest: arrayOfPages.length,
+	}, givenConfig.name);
 };
 
 export default iterateThroughPages;

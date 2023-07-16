@@ -18,3 +18,4 @@ node_modules/
 .idea/zoopla-scracher.iml
 htmlDump.html
 saves/seenIdentifiers.txt
+debug-output/tests.txt

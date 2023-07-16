@@ -1,7 +1,7 @@
-import {EndOfPagesIndicator, SearchConfig} from "../../types/configTypes";
+import {EndOfPagesIndicator, SearchConfig} from "../../../types/configTypes";
 
-const gumtreeRentSearchConfig : SearchConfig = {
-	name: "gumtree-rent",
+const gumtreeShareSearchConfig : SearchConfig = {
+	name: "gumtree-share",
 	url: "https://www.gumtree.com/",
 	subDirectory: "search",
 	getParams: [
@@ -11,11 +11,11 @@ const gumtreeRentSearchConfig : SearchConfig = {
 		},
 		{
 			parameter: "search_category",
-			value: "property-to-rent"
+			value: "property-to-share"
 		},
 		{
 			parameter: "search_location",
-			value: "Edinburgh"
+			value: "edinburgh"
 		}
 	],
 	page_param: "page",
@@ -47,7 +47,7 @@ const gumtreeRentSearchConfig : SearchConfig = {
 			else throw new Error("Id cannot be established!");
 		},
 		getURIBasedOnID : (id) => {
-			return "https://www.gumtree.com/p/property-to-rent/" + id;
+			return "https://www.gumtree.com/p/property-to-share/" + id;
 		}
 	},
 	endOfPagesIndicator: EndOfPagesIndicator.AllPointOfInterestIDsRepeated,
@@ -86,4 +86,4 @@ const gumtreeRentSearchConfig : SearchConfig = {
 	]
 };
 
-export default gumtreeRentSearchConfig;
+export default gumtreeShareSearchConfig;

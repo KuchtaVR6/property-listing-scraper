@@ -15,8 +15,11 @@ export const findFirstNumber = (input: string): number => {
 	}
 };
 
-const extractLastNumericalValue = (elements : HTMLElement[]) : number => {
+const extractLastNumericalValueOrOne = (elements : HTMLElement[]) : number => {
 	const lastElement = elements[elements.length - 1];
+	if (!lastElement) {
+		return 1;
+	}
 	const text = lastElement.textContent;
 	return findFirstNumber(text);
 };
@@ -24,10 +27,10 @@ const extractLastNumericalValue = (elements : HTMLElement[]) : number => {
 export const setTestingInformationFromFirstPage = (givenConfig : SearchConfig, element : HTMLElement) => {
 	if(givenConfig.optional_tests?.expectedNumberOfPages) {
 		const elements = getElementsMatchingSelector(element, givenConfig.optional_tests.expectedNumberOfPages);
-		TestingStorage.getInstance().setExpectedNumberOfPages(extractLastNumericalValue(elements));
+		TestingStorage.getInstance().setExpectedNumberOfPages(extractLastNumericalValueOrOne(elements));
 	}
 	if(givenConfig.optional_tests?.expectedNumberOfElementsOfInterest) {
 		const elements = getElementsMatchingSelector(element, givenConfig.optional_tests.expectedNumberOfElementsOfInterest);
-		TestingStorage.getInstance().setExpectedNumberOfElementsOfInterest(extractLastNumericalValue(elements));
+		TestingStorage.getInstance().setExpectedNumberOfElementsOfInterest(extractLastNumericalValueOrOne(elements));
 	}
 };
