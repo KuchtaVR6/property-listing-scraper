@@ -1,4 +1,4 @@
-import {SearchConfig} from "../../types/configTypes";
+import {EndOfPagesIndicator, SearchConfig} from "../../types/configTypes";
 import {findFirstNumber} from "../../testing/firstPageTest";
 import {ZooplaMethods} from "./valueRequirements";
 
@@ -23,14 +23,6 @@ const zooplaSearchConfig : SearchConfig = {
 		expectedValue : "portalLight",
 		exactMatch : true
 	},
-	requireToStartParsing : [
-		{
-			isCustomSelector: false,
-			attributeName : "id",
-			expectedValue : "listing_",
-			exactMatch : false
-		}
-	],
 	selectElementsOfInterest : {
 		isCustomSelector: false,
 		attributeName : "id",
@@ -53,6 +45,7 @@ const zooplaSearchConfig : SearchConfig = {
 			return "https://www.zoopla.co.uk/to-rent/details/" + id + "/";
 		}
 	},
+	endOfPagesIndicator : EndOfPagesIndicator.NoPointsOfInterestPresent,
 	optional_tests : {
 		expectedNumberOfElementsOfInterest : {
 			isCustomSelector: false,
@@ -71,7 +64,7 @@ const zooplaSearchConfig : SearchConfig = {
 		{
 			name: "Room with Bills Included",
 			requirements: [
-				ZooplaMethods.availabilityRequirement,
+				//ZooplaMethods.availabilityRequirement,
 				ZooplaMethods.parkingNotAllowedRequirement,
 				ZooplaMethods.priceLowerThan650,
 				ZooplaMethods.includesBills
@@ -80,7 +73,7 @@ const zooplaSearchConfig : SearchConfig = {
 		{
 			name: "Room without Bills Included, but cheap",
 			requirements: [
-				ZooplaMethods.availabilityRequirement,
+				//ZooplaMethods.availabilityRequirement,
 				ZooplaMethods.parkingNotAllowedRequirement,
 				ZooplaMethods.priceLowerThan500
 			]

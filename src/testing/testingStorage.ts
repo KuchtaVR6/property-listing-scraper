@@ -116,7 +116,7 @@ export default class TestingStorage {
 			);
 		}
 
-		const testResultsArray = [{Passed: passed, Failed: failed, Omitted: omitted}];
+		const testResultsArray = {Passed: passed, Failed: failed, Omitted: omitted};
 
 		const requirementTestsArray : { name: string, fulfilled: number, tested: number, rate : string}[] = [];
 
@@ -138,7 +138,7 @@ export default class TestingStorage {
 			});
 		}
 
-
+		console.table(testsArray);
 		console.table(testResultsArray);
 		console.log("Requirements statistics:");
 		console.table(requirementTestsArray);

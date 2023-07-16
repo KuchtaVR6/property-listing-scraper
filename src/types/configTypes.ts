@@ -25,20 +25,26 @@ export type Category = {
     requirements : ValueCheckerRequirement[];
 }
 
+export enum EndOfPagesIndicator {
+    NoPointsOfInterestPresent,
+    AllPointOfInterestIDsRepeated
+}
+
 export interface SearchConfig {
     name: string
     url: string,
     subDirectory: string,
     getParams: {parameter: string, value: string}[],
     page_param: string,
+    page_step?: number,
     requireToEstablishAsLoaded: AttributeSelector,
-    requireToStartParsing: AttributeSelector[],
     selectElementsOfInterest: AttributeSelector,
     identifierOfElementOfInterest: {
         selector: AttributeSelector,
         extractor: (element : HTMLElement) => string,
         getURIBasedOnID?: (id : string) => string,
     }
+    endOfPagesIndicator: EndOfPagesIndicator,
     optional_tests?: {
         // only run on the first page
         // both extract the numerical value from the last matching element.

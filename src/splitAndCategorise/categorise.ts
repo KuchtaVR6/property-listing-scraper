@@ -3,8 +3,9 @@ import {SearchConfig, ValueCheckerRequirement} from "../types/configTypes";
 import {getElementsMatchingSelector} from "../requirementMatcherHelpers";
 import TestingStorage from "../testing/testingStorage";
 import CategoryStorage from "./categoryStorage";
+import {seenIdsStorage} from "../procuringTheHTML/pageFlow";
 
-const extractElementId = (givenConfig : SearchConfig, element : HTMLElement) => {
+export const extractElementId = (givenConfig : SearchConfig, element : HTMLElement) => {
 	const idElements = getElementsMatchingSelector(element, givenConfig.identifierOfElementOfInterest.selector);
 	return givenConfig.identifierOfElementOfInterest.extractor(idElements[0]);
 };
@@ -33,6 +34,10 @@ const checkSuitabilityToCategory = (element : HTMLElement, requirements : ValueC
 
 export const categoriseElement = (givenConfig : SearchConfig, element : HTMLElement) => {
 	const elementID = extractElementId(givenConfig, element);
+	if(seenIdsStorage.includes(elementID)) {
+		return;
+	}
+	seenIdsStorage.push(elementID);
 	for (const category of givenConfig.categories) {
 		if(checkSuitabilityToCategory(element, category.requirements)) {
 			CategoryStorage.getInstance().addToCategory(category.name, {

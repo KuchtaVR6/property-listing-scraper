@@ -16,3 +16,5 @@ node_modules/
 .idea/inspectionProfiles/Project_Default.xml
 .idea/zoopla-scracher.iml
 .idea/zoopla-scracher.iml
+htmlDump.html
+saves/seenIdentifiers.txt

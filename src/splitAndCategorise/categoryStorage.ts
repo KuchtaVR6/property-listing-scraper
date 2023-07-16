@@ -1,19 +1,30 @@
 import {configs} from "../index";
 import {SearchConfig} from "../types/configTypes";
+import {getUserInputBoolean} from "../getUserInput";
+import * as fs from "fs";
 
 export default class CategoryStorage {
 	private static instance : CategoryStorage | undefined = undefined;
 
+	private seenIdentifiers : string[];
+
 	public mapStorage : Map<string, {prefix : string, main : string}[]>;
 	public static getInstance() : CategoryStorage {
 		if(!this.instance) {
-			this.instance = new CategoryStorage();
+			try{
+				const text = fs.readFileSync("saves/seenIdentifiers.txt","utf8");
+				this.instance = new CategoryStorage(text.split("\n"));
+			}
+			catch {
+				this.instance = new CategoryStorage([]);
+			}
 		}
 		return this.instance;
 	}
 
-	private constructor() {
+	private constructor(seenIdentifiers : string[]) {
 		this.mapStorage = new Map();
+		this.seenIdentifiers = seenIdentifiers;
 	}
 
 	public addToCategory(categoryName : string, identifier : {prefix : string, main : string}) {
@@ -26,7 +37,15 @@ export default class CategoryStorage {
 	}
 
 	private hasBeenSeen(identifier : {prefix : string, main : string}) {
-		return false;
+		return this.seenIdentifiers.includes(identifier.prefix + "|" + identifier.main);
+	}
+
+	private addAsHasBeenSeen(identifier : {prefix : string, main : string}) {
+		this.seenIdentifiers.push(identifier.prefix + "|" + identifier.main);
+	}
+
+	private async saveHasBeenSeenFile() {
+		fs.writeFileSync("saves/seenIdentifiers.txt", this.seenIdentifiers.join("\n"));
 	}
 
 	private getConfig (prefix : string) : SearchConfig {
@@ -35,9 +54,9 @@ export default class CategoryStorage {
 		else throw new Error("Config not found");
 	}
 
-	private displayEntries(seen? : boolean) {
-		if (!seen) {
-			seen = false;
+	private async displayEntries(displaySeen? : boolean) {
+		if (!displaySeen) {
+			displaySeen = false;
 		}
 
 		let firstDisplay = true;
@@ -45,30 +64,45 @@ export default class CategoryStorage {
 		for(const [categoryName, identifiers] of Array.from(this.mapStorage)) {
 			firstDisplay = true;
 			for (const identifier of identifiers) {
-				if(this.hasBeenSeen(identifier)? seen : !seen) {
+				const isSeen = this.hasBeenSeen(identifier);
+				if(isSeen? displaySeen : !displaySeen) {
 					const config = this.getConfig(identifier.prefix);
 					if (firstDisplay) {
 						console.log("--------------------- " + categoryName + " ---------------------");
 						firstDisplay = false;
 					}
+
 					if (config.identifierOfElementOfInterest.getURIBasedOnID) {
 						console.log(config.identifierOfElementOfInterest.getURIBasedOnID(identifier.main));
 					} else {
 						console.log(identifier.prefix + "|" + identifier.main);
 					}
+
+					if(!isSeen) {
+						const answer = await getUserInputBoolean("Do you want to save this as seen?");
+						if (answer) {
+							this.addAsHasBeenSeen(identifier);
+						}
+					}
 				}
 			}
 		}
+
+		if(!displaySeen) {
+			await this.saveHasBeenSeenFile();
+		}
 	}
 
-	public displayCategories() {
+	public async displayCategories() {
 		console.log("===================== SEEN CATEGORIES =====================");
 
-		this.displayEntries(true);
+		await this.displayEntries(true);
 
 		console.log("===================== NEW CATEGORIES =====================");
 
-		this.displayEntries();
+		await this.displayEntries();
+
+		console.log("===================== END OF CATEGORIES =====================");
 
 	}
 }
