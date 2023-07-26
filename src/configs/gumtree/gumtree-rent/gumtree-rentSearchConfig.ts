@@ -1,4 +1,13 @@
-import {EndOfPagesIndicator, SearchConfig} from "../../../types/configTypes";
+import {AttributeSelector, EndOfPagesIndicator, SearchConfig} from "../../../types/configTypes";
+import {GumtreeMethods} from "../valueRequirements";
+import priceConfig from "../../priceConfig";
+
+const adCountSelector : AttributeSelector = {
+	isCustomSelector: false,
+	attributeName: "data-q",
+	expectedValue: "ads-count",
+	exactMatch: true
+};
 
 const gumtreeRentSearchConfig : SearchConfig = {
 	name: "gumtree-rent",
@@ -19,12 +28,7 @@ const gumtreeRentSearchConfig : SearchConfig = {
 		}
 	],
 	page_param: "page",
-	requireToEstablishAsLoaded : {
-		isCustomSelector: false,
-		attributeName: "data-q",
-		expectedValue: "ads-count",
-		exactMatch: true
-	},
+	requireToEstablishAsLoaded : adCountSelector,
 	selectElementsOfInterest : {
 		isCustomSelector: false,
 		attributeName: "class",
@@ -52,12 +56,7 @@ const gumtreeRentSearchConfig : SearchConfig = {
 	},
 	endOfPagesIndicator: EndOfPagesIndicator.AllPointOfInterestIDsRepeated,
 	optional_tests: {
-		expectedNumberOfElementsOfInterest: {
-			isCustomSelector: false,
-			attributeName: "data-q",
-			expectedValue: "ads-count",
-			exactMatch: true
-		},
+		expectedNumberOfElementsOfInterest: adCountSelector,
 		expectedNumberOfPages : {
 			isCustomSelector: false,
 			attributeName: "data-analytics",
@@ -67,22 +66,41 @@ const gumtreeRentSearchConfig : SearchConfig = {
 	},
 	categories: [
 		{
-			name: "test let everything in",
+			name: "En-Suite with bills",
 			requirements: [
-				{
-					selector: {
-						isCustomSelector: false,
-						attributeName: "class",
-						expectedValue: "truncate-line",
-						exactMatch: true
-					},
-					name: "random test on truncate-line",
-					booleanTest: (element) => {
-						return true;
-					}
-				}
+				GumtreeMethods.availabilityRequirement,
+				GumtreeMethods.isEnSuite,
+				GumtreeMethods.getPriceLowerThanArgumentReq(
+					priceConfig.enSuiteWithBills),
+				GumtreeMethods.includesBills
 			]
-		}
+		},
+		{
+			name: "En-Suite without bills",
+			requirements: [
+				GumtreeMethods.availabilityRequirement,
+				GumtreeMethods.isEnSuite,
+				GumtreeMethods.getPriceLowerThanArgumentReq(
+					priceConfig.enSuiteWithoutBills),
+			]
+		},
+		{
+			name: "Room with bills",
+			requirements: [
+				GumtreeMethods.availabilityRequirement,
+				GumtreeMethods.getPriceLowerThanArgumentReq(
+					priceConfig.roomWithBills),
+				GumtreeMethods.includesBills
+			]
+		},
+		{
+			name: "Room without bills",
+			requirements: [
+				GumtreeMethods.availabilityRequirement,
+				GumtreeMethods.getPriceLowerThanArgumentReq(
+					priceConfig.roomWithoutBills),
+			]
+		},
 	]
 };
 

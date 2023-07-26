@@ -64,25 +64,7 @@ const rightMoveSearchConfig : SearchConfig = {
 		}
 	},
 
-	categories: [
-		{
-			name: "test let everything in",
-			requirements: [
-				{
-					selector: {
-						isCustomSelector: false,
-						attributeName: "class",
-						expectedValue: "propertyCard-priceValue",
-						exactMatch: true
-					},
-					name: "random test on propertyCard-priceValue",
-					booleanTest: (element) => {
-						return true;
-					}
-				}
-			]
-		}
-	]
+	categories: []
 };
 
 export default rightMoveSearchConfig;

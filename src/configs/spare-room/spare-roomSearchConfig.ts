@@ -1,5 +1,7 @@
 import {AttributeSelector, EndOfPagesIndicator, SearchConfig} from "../../types/configTypes";
 import {findFirstNumber} from "../../testing/firstPageTest";
+import {SpareRoomMethods} from "./valueRequirements";
+import priceConfig from "../priceConfig";
 
 const resultsSelector : AttributeSelector = {
 	isCustomSelector : true,
@@ -58,22 +60,93 @@ const spareRoomSearchConfig : SearchConfig = {
 
 	categories: [
 		{
-			name: "test let everything in",
+			name: "Weekly En-Suite with bills",
 			requirements: [
-				{
-					selector: {
-						isCustomSelector: false,
-						attributeName: "class",
-						expectedValue: "listingPriceDetails",
-						exactMatch: true
-					},
-					name: "random test on propertyCard-priceValue",
-					booleanTest: (element) => {
-						return true;
-					}
-				}
-			]
-		}
+				SpareRoomMethods.availabilityRequirement,
+				SpareRoomMethods.priceMeasuredWeekly,
+				SpareRoomMethods.isEnSuite,
+				SpareRoomMethods.getPriceLowerThanArgumentReq(
+					priceConfig.enSuiteWithBills, true),
+				SpareRoomMethods.includesBills
+			],
+			mustNotBePresentRequirements: [SpareRoomMethods.monFriSelector]
+		},
+		{
+			name: "Monthly En-Suite with bills",
+			requirements: [
+				SpareRoomMethods.availabilityRequirement,
+				SpareRoomMethods.priceMeasuredMonthly,
+				SpareRoomMethods.isEnSuite,
+				SpareRoomMethods.getPriceLowerThanArgumentReq(
+					priceConfig.enSuiteWithBills, false),
+				SpareRoomMethods.includesBills
+			],
+			mustNotBePresentRequirements: [SpareRoomMethods.monFriSelector]
+		},
+		{
+			name: "Weekly En-Suite without bills",
+			requirements: [
+				SpareRoomMethods.availabilityRequirement,
+				SpareRoomMethods.priceMeasuredWeekly,
+				SpareRoomMethods.isEnSuite,
+				SpareRoomMethods.getPriceLowerThanArgumentReq(
+					priceConfig.enSuiteWithoutBills, true),
+			],
+			mustNotBePresentRequirements: [SpareRoomMethods.monFriSelector]
+		},
+		{
+			name: "Monthly En-Suite without bills",
+			requirements: [
+				SpareRoomMethods.availabilityRequirement,
+				SpareRoomMethods.priceMeasuredMonthly,
+				SpareRoomMethods.isEnSuite,
+				SpareRoomMethods.getPriceLowerThanArgumentReq(
+					priceConfig.enSuiteWithoutBills, false),
+			],
+			mustNotBePresentRequirements: [SpareRoomMethods.monFriSelector]
+		},
+		{
+			name: "Weekly room with bills",
+			requirements: [
+				SpareRoomMethods.availabilityRequirement,
+				SpareRoomMethods.priceMeasuredWeekly,
+				SpareRoomMethods.getPriceLowerThanArgumentReq(
+					priceConfig.roomWithBills, true),
+				SpareRoomMethods.includesBills
+			],
+			mustNotBePresentRequirements: [SpareRoomMethods.monFriSelector]
+		},
+		{
+			name: "Monthly room with bills",
+			requirements: [
+				SpareRoomMethods.availabilityRequirement,
+				SpareRoomMethods.priceMeasuredMonthly,
+				SpareRoomMethods.getPriceLowerThanArgumentReq(
+					priceConfig.roomWithBills, false),
+				SpareRoomMethods.includesBills
+			],
+			mustNotBePresentRequirements: [SpareRoomMethods.monFriSelector]
+		},
+		{
+			name: "Weekly room without bills",
+			requirements: [
+				SpareRoomMethods.availabilityRequirement,
+				SpareRoomMethods.priceMeasuredWeekly,
+				SpareRoomMethods.getPriceLowerThanArgumentReq(
+					priceConfig.roomWithoutBills, true),
+			],
+			mustNotBePresentRequirements: [SpareRoomMethods.monFriSelector]
+		},
+		{
+			name: "Monthly room without bills",
+			requirements: [
+				SpareRoomMethods.availabilityRequirement,
+				SpareRoomMethods.priceMeasuredMonthly,
+				SpareRoomMethods.getPriceLowerThanArgumentReq(
+					priceConfig.roomWithoutBills, false),
+			],
+			mustNotBePresentRequirements: [SpareRoomMethods.monFriSelector]
+		},
 	]
 };
 

@@ -27,6 +27,11 @@ export async function fetchWebsiteHTML(givenConfig: SearchConfig, url : string):
 	const page = await browser.newPage();
 
 	await page.goto(url);
+
+	const preLoadHtml = await page.content();
+
+	fs.writeFileSync("htmlDump.html",preLoadHtml.toString());
+
 	try {
 		await page.waitForSelector(getSelectorBasedOfSelector(givenConfig.requireToEstablishAsLoaded),
 			{

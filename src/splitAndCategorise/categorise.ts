@@ -1,5 +1,9 @@
 import {HTMLElement} from "node-html-parser";
-import {SearchConfig, ValueCheckerRequirement} from "../types/configTypes";
+import {
+	mustNotBePresentRequirement,
+	SearchConfig,
+	ValueCheckerRequirement
+} from "../types/configTypes";
 import {getElementsMatchingSelector} from "../requirementMatcherHelpers";
 import TestingStorage from "../testing/testingStorage";
 import CategoryStorage from "./categoryStorage";
@@ -21,7 +25,11 @@ const compareToRequirement = (elementsToInspect : HTMLElement[], requirement : V
 	return false;
 };
 
-const checkSuitabilityToCategory = (element : HTMLElement, requirements : ValueCheckerRequirement[]) => {
+const checkSuitabilityToCategory = (
+	element : HTMLElement,
+	requirements : ValueCheckerRequirement[],
+	mustNotBePresentRequirements? : mustNotBePresentRequirement[]
+) => {
 	let answer = true;
 	for (const requirement of requirements) {
 		const elementsToInspect = getElementsMatchingSelector(element, requirement.selector);
@@ -29,6 +37,18 @@ const checkSuitabilityToCategory = (element : HTMLElement, requirements : ValueC
 			answer = false;
 		}
 	}
+	if(mustNotBePresentRequirements) {
+		for (const mustNotBePresentRequirement of mustNotBePresentRequirements) {
+			const elementsToInspect = getElementsMatchingSelector(element, mustNotBePresentRequirement);
+			if (elementsToInspect.length > 0) {
+				TestingStorage.getInstance().addFailedRequirement(mustNotBePresentRequirement.name);
+				answer = false;
+			} else {
+				TestingStorage.getInstance().addFulfilledRequirement(mustNotBePresentRequirement.name);
+			}
+		}
+	}
+
 	return answer;
 };
 
@@ -39,7 +59,7 @@ export const categoriseElement = (givenConfig : SearchConfig, element : HTMLElem
 	}
 	seenIdsStorage.push(elementID);
 	for (const category of givenConfig.categories) {
-		if(checkSuitabilityToCategory(element, category.requirements)) {
+		if(checkSuitabilityToCategory(element, category.requirements, category.mustNotBePresentRequirements)) {
 			CategoryStorage.getInstance().addToCategory(category.name, {
 				prefix: givenConfig.name,
 				main: elementID

@@ -20,9 +20,12 @@ export type ValueCheckerRequirement = {
     booleanTest: (input : string) => boolean
 }
 
+export type mustNotBePresentRequirement = AttributeSelector & {name : string}
+
 export type Category = {
     name : string,
     requirements : ValueCheckerRequirement[];
+    mustNotBePresentRequirements? : mustNotBePresentRequirement[];
 }
 
 export enum EndOfPagesIndicator {

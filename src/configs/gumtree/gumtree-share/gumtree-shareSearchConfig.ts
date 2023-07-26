@@ -1,4 +1,6 @@
 import {EndOfPagesIndicator, SearchConfig} from "../../../types/configTypes";
+import {GumtreeMethods} from "../valueRequirements";
+import priceConfig from "../../priceConfig";
 
 const gumtreeShareSearchConfig : SearchConfig = {
 	name: "gumtree-share",
@@ -67,22 +69,41 @@ const gumtreeShareSearchConfig : SearchConfig = {
 	},
 	categories: [
 		{
-			name: "test let everything in",
+			name: "En-Suite with bills",
 			requirements: [
-				{
-					selector: {
-						isCustomSelector: false,
-						attributeName: "class",
-						expectedValue: "truncate-line",
-						exactMatch: true
-					},
-					name: "random test on truncate-line",
-					booleanTest: (element) => {
-						return true;
-					}
-				}
+				GumtreeMethods.availabilityRequirement,
+				GumtreeMethods.isEnSuite,
+				GumtreeMethods.getPriceLowerThanArgumentReq(
+					priceConfig.enSuiteWithBills),
+				GumtreeMethods.includesBills
 			]
-		}
+		},
+		{
+			name: "En-Suite without bills",
+			requirements: [
+				GumtreeMethods.availabilityRequirement,
+				GumtreeMethods.isEnSuite,
+				GumtreeMethods.getPriceLowerThanArgumentReq(
+					priceConfig.enSuiteWithoutBills),
+			]
+		},
+		{
+			name: "Room with bills",
+			requirements: [
+				GumtreeMethods.availabilityRequirement,
+				GumtreeMethods.getPriceLowerThanArgumentReq(
+					priceConfig.roomWithBills),
+				GumtreeMethods.includesBills
+			]
+		},
+		{
+			name: "Room without bills",
+			requirements: [
+				GumtreeMethods.availabilityRequirement,
+				GumtreeMethods.getPriceLowerThanArgumentReq(
+					priceConfig.roomWithoutBills),
+			]
+		},
 	]
 };
 

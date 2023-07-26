@@ -1,6 +1,7 @@
 import {EndOfPagesIndicator, SearchConfig} from "../../types/configTypes";
 import {findFirstNumber} from "../../testing/firstPageTest";
 import {ZooplaMethods} from "./valueRequirements";
+import priceConfig from "../priceConfig";
 
 const zooplaSearchConfig : SearchConfig = {
 	name: "zoopla-for-rent",
@@ -64,18 +65,37 @@ const zooplaSearchConfig : SearchConfig = {
 		{
 			name: "Room with Bills Included",
 			requirements: [
-				//ZooplaMethods.availabilityRequirement,
+				ZooplaMethods.availabilityRequirement,
 				ZooplaMethods.parkingNotAllowedRequirement,
-				ZooplaMethods.priceLowerThan650,
+				ZooplaMethods.priceLowerThan(priceConfig.roomWithBills),
 				ZooplaMethods.includesBills
 			]
 		},
 		{
 			name: "Room without Bills Included, but cheap",
 			requirements: [
-				//ZooplaMethods.availabilityRequirement,
+				ZooplaMethods.availabilityRequirement,
 				ZooplaMethods.parkingNotAllowedRequirement,
-				ZooplaMethods.priceLowerThan500
+				ZooplaMethods.priceLowerThan(priceConfig.roomWithoutBills)
+			]
+		},
+		{
+			name: "EnSuite Room with Bills Included",
+			requirements: [
+				ZooplaMethods.availabilityRequirement,
+				ZooplaMethods.parkingNotAllowedRequirement,
+				ZooplaMethods.priceLowerThan(priceConfig.enSuiteWithBills),
+				ZooplaMethods.includesBills,
+				ZooplaMethods.enSuite,
+			]
+		},
+		{
+			name: "EnSuite Room without Bills Included, but cheap",
+			requirements: [
+				ZooplaMethods.availabilityRequirement,
+				ZooplaMethods.parkingNotAllowedRequirement,
+				ZooplaMethods.priceLowerThan(priceConfig.enSuiteWithoutBills),
+				ZooplaMethods.enSuite,
 			]
 		}
 	]

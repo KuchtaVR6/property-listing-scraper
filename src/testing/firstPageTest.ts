@@ -6,7 +6,7 @@ import {SearchConfig} from "../types/configTypes";
 export const findFirstNumber = (input: string): number => {
 
 	const regex = /[0-9]+/;
-	const result = input.match(regex);
+	const result = input.replace(",","").match(regex);
 
 	if (result !== null) {
 		return parseInt(result[0]);

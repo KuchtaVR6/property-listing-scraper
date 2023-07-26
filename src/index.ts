@@ -42,6 +42,8 @@ const main = async () => {
 			},40);
 	}
 	await CategoryStorage.getInstance().displayCategories();
+
+	console.log("Program finished...");
 };
 
 main();

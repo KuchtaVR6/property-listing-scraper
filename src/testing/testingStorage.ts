@@ -158,10 +158,10 @@ export default class TestingStorage {
 
 		fs.appendFileSync("debug-output/tests.txt",
 			"\n\n\n>>>>>>>>>>>>>>>>>>>> " + configName
-			+ " on " + (new Date()).toString() +
+			+ " on " + (new Date())
 			+ " >>>>>>>>>>>>>>>>>>>> \n\n" +
 			testsArrayString + "\n====REQ====\n" +
-			requirementTestsArray.join("\n====REQ====\n") + "/n"
+			requirementTestsArray.join("\n====REQ====\n") + "\n"
 		);
 
 		console.log("Testing " + configName + " finished.");

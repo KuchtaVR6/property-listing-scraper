@@ -36,29 +36,19 @@ export class ZooplaMethods {
 			return !input.toLowerCase().includes("parking");
 		}
 	};
-	public static priceLowerThan500 : ValueCheckerRequirement = {
-		name: "Must no more than £500.",
-		selector: {
-			isCustomSelector: false,
-			attributeName: "data-testid",
-			expectedValue: "listing-price",
-			exactMatch: true
-		},
-		booleanTest: (input) => {
-			return findFirstNumber(input) <= 500;
-		}
-	};
-	public static priceLowerThan650 : ValueCheckerRequirement = {
-		name: "Must no more than £650.",
-		selector: {
-			isCustomSelector: false,
-			attributeName: "data-testid",
-			expectedValue: "listing-price",
-			exactMatch: true
-		},
-		booleanTest: (input) => {
-			return findFirstNumber(input) <= 650;
-		}
+	public static priceLowerThan = (limit : number) : ValueCheckerRequirement => {
+		return {
+			name: `Must no more than £${limit}.`,
+			selector: {
+				isCustomSelector: false,
+				attributeName: "data-testid",
+				expectedValue: "listing-price",
+				exactMatch: true
+			},
+			booleanTest: (input) => {
+				return findFirstNumber(input) <= limit;
+			}
+		};
 	};
 	public static includesBills : ValueCheckerRequirement = {
 		name: "Must include bills.",
@@ -70,6 +60,20 @@ export class ZooplaMethods {
 		},
 		booleanTest: (input) => {
 			return input.toLowerCase() === "bills included";
+		}
+	};
+
+	public static enSuite : ValueCheckerRequirement = {
+		name: "Room must be en-suite",
+		selector: {
+			isCustomSelector: false,
+			attributeName: "class",
+			expectedValue: "_1ankud53",
+			exactMatch: false
+		},
+		booleanTest: (input) => {
+			return input.toLowerCase().includes("ensuite")
+				|| input.toLowerCase().includes("en-suite");
 		}
 	};
 }
