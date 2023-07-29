@@ -6,7 +6,7 @@ export class ZooplaMethods {
 		name : "Availability date must be between 25 Aug and 13 Sep",
 		selector: {
 			attributeName: "class",
-			expectedValue: "_18cib8e1",
+			expectedValue: "_65yptp1",
 			isCustomSelector: false,
 			exactMatch: true
 		},
@@ -24,7 +24,7 @@ export class ZooplaMethods {
 			return false;
 		}
 	};
-	public static parkingNotAllowedRequirement : ValueCheckerRequirement = {
+	public static isNotAParkingSpace : ValueCheckerRequirement = {
 		name : "Omit parking ads",
 		selector: {
 			attributeName: "data-testid",
@@ -55,7 +55,7 @@ export class ZooplaMethods {
 		selector: {
 			isCustomSelector: false,
 			attributeName: "class",
-			expectedValue: "_1ljm00u0",
+			expectedValue: "_1p8nftv0",
 			exactMatch: false
 		},
 		booleanTest: (input) => {
@@ -68,12 +68,48 @@ export class ZooplaMethods {
 		selector: {
 			isCustomSelector: false,
 			attributeName: "class",
-			expectedValue: "_1ankud53",
+			expectedValue: "_1vvnr3j3",
 			exactMatch: false
 		},
 		booleanTest: (input) => {
 			return input.toLowerCase().includes("ensuite")
 				|| input.toLowerCase().includes("en-suite");
+		}
+	};
+
+	public static getIsNBedApartment = (numberOfBedrooms : number) : ValueCheckerRequirement => {
+		return {
+			name: `Must be a ${numberOfBedrooms} bed apartment.`,
+			selector: {
+				isCustomSelector: false,
+				attributeName: "data-testid",
+				expectedValue: "listing-title",
+				exactMatch: true
+			},
+			booleanTest: (input) => {
+				const inputLowered = input.toLowerCase();
+				if (inputLowered.includes("flat")) {
+					return findFirstNumber(inputLowered) === numberOfBedrooms;
+				}
+				return false;
+			}
+		};
+	};
+
+	public static isStudio : ValueCheckerRequirement = {
+		name: "Must be a studio.",
+		selector: {
+			isCustomSelector: false,
+			attributeName: "data-testid",
+			expectedValue: "listing-title",
+			exactMatch: true
+		},
+		booleanTest: (input) => {
+			const inputLowered = input.toLowerCase();
+			if (inputLowered.includes("flat")) {
+				return findFirstNumber(inputLowered) === 1;
+			}
+			return inputLowered.includes("studio");
 		}
 	};
 }

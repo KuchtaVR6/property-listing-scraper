@@ -83,6 +83,24 @@ export class SpareRoomMethods {
 			return input === "pw";
 		}
 	};
+	public static getIsNBedApartment = (numberOfBedrooms : number) : ValueCheckerRequirement => {
+		return {
+			name: `Must be a ${numberOfBedrooms} bed apartment.`,
+			selector: {
+				isCustomSelector: false,
+				attributeName: "class",
+				expectedValue: "shortDescription",
+				exactMatch: true
+			},
+			booleanTest: (input) => {
+				const inputLowered = input.toLowerCase();
+				if (inputLowered.includes("flat")) {
+					return findFirstNumber(inputLowered) === numberOfBedrooms;
+				}
+				return false;
+			}
+		};
+	};
 	public static isEnSuite : ValueCheckerRequirement = {
 		name: "Room is en-suite",
 		selector: SpareRoomMethods.titleSelector,

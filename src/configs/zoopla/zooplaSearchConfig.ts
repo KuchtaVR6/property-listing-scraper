@@ -14,7 +14,7 @@ const zooplaSearchConfig : SearchConfig = {
 		},
 		{
 			parameter: "price_max",
-			value: "650"
+			value: "1500"
 		}
 	],
 	page_param : "pn",
@@ -31,15 +31,9 @@ const zooplaSearchConfig : SearchConfig = {
 		exactMatch : false
 	},
 	identifierOfElementOfInterest: {
-		selector : {
-			isCustomSelector: false,
-			attributeName : "class",
-			expectedValue : "_1maljyt1",
-			exactMatch : true
-		},
 		extractor: (element) => {
-			const linkAttribute = element.getAttribute("href");
-			if(linkAttribute) return findFirstNumber(linkAttribute).toString();
+			const idAttribute = element.getAttribute("id");
+			if(idAttribute) return findFirstNumber(idAttribute).toString();
 			else throw new Error("Id cannot be established!");
 		},
 		getURIBasedOnID : (id) => {
@@ -53,12 +47,6 @@ const zooplaSearchConfig : SearchConfig = {
 			attributeName: "data-testid",
 			expectedValue: "total-results",
 			exactMatch: true
-		},
-		expectedNumberOfPages : {
-			isCustomSelector: false,
-			attributeName: "class",
-			expectedValue: "_13wnc6k4",
-			exactMatch: true
 		}
 	},
 	categories: [
@@ -66,7 +54,7 @@ const zooplaSearchConfig : SearchConfig = {
 			name: "Room with Bills Included",
 			requirements: [
 				ZooplaMethods.availabilityRequirement,
-				ZooplaMethods.parkingNotAllowedRequirement,
+				ZooplaMethods.isNotAParkingSpace,
 				ZooplaMethods.priceLowerThan(priceConfig.roomWithBills),
 				ZooplaMethods.includesBills
 			]
@@ -75,7 +63,7 @@ const zooplaSearchConfig : SearchConfig = {
 			name: "Room without Bills Included, but cheap",
 			requirements: [
 				ZooplaMethods.availabilityRequirement,
-				ZooplaMethods.parkingNotAllowedRequirement,
+				ZooplaMethods.isNotAParkingSpace,
 				ZooplaMethods.priceLowerThan(priceConfig.roomWithoutBills)
 			]
 		},
@@ -83,7 +71,7 @@ const zooplaSearchConfig : SearchConfig = {
 			name: "EnSuite Room with Bills Included",
 			requirements: [
 				ZooplaMethods.availabilityRequirement,
-				ZooplaMethods.parkingNotAllowedRequirement,
+				ZooplaMethods.isNotAParkingSpace,
 				ZooplaMethods.priceLowerThan(priceConfig.enSuiteWithBills),
 				ZooplaMethods.includesBills,
 				ZooplaMethods.enSuite,
@@ -93,11 +81,50 @@ const zooplaSearchConfig : SearchConfig = {
 			name: "EnSuite Room without Bills Included, but cheap",
 			requirements: [
 				ZooplaMethods.availabilityRequirement,
-				ZooplaMethods.parkingNotAllowedRequirement,
+				ZooplaMethods.isNotAParkingSpace,
 				ZooplaMethods.priceLowerThan(priceConfig.enSuiteWithoutBills),
 				ZooplaMethods.enSuite,
 			]
-		}
+		},
+
+		{
+			name: "Studio flat with Bills Included",
+			requirements: [
+				ZooplaMethods.availabilityRequirement,
+				ZooplaMethods.isNotAParkingSpace,
+				ZooplaMethods.priceLowerThan(priceConfig.studioPriceWithBills),
+				ZooplaMethods.includesBills,
+				ZooplaMethods.isStudio,
+			]
+		},
+		{
+			name: "Studio flat without Bills Included",
+			requirements: [
+				ZooplaMethods.availabilityRequirement,
+				ZooplaMethods.isNotAParkingSpace,
+				ZooplaMethods.priceLowerThan(priceConfig.studioPriceWithoutBills),
+				ZooplaMethods.isStudio,
+			]
+		},
+
+		{
+			name: "Two bed flat",
+			requirements: [
+				ZooplaMethods.availabilityRequirement,
+				ZooplaMethods.isNotAParkingSpace,
+				ZooplaMethods.priceLowerThan(priceConfig.twoBedFlat),
+				ZooplaMethods.getIsNBedApartment(2)
+			]
+		},
+		{
+			name: "Three bed flat",
+			requirements: [
+				ZooplaMethods.availabilityRequirement,
+				ZooplaMethods.isNotAParkingSpace,
+				ZooplaMethods.priceLowerThan(priceConfig.threeBedFlat),
+				ZooplaMethods.getIsNBedApartment(3)
+			]
+		},
 	]
 
 };

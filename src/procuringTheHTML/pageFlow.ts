@@ -23,7 +23,7 @@ const getFullURLBasedOnConfigWithPageNumber = (givenConfig : SearchConfig, pageN
 const checkIfDocumentMeetsParsingRequirements = (givenConfig : SearchConfig, element : HTMLElement) => {
 	switch (givenConfig.endOfPagesIndicator) {
 		case EndOfPagesIndicator.NoPointsOfInterestPresent: {
-			if(getElementsMatchingSelector(element, givenConfig.identifierOfElementOfInterest.selector).length === 0) {
+			if(getElementsMatchingSelector(element, givenConfig.selectElementsOfInterest).length === 0) {
 				return false;
 			}
 			return true;

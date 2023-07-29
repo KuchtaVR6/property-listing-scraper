@@ -131,7 +131,7 @@ export default class TestingStorage {
 			if (rate <= 20) {
 				warned = true;
 				if (rate <= 5) {
-					console.error("[!] '" + requirementName + "' has a very low pass rate of " + rate +
+					console.error("[!!] '" + requirementName + "' has a very low pass rate of " + rate +
 						"%. Make sure it is defined correctly.");
 				} else {
 					console.warn("[!] '" + requirementName + "' has a low pass rate of " + rate +

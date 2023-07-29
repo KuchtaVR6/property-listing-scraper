@@ -1,6 +1,5 @@
 import {EndOfPagesIndicator, SearchConfig} from "../../../types/configTypes";
-import {GumtreeMethods} from "../valueRequirements";
-import priceConfig from "../../priceConfig";
+import gumtreeCategories from "../gumtreeCategories";
 
 const gumtreeShareSearchConfig : SearchConfig = {
 	name: "gumtree-share",
@@ -9,7 +8,7 @@ const gumtreeShareSearchConfig : SearchConfig = {
 	getParams: [
 		{
 			parameter: "max_price",
-			value: "230"
+			value: "500"
 		},
 		{
 			parameter: "search_category",
@@ -20,6 +19,7 @@ const gumtreeShareSearchConfig : SearchConfig = {
 			value: "edinburgh"
 		}
 	],
+	timeoutTime: 10000,
 	page_param: "page",
 	requireToEstablishAsLoaded : {
 		isCustomSelector: false,
@@ -60,51 +60,16 @@ const gumtreeShareSearchConfig : SearchConfig = {
 			expectedValue: "ads-count",
 			exactMatch: true
 		},
+		/*
 		expectedNumberOfPages : {
 			isCustomSelector: false,
 			attributeName: "data-analytics",
 			expectedValue: "gaEvent:PaginationPage",
 			exactMatch: true
 		}
+		 */
 	},
-	categories: [
-		{
-			name: "En-Suite with bills",
-			requirements: [
-				GumtreeMethods.availabilityRequirement,
-				GumtreeMethods.isEnSuite,
-				GumtreeMethods.getPriceLowerThanArgumentReq(
-					priceConfig.enSuiteWithBills),
-				GumtreeMethods.includesBills
-			]
-		},
-		{
-			name: "En-Suite without bills",
-			requirements: [
-				GumtreeMethods.availabilityRequirement,
-				GumtreeMethods.isEnSuite,
-				GumtreeMethods.getPriceLowerThanArgumentReq(
-					priceConfig.enSuiteWithoutBills),
-			]
-		},
-		{
-			name: "Room with bills",
-			requirements: [
-				GumtreeMethods.availabilityRequirement,
-				GumtreeMethods.getPriceLowerThanArgumentReq(
-					priceConfig.roomWithBills),
-				GumtreeMethods.includesBills
-			]
-		},
-		{
-			name: "Room without bills",
-			requirements: [
-				GumtreeMethods.availabilityRequirement,
-				GumtreeMethods.getPriceLowerThanArgumentReq(
-					priceConfig.roomWithoutBills),
-			]
-		},
-	]
+	categories: gumtreeCategories
 };
 
 export default gumtreeShareSearchConfig;

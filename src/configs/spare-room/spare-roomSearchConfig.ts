@@ -15,7 +15,7 @@ const spareRoomSearchConfig : SearchConfig = {
 	getParams: [
 		{
 			parameter : "search_id",
-			value : "1232444711"
+			value : "1235130210"
 		}
 	],
 	page_param: "offset",
@@ -144,6 +144,99 @@ const spareRoomSearchConfig : SearchConfig = {
 				SpareRoomMethods.priceMeasuredMonthly,
 				SpareRoomMethods.getPriceLowerThanArgumentReq(
 					priceConfig.roomWithoutBills, false),
+			],
+			mustNotBePresentRequirements: [SpareRoomMethods.monFriSelector]
+		},
+
+		{
+			name: "Weekly studio without bills",
+			requirements: [
+				SpareRoomMethods.availabilityRequirement,
+				SpareRoomMethods.priceMeasuredWeekly,
+				SpareRoomMethods.getPriceLowerThanArgumentReq(
+					priceConfig.studioPriceWithoutBills, true),
+				SpareRoomMethods.getIsNBedApartment(1)
+			],
+			mustNotBePresentRequirements: [SpareRoomMethods.monFriSelector]
+		},
+		{
+			name: "Monthly studio without bills",
+			requirements: [
+				SpareRoomMethods.availabilityRequirement,
+				SpareRoomMethods.priceMeasuredMonthly,
+				SpareRoomMethods.getPriceLowerThanArgumentReq(
+					priceConfig.studioPriceWithoutBills, false),
+				SpareRoomMethods.getIsNBedApartment(1)
+			],
+			mustNotBePresentRequirements: [SpareRoomMethods.monFriSelector]
+		},
+		{
+			name: "Weekly studio with bills",
+			requirements: [
+				SpareRoomMethods.availabilityRequirement,
+				SpareRoomMethods.priceMeasuredWeekly,
+				SpareRoomMethods.getPriceLowerThanArgumentReq(
+					priceConfig.studioPriceWithBills, true),
+				SpareRoomMethods.includesBills,
+				SpareRoomMethods.getIsNBedApartment(1)
+			],
+			mustNotBePresentRequirements: [SpareRoomMethods.monFriSelector]
+		},
+		{
+			name: "Monthly studio with bills",
+			requirements: [
+				SpareRoomMethods.availabilityRequirement,
+				SpareRoomMethods.priceMeasuredMonthly,
+				SpareRoomMethods.getPriceLowerThanArgumentReq(
+					priceConfig.studioPriceWithBills, false),
+				SpareRoomMethods.includesBills,
+				SpareRoomMethods.getIsNBedApartment(1)
+			],
+			mustNotBePresentRequirements: [SpareRoomMethods.monFriSelector]
+		},
+
+		{
+			name: "Monthly two bed flat",
+			requirements: [
+				SpareRoomMethods.availabilityRequirement,
+				SpareRoomMethods.priceMeasuredMonthly,
+				SpareRoomMethods.getPriceLowerThanArgumentReq(
+					priceConfig.twoBedFlat, false),
+				SpareRoomMethods.getIsNBedApartment(2)
+			],
+			mustNotBePresentRequirements: [SpareRoomMethods.monFriSelector]
+		},
+		{
+			name: "Weekly two bed flat",
+			requirements: [
+				SpareRoomMethods.availabilityRequirement,
+				SpareRoomMethods.priceMeasuredWeekly,
+				SpareRoomMethods.getPriceLowerThanArgumentReq(
+					priceConfig.twoBedFlat, true),
+				SpareRoomMethods.getIsNBedApartment(2)
+			],
+			mustNotBePresentRequirements: [SpareRoomMethods.monFriSelector]
+		},
+
+		{
+			name: "Monthly three bed flat",
+			requirements: [
+				SpareRoomMethods.availabilityRequirement,
+				SpareRoomMethods.priceMeasuredMonthly,
+				SpareRoomMethods.getPriceLowerThanArgumentReq(
+					priceConfig.threeBedFlat, false),
+				SpareRoomMethods.getIsNBedApartment(3)
+			],
+			mustNotBePresentRequirements: [SpareRoomMethods.monFriSelector]
+		},
+		{
+			name: "Weekly three bed flat",
+			requirements: [
+				SpareRoomMethods.availabilityRequirement,
+				SpareRoomMethods.priceMeasuredWeekly,
+				SpareRoomMethods.getPriceLowerThanArgumentReq(
+					priceConfig.threeBedFlat, true),
+				SpareRoomMethods.getIsNBedApartment(3)
 			],
 			mustNotBePresentRequirements: [SpareRoomMethods.monFriSelector]
 		},

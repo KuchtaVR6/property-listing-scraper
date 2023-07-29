@@ -10,8 +10,12 @@ import CategoryStorage from "./categoryStorage";
 import {seenIdsStorage} from "../procuringTheHTML/pageFlow";
 
 export const extractElementId = (givenConfig : SearchConfig, element : HTMLElement) => {
-	const idElements = getElementsMatchingSelector(element, givenConfig.identifierOfElementOfInterest.selector);
-	return givenConfig.identifierOfElementOfInterest.extractor(idElements[0]);
+	if(givenConfig.identifierOfElementOfInterest.selector) {
+		const idElements = getElementsMatchingSelector(element, givenConfig.identifierOfElementOfInterest.selector);
+		return givenConfig.identifierOfElementOfInterest.extractor(idElements[0]);
+	} else {
+		return givenConfig.identifierOfElementOfInterest.extractor(element);
+	}
 };
 
 const compareToRequirement = (elementsToInspect : HTMLElement[], requirement : ValueCheckerRequirement) => {

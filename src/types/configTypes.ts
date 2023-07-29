@@ -43,7 +43,7 @@ export interface SearchConfig {
     requireToEstablishAsLoaded: AttributeSelector,
     selectElementsOfInterest: AttributeSelector,
     identifierOfElementOfInterest: {
-        selector: AttributeSelector,
+        selector?: AttributeSelector,
         extractor: (element : HTMLElement) => string,
         getURIBasedOnID?: (id : string) => string,
     }
@@ -56,4 +56,6 @@ export interface SearchConfig {
     }
 
     categories: Category[]
+
+    timeoutTime? : number
 }

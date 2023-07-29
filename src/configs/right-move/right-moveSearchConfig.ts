@@ -1,5 +1,7 @@
 import {EndOfPagesIndicator, SearchConfig} from "../../types/configTypes";
 import {findFirstNumber} from "../../testing/firstPageTest";
+import RightMoveMethods from "./valueRequirements";
+import priceConfig from "../priceConfig";
 
 const rightMoveSearchConfig : SearchConfig = {
 	name: "right-move-for-rent",
@@ -12,7 +14,7 @@ const rightMoveSearchConfig : SearchConfig = {
 		},
 		{
 			parameter: "maxPrice",
-			value: "1000"
+			value: "2000"
 		},
 		{
 			parameter: "includeLetAgreed",
@@ -64,7 +66,100 @@ const rightMoveSearchConfig : SearchConfig = {
 		}
 	},
 
-	categories: []
+	categories: [
+		{
+			name: "Room with bills",
+			requirements: [
+				RightMoveMethods.includesBills,
+				RightMoveMethods.priceLowerThan(priceConfig.roomWithBills),
+				RightMoveMethods.isNotAParkingSpace
+			]
+		},
+		{
+			name: "Room without bills",
+			requirements: [
+				RightMoveMethods.priceLowerThan(priceConfig.roomWithoutBills),
+				RightMoveMethods.isNotAParkingSpace
+			]
+		},
+		{
+			name: "En-suite with bills",
+			requirements: [
+				RightMoveMethods.includesBills,
+				RightMoveMethods.priceLowerThan(priceConfig.enSuiteWithBills),
+				RightMoveMethods.isNotAParkingSpace,
+				RightMoveMethods.enSuite
+			]
+		},
+		{
+			name: "En-suite without bills",
+			requirements: [
+				RightMoveMethods.priceLowerThan(priceConfig.enSuiteWithoutBills),
+				RightMoveMethods.isNotAParkingSpace,
+				RightMoveMethods.enSuite
+			]
+		},
+
+		{
+			name: "Studio with bills",
+			requirements: [
+				RightMoveMethods.includesBills,
+				RightMoveMethods.priceLowerThan(priceConfig.studioPriceWithBills),
+				RightMoveMethods.isNotAParkingSpace,
+				RightMoveMethods.isStudio,
+				RightMoveMethods.isNotAHouseShare
+			]
+		},
+		{
+			name: "Studio without bills",
+			requirements: [
+				RightMoveMethods.priceLowerThan(priceConfig.studioPriceWithoutBills),
+				RightMoveMethods.isNotAParkingSpace,
+				RightMoveMethods.isStudio,
+				RightMoveMethods.isNotAHouseShare
+			]
+		},
+
+		{
+			name: "One bed flat with bills",
+			requirements: [
+				RightMoveMethods.includesBills,
+				RightMoveMethods.priceLowerThan(priceConfig.studioPriceWithBills),
+				RightMoveMethods.isNotAParkingSpace,
+				RightMoveMethods.getIsNBedApartment(1),
+				RightMoveMethods.isNotAHouseShare
+			]
+		},
+		{
+			name: "One bed flat without bills",
+			requirements: [
+				RightMoveMethods.priceLowerThan(priceConfig.studioPriceWithoutBills),
+				RightMoveMethods.isNotAParkingSpace,
+				RightMoveMethods.getIsNBedApartment(1),
+				RightMoveMethods.isNotAHouseShare
+			]
+		},
+
+		{
+			name: "Two bed flat",
+			requirements: [
+				RightMoveMethods.priceLowerThan(priceConfig.twoBedFlat),
+				RightMoveMethods.isNotAParkingSpace,
+				RightMoveMethods.getIsNBedApartment(2),
+				RightMoveMethods.isNotAHouseShare
+			]
+		},
+
+		{
+			name: "Three bed flat",
+			requirements: [
+				RightMoveMethods.priceLowerThan(priceConfig.threeBedFlat),
+				RightMoveMethods.isNotAParkingSpace,
+				RightMoveMethods.getIsNBedApartment(3),
+				RightMoveMethods.isNotAHouseShare
+			]
+		},
+	]
 };
 
 export default rightMoveSearchConfig;

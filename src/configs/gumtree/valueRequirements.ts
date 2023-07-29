@@ -45,6 +45,34 @@ export class GumtreeMethods {
 			}
 		};
 	};
+	public static getIsNBedApartment = (numberOfBedrooms : number) : ValueCheckerRequirement => {
+		return {
+			name: `Must be a ${numberOfBedrooms} bed apartment.`,
+			selector: GumtreeMethods.titleSelector,
+			booleanTest: (input) => {
+				const inputLowered = input.toLowerCase();
+				if (inputLowered.includes("flat") || inputLowered.includes("apartment")) {
+					return findFirstNumber(inputLowered, true) === numberOfBedrooms;
+				}
+				return false;
+			}
+		};
+	};
+
+	public static isStudio : ValueCheckerRequirement = {
+		name: "Must be a studio flat.",
+		selector: GumtreeMethods.titleSelector,
+		booleanTest: (input) => {
+			const inputLowered = input.toLowerCase();
+			if (inputLowered.includes("flat") || inputLowered.includes("apartment")) {
+				if (findFirstNumber(inputLowered, true) === 1) {
+					return true;
+				}
+			}
+			return inputLowered.includes("studio");
+		}
+	};
+
 	public static includesBills : ValueCheckerRequirement = {
 		name: "Must include bills.",
 		selector: GumtreeMethods.titleSelector,
