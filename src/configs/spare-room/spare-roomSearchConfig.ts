@@ -15,7 +15,7 @@ const spareRoomSearchConfig : SearchConfig = {
 	getParams: [
 		{
 			parameter : "search_id",
-			value : "1235130210"
+			value : "1239097565"
 		}
 	],
 	page_param: "offset",

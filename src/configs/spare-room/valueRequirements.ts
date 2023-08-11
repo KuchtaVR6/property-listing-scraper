@@ -95,7 +95,7 @@ export class SpareRoomMethods {
 			booleanTest: (input) => {
 				const inputLowered = input.toLowerCase();
 				if (inputLowered.includes("flat")) {
-					return findFirstNumber(inputLowered) === numberOfBedrooms;
+					return findFirstNumber(inputLowered, true) === numberOfBedrooms;
 				}
 				return false;
 			}

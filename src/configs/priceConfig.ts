@@ -1,8 +1,10 @@
 const billsAdjustment = 150;
 
-const maxStudioPrice = 800;
+const maxStudioPrice = 900;
 const maxEnSuitePriceWithBills = 700;
 const maxRoomPriceWithBills = 600;
+
+const multiRoomHustleMultiplier = 0.8;
 
 
 const priceConfig = {
@@ -16,8 +18,8 @@ const priceConfig = {
 	roomWithBills: maxRoomPriceWithBills,
 	roomWithoutBills: maxRoomPriceWithBills - billsAdjustment,
 
-	twoBedFlat: (maxEnSuitePriceWithBills - billsAdjustment) * 0,
-	threeBedFlat: (maxEnSuitePriceWithBills - billsAdjustment) * 0
+	twoBedFlat: (maxEnSuitePriceWithBills - billsAdjustment) * 2 * multiRoomHustleMultiplier,
+	threeBedFlat: (maxEnSuitePriceWithBills - billsAdjustment) * 3 * multiRoomHustleMultiplier
 };
 
 export default priceConfig;

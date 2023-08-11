@@ -3,7 +3,11 @@ import {getElementsMatchingSelector} from "../requirementMatcherHelpers";
 import TestingStorage from "./testingStorage";
 import {SearchConfig} from "../types/configTypes";
 
-export const findFirstNumber = (input: string, replaceErrorWithMinusOne? : true): number => {
+export const findFirstNumber = (input: string, replaceErrorWithNan? : true): number => {
+
+	if (input.includes("javascript:alert")) {
+		return NaN;
+	}
 
 	const regex = /[0-9]+/;
 	const result = input.replace(",","").match(regex);
@@ -11,10 +15,10 @@ export const findFirstNumber = (input: string, replaceErrorWithMinusOne? : true)
 	if (result !== null) {
 		return parseInt(result[0]);
 	} else {
-		if(replaceErrorWithMinusOne) {
-			return -1;
+		if(replaceErrorWithNan) {
+			return NaN;
 		}
-		throw new Error("findFirstNumber: Failed to find a suitable value.");
+		throw new Error("findFirstNumber: Failed to find a suitable value in " + input);
 	}
 };
 
