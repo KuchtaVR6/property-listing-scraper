@@ -21,7 +21,6 @@
     "lint": "eslint --ext .ts --fix src/**/*.ts test/**/*.ts",
     "preversion": "npm run build && npm run cover:check",
     "postversion": "git push && git push --tags",
-    "prepare": "npm run build",
     "serve": "nodemon src/index.ts",
     "test": "mocha",
     "upgrade": "npx npm-check -u",
@@ -52,7 +51,7 @@
   "dependencies": {
     "jquery": "^3.7.0",
     "node-html-parser": "^6.1.5",
-    "puppeteer": "^20.8.0",
+    "puppeteer": "^21.0.3",
     "puppeteer-extra": "^3.3.6",
     "puppeteer-extra-plugin-adblocker": "^2.13.6",
     "puppeteer-extra-plugin-stealth": "^2.11.2",
