@@ -15,13 +15,14 @@ const spareRoomSearchConfig : SearchConfig = {
 	getParams: [
 		{
 			parameter : "search_id",
-			value : "1243769887"
+			value : "1243779385"
 		},
 		{
 			parameter : "sort_by",
 			value : "days_since_placed"
 		}
 	],
+	stopOnFirstSeenAdvert: true,
 	page_param: "offset",
 	page_step: 10,
 	requireToEstablishAsLoaded : {

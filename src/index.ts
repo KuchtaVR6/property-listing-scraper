@@ -10,6 +10,7 @@ import GumtreeShareSearchConfig from "./configs/gumtree/gumtree-share/gumtree-sh
 import RightMoveSearchConfig from "./configs/right-move/right-moveSearchConfig";
 import ZooplaSearchConfig from "./configs/zoopla/zooplaSearchConfig";
 import SpareRoomSearchConfig from "./configs/spare-room/spare-roomSearchConfig";
+import NoProceedInterrupt, {noProceedInterruptMessage} from "./types/noProceedInterrupt";
 
 const possibleConfigs = [
 	GumtreeRentSearchConfig,
@@ -31,18 +32,27 @@ const main = async () => {
 
 	for(const config of Array.from(configs.values())) {
 		TestingStorage.reset();
-		await iterateThroughPages(
-			config,
-			(element) => {
-				const elementsOfInterest = splitElementsOfInterest(config, element);
-				for (const interestingElement of elementsOfInterest) {
-					const proceedFlag = categoriseElementAndReturnIfProceed(config, interestingElement);
-					if (!proceedFlag) {
-						break;
+		try {
+			await iterateThroughPages(
+				config,
+				(element) => {
+					const elementsOfInterest = splitElementsOfInterest(config, element);
+					for (const interestingElement of elementsOfInterest) {
+						const proceedFlag = categoriseElementAndReturnIfProceed(config, interestingElement);
+						if (!proceedFlag) {
+							throw new NoProceedInterrupt;
+						}
 					}
-				}
-				return elementsOfInterest;
-			},40);
+					return elementsOfInterest;
+				},40);
+		} catch (e) {
+			if ((e as NoProceedInterrupt).message === noProceedInterruptMessage) {
+				console.log("HALT! Stopped On First Saved As Seen");
+			} else {
+				throw e;
+			}
+		}
+
 	}
 	await CategoryStorage.getInstance().displayCategories();
 
