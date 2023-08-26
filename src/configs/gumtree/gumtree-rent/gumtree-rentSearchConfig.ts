@@ -40,7 +40,6 @@ const gumtreeRentSearchConfig : SearchConfig = {
 			value: "Edinburgh"
 		}
 	],
-	stopOnFirstSeenAdvert: true,
 	page_param: "page",
 	requireToEstablishAsLoaded : adCountSelector,
 	selectElementsOfInterest : adSelector,

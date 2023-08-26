@@ -22,7 +22,6 @@ const spareRoomSearchConfig : SearchConfig = {
 			value : "days_since_placed"
 		}
 	],
-	stopOnFirstSeenAdvert: true,
 	page_param: "offset",
 	page_step: 10,
 	requireToEstablishAsLoaded : {

@@ -8,6 +8,7 @@ import {getElementsMatchingSelector} from "../requirementMatcherHelpers";
 import TestingStorage from "../testing/testingStorage";
 import CategoryStorage from "./categoryStorage";
 import {seenIdsStorage} from "../procuringTheHTML/pageFlow";
+import {stopOnFirstSeenAdvert} from "../index";
 
 export const extractElementId = (givenConfig : SearchConfig, element : HTMLElement) => {
 	if(givenConfig.identifierOfElementOfInterest.selector) {
@@ -60,9 +61,9 @@ export const categoriseElementAndReturnIfProceed = (givenConfig : SearchConfig, 
 	const elementID = extractElementId(givenConfig, element);
 	const categoryStorageInstance = CategoryStorage.getInstance();
 	if(seenIdsStorage.includes(elementID)) {
-		return false;
+		return true;
 	}
-	if(givenConfig.stopOnFirstSeenAdvert) {
+	if(stopOnFirstSeenAdvert) {
 		if(categoryStorageInstance.hasBeenSeen({prefix: givenConfig.name, main: elementID})) {
 			return false;
 		}

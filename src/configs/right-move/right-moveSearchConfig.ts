@@ -21,7 +21,6 @@ const rightMoveSearchConfig : SearchConfig = {
 			value: "false"
 		}
 	],
-	stopOnFirstSeenAdvert: true,
 	page_param: "index",
 	page_step: 24,
 	requireToEstablishAsLoaded : {

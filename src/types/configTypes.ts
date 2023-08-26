@@ -56,6 +56,4 @@ export interface SearchConfig {
     }
 
     categories: Category[]
-
-    stopOnFirstSeenAdvert? : true
 }
