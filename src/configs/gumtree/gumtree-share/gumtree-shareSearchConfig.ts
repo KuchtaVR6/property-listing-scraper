@@ -1,5 +1,6 @@
 import {EndOfPagesIndicator, SearchConfig} from "../../../types/configTypes";
 import gumtreeCategories from "../gumtreeCategories";
+import {adCountSelector, adSelector, idContainer} from "../gumtree-rent/gumtree-rentSearchConfig";
 
 const gumtreeShareSearchConfig : SearchConfig = {
 	name: "gumtree-share",
@@ -21,25 +22,10 @@ const gumtreeShareSearchConfig : SearchConfig = {
 	],
 	timeoutTime: 10000,
 	page_param: "page",
-	requireToEstablishAsLoaded : {
-		isCustomSelector: false,
-		attributeName: "data-q",
-		expectedValue: "ads-count",
-		exactMatch: true
-	},
-	selectElementsOfInterest : {
-		isCustomSelector: false,
-		attributeName: "class",
-		expectedValue: "natural",
-		exactMatch: true,
-	},
+	requireToEstablishAsLoaded : adCountSelector,
+	selectElementsOfInterest : adSelector,
 	identifierOfElementOfInterest : {
-		selector : {
-			isCustomSelector: false,
-			attributeName: "class",
-			expectedValue: "listing-link",
-			exactMatch: false
-		},
+		selector : idContainer,
 		extractor : (element) => {
 			const hrefAttribute = element.getAttribute("href");
 			if(hrefAttribute) {

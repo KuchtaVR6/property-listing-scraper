@@ -17,7 +17,7 @@ export class SpareRoomMethods {
 	};
 
 	public static availabilityRequirement: ValueCheckerRequirement = {
-		name: "Availability date must be between 25 Aug and 13 Sep",
+		name: "Availability date must be between 22 Aug and 13 Sep",
 		selector: {
 			isCustomSelector: true,
 			customSelector: ".advertDescription strong"
@@ -28,7 +28,7 @@ export class SpareRoomMethods {
 				const day = Number(wordSplit[1]);
 				const month = wordSplit[2];
 				if (month === "Aug") {
-					return day >= 25;
+					return day >= 22;
 				} else if (month === "Sep") {
 					return day <= 13;
 				}

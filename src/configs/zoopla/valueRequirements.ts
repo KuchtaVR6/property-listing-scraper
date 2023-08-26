@@ -3,7 +3,7 @@ import {findFirstNumber} from "../../testing/firstPageTest";
 
 export class ZooplaMethods {
 	public static availabilityRequirement : ValueCheckerRequirement = {
-		name : "Availability date must be between 25 Aug and 13 Sep",
+		name : "Availability date must be between 22 Aug and 13 Sep or immediately",
 		selector: {
 			attributeName: "class",
 			expectedValue: "_65yptp1",
@@ -16,12 +16,12 @@ export class ZooplaMethods {
 				const day = Number(wordSplit[2].slice(0,-2));
 				const month = wordSplit[3];
 				if (month === "Aug") {
-					return day >= 25;
+					return day >= 22;
 				} else if (month === "Sep") {
 					return day <= 13;
 				}
 			}
-			return false;
+			return true;
 		}
 	};
 	public static isNotAParkingSpace : ValueCheckerRequirement = {

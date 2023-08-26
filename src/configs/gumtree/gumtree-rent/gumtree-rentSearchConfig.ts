@@ -1,10 +1,24 @@
 import {AttributeSelector, EndOfPagesIndicator, SearchConfig} from "../../../types/configTypes";
 import gumtreeCategories from "../gumtreeCategories";
 
-const adCountSelector : AttributeSelector = {
+export const adCountSelector : AttributeSelector = {
+	isCustomSelector: false,
+	attributeName: "class",
+	expectedValue: "css-1yuhvjn",
+	exactMatch: false
+};
+
+export const adSelector : AttributeSelector = {
 	isCustomSelector: false,
 	attributeName: "data-q",
-	expectedValue: "ads-count",
+	expectedValue: "search-result",
+	exactMatch: true
+};
+
+export const idContainer : AttributeSelector = {
+	isCustomSelector: false,
+	attributeName: "data-q",
+	expectedValue: "search-result-anchor",
 	exactMatch: true
 };
 
@@ -29,19 +43,9 @@ const gumtreeRentSearchConfig : SearchConfig = {
 	timeoutTime: 15000,
 	page_param: "page",
 	requireToEstablishAsLoaded : adCountSelector,
-	selectElementsOfInterest : {
-		isCustomSelector: false,
-		attributeName: "class",
-		expectedValue: "natural",
-		exactMatch: true,
-	},
+	selectElementsOfInterest : adSelector,
 	identifierOfElementOfInterest : {
-		selector : {
-			isCustomSelector: false,
-			attributeName: "class",
-			expectedValue: "listing-link",
-			exactMatch: false
-		},
+		selector : idContainer,
 		extractor : (element) => {
 			const hrefAttribute = element.getAttribute("href");
 			if(hrefAttribute) {

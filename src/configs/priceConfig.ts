@@ -19,7 +19,7 @@ const priceConfig = {
 	roomWithoutBills: maxRoomPriceWithBills - billsAdjustment,
 
 	twoBedFlat: (maxEnSuitePriceWithBills - billsAdjustment) * 2 * multiRoomHustleMultiplier,
-	threeBedFlat: (maxEnSuitePriceWithBills - billsAdjustment) * 3 * multiRoomHustleMultiplier
+	threeBedFlat: (maxEnSuitePriceWithBills - billsAdjustment) * 2 * multiRoomHustleMultiplier
 };
 
 export default priceConfig;

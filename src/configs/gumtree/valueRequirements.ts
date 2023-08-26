@@ -4,15 +4,17 @@ import {findFirstNumber} from "../../testing/firstPageTest";
 export class GumtreeMethods {
 
 	private static titleSelector : AttributeSelector = {
-		isCustomSelector: true,
-		customSelector: "h2.listing-title"
+		isCustomSelector: false,
+		attributeName: "data-q",
+		expectedValue: "tile-title",
+		exactMatch: true
 	};
 
 	public static availabilityRequirement: ValueCheckerRequirement = {
 		name: "Availability date must be between 25 Aug and 13 Sep",
 		selector: {
 			isCustomSelector: true,
-			customSelector: ".listing-attributes > li:nth-child(1) > span:nth-child(2)"
+			customSelector: "[data-q=\"tile-description\"] > div:nth-child(1) > span:nth-child(2)"
 		},
 		booleanTest: (input) => {
 			const wordSplit = input.split(" ");
@@ -32,8 +34,10 @@ export class GumtreeMethods {
 		return {
 			name: `Must be no more than ${price}.`,
 			selector: {
-				isCustomSelector: true,
-				customSelector: ".listing-price > strong:nth-child(1)",
+				isCustomSelector: false,
+				attributeName: "data-testid",
+				expectedValue: "price",
+				exactMatch: true
 			}
 			,
 			booleanTest: (input) => {
