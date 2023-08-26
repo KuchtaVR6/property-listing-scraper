@@ -11,7 +11,7 @@ export class GumtreeMethods {
 	};
 
 	public static availabilityRequirement: ValueCheckerRequirement = {
-		name: "Availability date must be between 25 Aug and 13 Sep",
+		name: "Availability date must be between 25 Aug and 13 Sep or immediately",
 		selector: {
 			isCustomSelector: true,
 			customSelector: "[data-q=\"tile-description\"] > div:nth-child(1) > span:nth-child(2)"
@@ -21,13 +21,12 @@ export class GumtreeMethods {
 			if (wordSplit.length === 5) {
 				const day = Number(wordSplit[2]);
 				const month = wordSplit[3];
-				if (month === "Aug") {
-					return day >= 25;
-				} else if (month === "Sep") {
+				if (month === "Sep") {
 					return day <= 13;
 				}
+				return !(["Oct", "Nov", "Dec"].includes(month));
 			}
-			return false;
+			return true;
 		}
 	};
 	public static getPriceLowerThanArgumentReq = (price: number): ValueCheckerRequirement => {
