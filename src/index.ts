@@ -1,6 +1,6 @@
 import iterateThroughPages from "./procuringTheHTML/pageFlow";
 import {splitElementsOfInterest} from "./splitAndCategorise/split";
-import {categoriseElement} from "./splitAndCategorise/categorise";
+import {categoriseElementAndReturnIfProceed} from "./splitAndCategorise/categorise";
 import CategoryStorage from "./splitAndCategorise/categoryStorage";
 import {SearchConfig} from "./types/configTypes";
 import TestingStorage from "./testing/testingStorage";
@@ -36,7 +36,10 @@ const main = async () => {
 			(element) => {
 				const elementsOfInterest = splitElementsOfInterest(config, element);
 				for (const interestingElement of elementsOfInterest) {
-					categoriseElement(config, interestingElement);
+					const proceedFlag = categoriseElementAndReturnIfProceed(config, interestingElement);
+					if (!proceedFlag) {
+						break;
+					}
 				}
 				return elementsOfInterest;
 			},40);

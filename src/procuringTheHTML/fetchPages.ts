@@ -37,7 +37,7 @@ export async function fetchWebsiteHTML(givenConfig: SearchConfig, url : string):
 	try {
 		await page.waitForSelector(getSelectorBasedOfSelector(givenConfig.requireToEstablishAsLoaded),
 			{
-				timeout: givenConfig.timeoutTime? givenConfig.timeoutTime : 5000
+				timeout : 5000
 			});
 	} catch (e) {
 		throw new Error("Timeout! Check *requireToEstablishAsLoaded*");
@@ -46,8 +46,6 @@ export async function fetchWebsiteHTML(givenConfig: SearchConfig, url : string):
 	const html = await page.content();
 
 	fs.writeFileSync("htmlDump.html",html.toString());
-
-	console.log("-----------------> Fetched -> ", url);
 
 	return parse(html);
 }

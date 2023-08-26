@@ -40,7 +40,7 @@ const gumtreeRentSearchConfig : SearchConfig = {
 			value: "Edinburgh"
 		}
 	],
-	timeoutTime: 15000,
+	stopOnFirstSeenAdvert: true,
 	page_param: "page",
 	requireToEstablishAsLoaded : adCountSelector,
 	selectElementsOfInterest : adSelector,

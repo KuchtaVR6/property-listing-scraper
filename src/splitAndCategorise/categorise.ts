@@ -56,10 +56,16 @@ const checkSuitabilityToCategory = (
 	return answer;
 };
 
-export const categoriseElement = (givenConfig : SearchConfig, element : HTMLElement) => {
+export const categoriseElementAndReturnIfProceed = (givenConfig : SearchConfig, element : HTMLElement): boolean => {
 	const elementID = extractElementId(givenConfig, element);
+	const categoryStorageInstance = CategoryStorage.getInstance();
 	if(seenIdsStorage.includes(elementID)) {
-		return;
+		return false;
+	}
+	if(givenConfig.stopOnFirstSeenAdvert) {
+		if(categoryStorageInstance.hasBeenSeen({prefix: givenConfig.name, main: elementID})) {
+			return false;
+		}
 	}
 	seenIdsStorage.push(elementID);
 	for (const category of givenConfig.categories) {
@@ -70,4 +76,5 @@ export const categoriseElement = (givenConfig : SearchConfig, element : HTMLElem
 			});
 		}
 	}
+	return true;
 };

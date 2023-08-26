@@ -57,5 +57,5 @@ export interface SearchConfig {
 
     categories: Category[]
 
-    timeoutTime? : number
+    stopOnFirstSeenAdvert? : true
 }

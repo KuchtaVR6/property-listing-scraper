@@ -20,7 +20,7 @@ const gumtreeShareSearchConfig : SearchConfig = {
 			value: "edinburgh"
 		}
 	],
-	timeoutTime: 10000,
+	stopOnFirstSeenAdvert: true,
 	page_param: "page",
 	requireToEstablishAsLoaded : adCountSelector,
 	selectElementsOfInterest : adSelector,

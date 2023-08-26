@@ -17,6 +17,7 @@ const zooplaSearchConfig : SearchConfig = {
 			value: "1500"
 		}
 	],
+	stopOnFirstSeenAdvert: true,
 	page_param : "pn",
 	requireToEstablishAsLoaded : {
 		isCustomSelector: false,

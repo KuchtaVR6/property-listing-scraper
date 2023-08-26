@@ -36,7 +36,7 @@ export default class CategoryStorage {
 		}
 	}
 
-	private hasBeenSeen(identifier : {prefix : string, main : string}) {
+	public hasBeenSeen(identifier : {prefix : string, main : string}) {
 		return this.seenIdentifiers.includes(identifier.prefix + "|" + identifier.main);
 	}
 

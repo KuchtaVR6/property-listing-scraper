@@ -1,5 +1,4 @@
 import * as fs from "fs";
-import {getUserInputBoolean} from "../getUserInput";
 
 export default class TestingStorage {
 	private expectedNumberOfPages : number | undefined;
@@ -69,13 +68,11 @@ export default class TestingStorage {
 			encountered : number
 		}[] = [];
 
-		let warned = false;
 		console.log("Testing " + configName + " in progress...");
 
 		if(this.expectedNumberOfPages) {
 			const difference = Math.abs(this.expectedNumberOfPages - encountered.numberOfPages);
 			if(difference > 0) {
-				warned = true;
 				console.warn("[!] Number of index pages does not match the expected by " + difference +
 					" pages. Expected: " + this.expectedNumberOfPages);
 			}
@@ -101,7 +98,6 @@ export default class TestingStorage {
 			const difference =
 				Math.abs(this.expectedNumberOfElementsOfInterest - encountered.numberOfElementsOfInterest);
 			if(difference > 0) {
-				warned = true;
 				console.warn("[!] Number of elements of interest does not match the expected by "
 					+ difference + " elements. Expected: " + this.expectedNumberOfElementsOfInterest);
 			}
@@ -129,7 +125,6 @@ export default class TestingStorage {
 			const rate = Math.floor((passed / tried) * 100);
 			const multipleCheckDivider = encountered.numberOfElementsOfInterest / tried;
 			if (rate <= 20) {
-				warned = true;
 				if (rate <= 5) {
 					console.error("[!!] '" + requirementName + "' has a very low pass rate of " + rate +
 						"%. Make sure it is defined correctly.");
@@ -165,13 +160,5 @@ export default class TestingStorage {
 		);
 
 		console.log("Testing " + configName + " finished.");
-
-		if(warned) {
-			if (await getUserInputBoolean("Would you like to proceed after reading these warnings?")) {
-				return;
-			} else {
-				throw new Error("Testing ended with warnings that have not been dismissed.");
-			}
-		}
 	}
 }

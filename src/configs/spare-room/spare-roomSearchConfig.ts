@@ -15,7 +15,11 @@ const spareRoomSearchConfig : SearchConfig = {
 	getParams: [
 		{
 			parameter : "search_id",
-			value : "1242960318"
+			value : "1243769887"
+		},
+		{
+			parameter : "sort_by",
+			value : "days_since_placed"
 		}
 	],
 	page_param: "offset",
