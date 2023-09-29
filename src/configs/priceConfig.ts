@@ -2,7 +2,7 @@ const billsAdjustment = 150;
 
 const maxStudioPrice = 900;
 const maxEnSuitePriceWithBills = 800;
-const maxRoomPriceWithBills = 700;
+const maxRoomPriceWithBills = 750;
 
 const multiRoomHustleMultiplier = 0;
 
