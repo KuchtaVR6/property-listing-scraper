@@ -4,77 +4,85 @@ import priceConfig from "../priceConfig";
 
 const gumtreeCategories : Category[] = [
 	{
-		name: "En-Suite with bills",
-		requirements: [
+		name: "EnSuite Room Bills Included",
+		shallowRequirements: [
 			GumtreeMethods.availabilityRequirement,
 			GumtreeMethods.isEnSuite,
 			GumtreeMethods.getPriceLowerThanArgumentReq(
 				priceConfig.enSuiteWithBills),
-			GumtreeMethods.includesBills
-		]
+			GumtreeMethods.includesBills // todo this would be better if it was a scoring requirement
+		],
+		deepScoreMethods: []
 	},
 	{
-		name: "En-Suite without bills",
-		requirements: [
+		name: "EnSuite Room w/o Bills Included",
+		shallowRequirements: [
 			GumtreeMethods.availabilityRequirement,
 			GumtreeMethods.isEnSuite,
 			GumtreeMethods.getPriceLowerThanArgumentReq(
 				priceConfig.enSuiteWithoutBills),
-		]
+		],
+		deepScoreMethods: []
 	},
 	{
-		name: "Room with bills",
-		requirements: [
+		name: "Room Bills Included",
+		shallowRequirements: [
 			GumtreeMethods.availabilityRequirement,
 			GumtreeMethods.getPriceLowerThanArgumentReq(
 				priceConfig.roomWithBills),
 			GumtreeMethods.includesBills
-		]
+		],
+		deepScoreMethods: []
 	},
 	{
-		name: "Room without bills",
-		requirements: [
+		name: "Room w/o Bills Included",
+		shallowRequirements: [
 			GumtreeMethods.availabilityRequirement,
 			GumtreeMethods.getPriceLowerThanArgumentReq(
 				priceConfig.roomWithoutBills),
-		]
+		],
+		deepScoreMethods: []
 	},
 	{
-		name: "Studio Flat with bills",
-		requirements: [
+		name: "Studio flat Bills Included",
+		shallowRequirements: [
 			GumtreeMethods.availabilityRequirement,
 			GumtreeMethods.isStudio,
 			GumtreeMethods.includesBills,
 			GumtreeMethods.getPriceLowerThanArgumentReq(
 				priceConfig.studioPriceWithBills),
-		]
+		],
+		deepScoreMethods: []
 	},
 	{
-		name: "Studio Flat without bills",
-		requirements: [
+		name: "Studio flat w/o Bills Included",
+		shallowRequirements: [
 			GumtreeMethods.availabilityRequirement,
 			GumtreeMethods.isStudio,
 			GumtreeMethods.getPriceLowerThanArgumentReq(
 				priceConfig.studioPriceWithoutBills),
-		]
+		],
+		deepScoreMethods: []
 	},
 	{
 		name: "Two bed flat",
-		requirements: [
+		shallowRequirements: [
 			GumtreeMethods.availabilityRequirement,
 			GumtreeMethods.getIsNBedApartment(2),
 			GumtreeMethods.getPriceLowerThanArgumentReq(
 				priceConfig.twoBedFlat),
-		]
+		],
+		deepScoreMethods: []
 	},
 	{
 		name: "Three bed flats",
-		requirements: [
+		shallowRequirements: [
 			GumtreeMethods.availabilityRequirement,
 			GumtreeMethods.getIsNBedApartment(3),
 			GumtreeMethods.getPriceLowerThanArgumentReq(
 				priceConfig.threeBedFlat),
-		]
+		],
+		deepScoreMethods: []
 	}
 ];
 

@@ -3,7 +3,7 @@ import {findFirstNumber} from "../../testing/firstPageTest";
 import timeConfig, {check_date_against_config} from "../timeConfig";
 
 export class ZooplaMethods {
-	public static availabilityRequirement : ValueCheckerRequirement = {
+	public static availabilityRequirement : ValueCheckerRequirement<boolean> = {
 		name : `Availability date must be between ${timeConfig.formatted_string}`,
 		selector: {
 			attributeName: "class",
@@ -11,7 +11,7 @@ export class ZooplaMethods {
 			isCustomSelector: false,
 			exactMatch: true
 		},
-		booleanTest: (input) => {
+		booleanTest: (input: string) => {
 			const wordSplit = input.split(" ");
 			if(wordSplit[0]==="Available" && wordSplit.length === 5) {
 				const day = Number(wordSplit[2].slice(0,-2));
@@ -21,7 +21,7 @@ export class ZooplaMethods {
 			return timeConfig.available_now_accept;
 		}
 	};
-	public static isNotAParkingSpace : ValueCheckerRequirement = {
+	public static isNotAParkingSpace : ValueCheckerRequirement<boolean> = {
 		name : "Omit parking ads",
 		selector: {
 			attributeName: "data-testid",
@@ -29,11 +29,11 @@ export class ZooplaMethods {
 			isCustomSelector: false,
 			exactMatch: true
 		},
-		booleanTest: (input) => {
+		booleanTest: (input: string) => {
 			return !input.toLowerCase().includes("parking");
 		}
 	};
-	public static priceLowerThan = (limit : number) : ValueCheckerRequirement => {
+	public static priceLowerThan = (limit : number) : ValueCheckerRequirement<boolean> => {
 		return {
 			name: `Must no more than £${limit}.`,
 			selector: {
@@ -42,12 +42,12 @@ export class ZooplaMethods {
 				expectedValue: "listing-price",
 				exactMatch: true
 			},
-			booleanTest: (input) => {
+			booleanTest: (input: string) => {
 				return findFirstNumber(input) <= limit;
 			}
 		};
 	};
-	public static includesBills : ValueCheckerRequirement = {
+	public static includesBills : ValueCheckerRequirement<boolean> = {
 		name: "Must include bills.",
 		selector: {
 			isCustomSelector: false,
@@ -55,12 +55,12 @@ export class ZooplaMethods {
 			expectedValue: "_1p8nftv0",
 			exactMatch: false
 		},
-		booleanTest: (input) => {
+		booleanTest: (input: string) => {
 			return input.toLowerCase() === "bills included";
 		}
 	};
 
-	public static enSuite : ValueCheckerRequirement = {
+	public static enSuite : ValueCheckerRequirement<boolean> = {
 		name: "Room must be en-suite",
 		selector: {
 			isCustomSelector: false,
@@ -68,13 +68,13 @@ export class ZooplaMethods {
 			expectedValue: "_1vvnr3j3",
 			exactMatch: false
 		},
-		booleanTest: (input) => {
+		booleanTest: (input: string) => {
 			return input.toLowerCase().includes("ensuite")
 				|| input.toLowerCase().includes("en-suite");
 		}
 	};
 
-	public static getIsNBedApartment = (numberOfBedrooms : number) : ValueCheckerRequirement => {
+	public static getIsNBedApartment = (numberOfBedrooms : number) : ValueCheckerRequirement<boolean> => {
 		return {
 			name: `Must be a ${numberOfBedrooms} bed apartment.`,
 			selector: {
@@ -83,7 +83,7 @@ export class ZooplaMethods {
 				expectedValue: "listing-title",
 				exactMatch: true
 			},
-			booleanTest: (input) => {
+			booleanTest: (input: string) => {
 				const inputLowered = input.toLowerCase();
 				if (inputLowered.includes("flat")) {
 					return findFirstNumber(inputLowered, true) === numberOfBedrooms;
@@ -93,7 +93,7 @@ export class ZooplaMethods {
 		};
 	};
 
-	public static isStudio : ValueCheckerRequirement = {
+	public static isStudio : ValueCheckerRequirement<boolean> = {
 		name: "Must be a studio.",
 		selector: {
 			isCustomSelector: false,
@@ -101,7 +101,7 @@ export class ZooplaMethods {
 			expectedValue: "listing-title",
 			exactMatch: true
 		},
-		booleanTest: (input) => {
+		booleanTest: (input: string) => {
 			const inputLowered = input.toLowerCase();
 			if (inputLowered.includes("flat")) {
 				return findFirstNumber(inputLowered) === 1;

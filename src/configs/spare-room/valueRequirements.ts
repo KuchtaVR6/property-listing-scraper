@@ -17,7 +17,7 @@ export class SpareRoomMethods {
 		expectedValue: "mon-fri",
 	};
 
-	public static availabilityRequirement: ValueCheckerRequirement = {
+	public static availabilityRequirement: ValueCheckerRequirement<boolean> = {
 		name: `Availability date must be between ${timeConfig.formatted_string}`,
 		selector: {
 			isCustomSelector: true,
@@ -33,7 +33,7 @@ export class SpareRoomMethods {
 			return timeConfig.available_now_accept;
 		}
 	};
-	public static getPriceLowerThanArgumentReq = (price: number, adjustPerWeek : boolean): ValueCheckerRequirement => {
+	public static getPriceLowerThanArgumentReq = (price: number, adjustPerWeek : boolean): ValueCheckerRequirement<boolean> => {
 		return {
 			name: `Must be no more than ${price}.`,
 			selector: {
@@ -48,7 +48,7 @@ export class SpareRoomMethods {
 			}
 		};
 	};
-	public static includesBills : ValueCheckerRequirement = {
+	public static includesBills : ValueCheckerRequirement<boolean> = {
 		name: "Must include bills.",
 		selector: {
 			isCustomSelector: false,
@@ -60,7 +60,7 @@ export class SpareRoomMethods {
 			return input.toLowerCase() === "bills inc.";
 		}
 	};
-	public static priceMeasuredMonthly : ValueCheckerRequirement = {
+	public static priceMeasuredMonthly : ValueCheckerRequirement<boolean> = {
 		name: "Price is measured monthly.",
 		selector: {
 			isCustomSelector: true,
@@ -70,7 +70,7 @@ export class SpareRoomMethods {
 			return input.replace(" ", "") === "pcm";
 		}
 	};
-	public static priceMeasuredWeekly : ValueCheckerRequirement = {
+	public static priceMeasuredWeekly : ValueCheckerRequirement<boolean> = {
 		name: "Price is measured weekly.",
 		selector: {
 			isCustomSelector: true,
@@ -80,7 +80,7 @@ export class SpareRoomMethods {
 			return input.replace(" ", "") === "pw";
 		}
 	};
-	public static getIsNBedApartment = (numberOfBedrooms : number) : ValueCheckerRequirement => {
+	public static getIsNBedApartment = (numberOfBedrooms : number) : ValueCheckerRequirement<boolean> => {
 		return {
 			name: `Must be a ${numberOfBedrooms} bed apartment.`,
 			selector: {
@@ -98,7 +98,7 @@ export class SpareRoomMethods {
 			}
 		};
 	};
-	public static isEnSuite : ValueCheckerRequirement = {
+	public static isEnSuite : ValueCheckerRequirement<boolean> = {
 		name: "Room is en-suite",
 		selector: SpareRoomMethods.titleSelector,
 		booleanTest: (input) => {

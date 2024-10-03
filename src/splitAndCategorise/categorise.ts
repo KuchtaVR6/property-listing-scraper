@@ -9,6 +9,7 @@ import TestingStorage from "../testing/testingStorage";
 import CategoryStorage from "./categoryStorage";
 import {seenIdsStorage} from "../procuringTheHTML/pageFlow";
 import {stopOnFirstSeenAdvert} from "../index";
+import deepScoring from "./deepScoring";
 
 export const extractElementId = (givenConfig : SearchConfig, element : HTMLElement) => {
 	if(givenConfig.identifierOfElementOfInterest.selector) {
@@ -19,7 +20,7 @@ export const extractElementId = (givenConfig : SearchConfig, element : HTMLEleme
 	}
 };
 
-const compareToRequirement = (elementsToInspect : HTMLElement[], requirement : ValueCheckerRequirement) => {
+const compareToRequirement = (elementsToInspect : HTMLElement[], requirement : ValueCheckerRequirement<boolean>) => {
 	for(const element of elementsToInspect) {
 		if (requirement.booleanTest(element.textContent)) {
 			TestingStorage.getInstance().addFulfilledRequirement(requirement.name);
@@ -30,9 +31,9 @@ const compareToRequirement = (elementsToInspect : HTMLElement[], requirement : V
 	return false;
 };
 
-const checkSuitabilityToCategory = (
+const shallowCheckSuitabilityToCategory = (
 	element : HTMLElement,
-	requirements : ValueCheckerRequirement[],
+	requirements : ValueCheckerRequirement<boolean>[],
 	mustNotBePresentRequirements? : mustNotBePresentRequirement[]
 ) => {
 	let answer = true;
@@ -70,11 +71,17 @@ export const categoriseElementAndReturnIfProceed = (givenConfig : SearchConfig, 
 	}
 	seenIdsStorage.push(elementID);
 	for (const category of givenConfig.categories) {
-		if(checkSuitabilityToCategory(element, category.requirements, category.mustNotBePresentRequirements)) {
-			CategoryStorage.getInstance().addToCategory(category.name, {
-				prefix: givenConfig.name,
-				main: elementID
-			});
+		if(shallowCheckSuitabilityToCategory(element, category.shallowRequirements, category.mustNotBePresentRequirements)) {
+			const score = deepScoring(
+				givenConfig.identifierOfElementOfInterest.getURIBasedOnID(elementID),
+				category.deepScoreMethods
+			);
+			if (score >= 0) {
+				CategoryStorage.getInstance().addToCategory(category.name, {
+					prefix: givenConfig.name,
+					main: elementID
+				});
+			}
 		}
 	}
 	return true;

@@ -11,13 +11,13 @@ export class GumtreeMethods {
 		exactMatch: true
 	};
 
-	public static availabilityRequirement: ValueCheckerRequirement = {
+	public static availabilityRequirement: ValueCheckerRequirement<boolean> = {
 		name: `Availability date must be between ${timeConfig.formatted_string}`,
 		selector: {
 			isCustomSelector: true,
 			customSelector: "[data-q=\"tile-description\"] > div:nth-child(1) > span:nth-child(2)"
 		},
-		booleanTest: (input) => {
+		booleanTest: (input : string) => {
 			const wordSplit = input.split(" ");
 			if (wordSplit.length === 5) {
 				const day = Number(wordSplit[2]);
@@ -27,7 +27,7 @@ export class GumtreeMethods {
 			return timeConfig.available_now_accept;
 		}
 	};
-	public static getPriceLowerThanArgumentReq = (price: number): ValueCheckerRequirement => {
+	public static getPriceLowerThanArgumentReq = (price: number): ValueCheckerRequirement<boolean> => {
 		return {
 			name: `Must be no more than ${price}.`,
 			selector: {
@@ -46,7 +46,7 @@ export class GumtreeMethods {
 			}
 		};
 	};
-	public static getIsNBedApartment = (numberOfBedrooms : number) : ValueCheckerRequirement => {
+	public static getIsNBedApartment = (numberOfBedrooms : number) : ValueCheckerRequirement<boolean> => {
 		return {
 			name: `Must be a ${numberOfBedrooms} bed apartment.`,
 			selector: GumtreeMethods.titleSelector,
@@ -60,7 +60,7 @@ export class GumtreeMethods {
 		};
 	};
 
-	public static isStudio : ValueCheckerRequirement = {
+	public static isStudio : ValueCheckerRequirement<boolean> = {
 		name: "Must be a studio flat.",
 		selector: GumtreeMethods.titleSelector,
 		booleanTest: (input) => {
@@ -74,7 +74,7 @@ export class GumtreeMethods {
 		}
 	};
 
-	public static includesBills : ValueCheckerRequirement = {
+	public static includesBills : ValueCheckerRequirement<boolean> = {
 		name: "Must include bills.",
 		selector: GumtreeMethods.titleSelector,
 		booleanTest: (input) => {
@@ -82,7 +82,7 @@ export class GumtreeMethods {
 				|| input.toLowerCase().includes("inc") ;
 		}
 	};
-	public static isEnSuite : ValueCheckerRequirement = {
+	public static isEnSuite : ValueCheckerRequirement<boolean> = {
 		name: "Room is en-suite",
 		selector: GumtreeMethods.titleSelector,
 		booleanTest: (input) => {

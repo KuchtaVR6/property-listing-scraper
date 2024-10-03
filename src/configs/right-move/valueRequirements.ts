@@ -13,15 +13,17 @@ export class RightMoveMethods {
 		isCustomSelector: true,
 		customSelector: "a.propertyCard-link span span"
 	};
-	public static isNotAParkingSpace : ValueCheckerRequirement = {
+	public static isNotAParkingSpace : ValueCheckerRequirement<boolean> = {
 		name : "Omit parking ads",
 		selector: RightMoveMethods.typeSelector,
 		booleanTest: (input) => {
 			const loweredInput = input.toLowerCase();
-			return !loweredInput.includes("parking") && !loweredInput.includes("garages");
+			return 	!loweredInput.includes("parking") &&
+					!loweredInput.includes("garages") &&
+					!loweredInput.includes("not specified");
 		}
 	};
-	public static priceLowerThan = (limit : number) : ValueCheckerRequirement => {
+	public static priceLowerThan = (limit : number) : ValueCheckerRequirement<boolean> => {
 		return {
 			name: `Must no more than £${limit}.`,
 			selector: {
@@ -35,7 +37,7 @@ export class RightMoveMethods {
 			}
 		};
 	};
-	public static includesBills : ValueCheckerRequirement = {
+	public static includesBills : ValueCheckerRequirement<boolean> = {
 		name: "Must include bills.",
 		selector: RightMoveMethods.descriptionSelector,
 		booleanTest: (input) => {
@@ -43,7 +45,7 @@ export class RightMoveMethods {
 		}
 	};
 
-	public static enSuite : ValueCheckerRequirement = {
+	public static enSuite : ValueCheckerRequirement<boolean> = {
 		name: "Room must be en-suite",
 		selector: RightMoveMethods.descriptionSelector,
 		booleanTest: (input) => {
@@ -51,7 +53,7 @@ export class RightMoveMethods {
                 || input.toLowerCase().includes("en-suite");
 		}
 	};
-	public static isNotAHouseShare : ValueCheckerRequirement = {
+	public static isNotAHouseShare : ValueCheckerRequirement<boolean> = {
 		name: "Must not be a house share",
 		selector: RightMoveMethods.typeSelector,
 		booleanTest: (input) => {
@@ -59,7 +61,7 @@ export class RightMoveMethods {
 			return !loweredInput.includes("share");
 		}
 	};
-	public static getIsNBedApartment = (numberOfBedrooms : number) : ValueCheckerRequirement => {
+	public static getIsNBedApartment = (numberOfBedrooms : number) : ValueCheckerRequirement<boolean> => {
 		return {
 			name: `Must be a ${numberOfBedrooms} bed apartment.`,
 			selector: {
@@ -72,7 +74,7 @@ export class RightMoveMethods {
 		};
 	};
 
-	public static isStudio : ValueCheckerRequirement = {
+	public static isStudio : ValueCheckerRequirement<boolean> = {
 		name: "Must be a studio.",
 		selector: RightMoveMethods.typeSelector,
 		booleanTest: (input) => {

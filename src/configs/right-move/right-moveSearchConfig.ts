@@ -82,96 +82,106 @@ const rightMoveSearchConfig : SearchConfig = {
 
 	categories: [
 		{
-			name: "Room with bills",
-			requirements: [
-				RightMoveMethods.includesBills,
+			name: "Room Bills Included",
+			shallowRequirements: [
+				RightMoveMethods.includesBills, // todo this is dodgy i.e 0%
 				RightMoveMethods.priceLowerThan(priceConfig.roomWithBills),
 				RightMoveMethods.isNotAParkingSpace
-			]
+			],
+			deepScoreMethods: [] // Todo availability check
 		},
 		{
-			name: "Room without bills",
-			requirements: [
+			name: "Room w/o Bills Included",
+			shallowRequirements: [
 				RightMoveMethods.priceLowerThan(priceConfig.roomWithoutBills),
 				RightMoveMethods.isNotAParkingSpace
-			]
+			],
+			deepScoreMethods: [] // Todo availability check
 		},
 		{
-			name: "En-suite with bills",
-			requirements: [
+			name: "EnSuite Room Bills Included",
+			shallowRequirements: [
 				RightMoveMethods.includesBills,
 				RightMoveMethods.priceLowerThan(priceConfig.enSuiteWithBills),
 				RightMoveMethods.isNotAParkingSpace,
 				RightMoveMethods.enSuite
-			]
+			],
+			deepScoreMethods: [] // Todo availability check
 		},
 		{
-			name: "En-suite without bills",
-			requirements: [
+			name: "EnSuite Room w/o Bills Included",
+			shallowRequirements: [
 				RightMoveMethods.priceLowerThan(priceConfig.enSuiteWithoutBills),
 				RightMoveMethods.isNotAParkingSpace,
 				RightMoveMethods.enSuite
-			]
+			],
+			deepScoreMethods: [] // Todo availability check
 		},
 
 		{
-			name: "Studio with bills",
-			requirements: [
+			name: "Studio flat Bills Included",
+			shallowRequirements: [
 				RightMoveMethods.includesBills,
 				RightMoveMethods.priceLowerThan(priceConfig.studioPriceWithBills),
 				RightMoveMethods.isNotAParkingSpace,
 				RightMoveMethods.isStudio,
 				RightMoveMethods.isNotAHouseShare
-			]
+			],
+			deepScoreMethods: [] // Todo availability check
 		},
 		{
-			name: "Studio without bills",
-			requirements: [
+			name: "Studio flat w/o Bills Included",
+			shallowRequirements: [
 				RightMoveMethods.priceLowerThan(priceConfig.studioPriceWithoutBills),
 				RightMoveMethods.isNotAParkingSpace,
 				RightMoveMethods.isStudio,
 				RightMoveMethods.isNotAHouseShare
-			]
+			],
+			deepScoreMethods: [] // Todo availability check
 		},
 
 		{
-			name: "One bed flat with bills",
-			requirements: [
+			name: "Studio flat Bills Included", // 1 bed is treated the same as studio flat
+			shallowRequirements: [
 				RightMoveMethods.includesBills,
 				RightMoveMethods.priceLowerThan(priceConfig.studioPriceWithBills),
 				RightMoveMethods.isNotAParkingSpace,
 				RightMoveMethods.getIsNBedApartment(1),
 				RightMoveMethods.isNotAHouseShare
-			]
+			],
+			deepScoreMethods: [] // Todo availability check
 		},
 		{
-			name: "One bed flat without bills",
-			requirements: [
+			name: "Studio flat w/o Bills Included", // 1 bed is treated the same as studio flat
+			shallowRequirements: [
 				RightMoveMethods.priceLowerThan(priceConfig.studioPriceWithoutBills),
 				RightMoveMethods.isNotAParkingSpace,
 				RightMoveMethods.getIsNBedApartment(1),
 				RightMoveMethods.isNotAHouseShare
-			]
+			],
+			deepScoreMethods: [] // Todo availability check
 		},
 
 		{
 			name: "Two bed flat",
-			requirements: [
+			shallowRequirements: [
 				RightMoveMethods.priceLowerThan(priceConfig.twoBedFlat),
 				RightMoveMethods.isNotAParkingSpace,
 				RightMoveMethods.getIsNBedApartment(2),
 				RightMoveMethods.isNotAHouseShare
-			]
+			],
+			deepScoreMethods: [] // Todo availability check
 		},
 
 		{
 			name: "Three bed flat",
-			requirements: [
+			shallowRequirements: [
 				RightMoveMethods.priceLowerThan(priceConfig.threeBedFlat),
 				RightMoveMethods.isNotAParkingSpace,
 				RightMoveMethods.getIsNBedApartment(3),
 				RightMoveMethods.isNotAHouseShare
-			]
+			],
+			deepScoreMethods: [] // Todo availability check
 		},
 	]
 };

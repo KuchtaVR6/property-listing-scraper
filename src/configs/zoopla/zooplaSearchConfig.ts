@@ -56,79 +56,82 @@ const zooplaSearchConfig : SearchConfig = {
 	},
 	categories: [
 		{
-			name: "Room MANUAL CHECK Bills Included",
-			requirements: [
+			name: "Room Bills Included",
+			shallowRequirements: [
 				ZooplaMethods.availabilityRequirement,
 				ZooplaMethods.isNotAParkingSpace,
 				ZooplaMethods.priceLowerThan(priceConfig.roomWithBills),
-				//ZooplaMethods.includesBills
-			]
+			],
+			deepScoreMethods: [] // todo check for bills.
 		},
-		// {
-		// 	name: "Room without Bills Included, but cheap",
-		// 	requirements: [
-		// 		ZooplaMethods.availabilityRequirement,
-		// 		ZooplaMethods.isNotAParkingSpace,
-		// 		ZooplaMethods.priceLowerThan(priceConfig.roomWithoutBills)
-		// 	]
-		// },
 		{
-			name: "EnSuite Room MANUAL CHECK Bills Included",
-			requirements: [
+			name: "Room w/o Bills Included",
+			shallowRequirements: [
+				ZooplaMethods.availabilityRequirement,
+				ZooplaMethods.isNotAParkingSpace,
+				ZooplaMethods.priceLowerThan(priceConfig.roomWithoutBills)
+			],
+			deepScoreMethods: []
+		},
+		{
+			name: "EnSuite Room Bills Included",
+			shallowRequirements: [
 				ZooplaMethods.availabilityRequirement,
 				ZooplaMethods.isNotAParkingSpace,
 				ZooplaMethods.priceLowerThan(priceConfig.enSuiteWithBills),
-				//ZooplaMethods.includesBills,
 				ZooplaMethods.enSuite,
-			]
+			],
+			deepScoreMethods: [] // todo check for bills.
 		},
-		// {
-		// 	name: "EnSuite Room without Bills Included, but cheap",
-		// 	requirements: [
-		// 		ZooplaMethods.availabilityRequirement,
-		// 		ZooplaMethods.isNotAParkingSpace,
-		// 		ZooplaMethods.priceLowerThan(priceConfig.enSuiteWithoutBills),
-		// 		ZooplaMethods.enSuite,
-		// 	]
-		// },
-
 		{
-			name: "Studio flat MANUAL CHECK Bills Included",
-			requirements: [
+			name: "EnSuite Room w/o Bills Included",
+			shallowRequirements: [
+				ZooplaMethods.availabilityRequirement,
+				ZooplaMethods.isNotAParkingSpace,
+				ZooplaMethods.priceLowerThan(priceConfig.enSuiteWithoutBills),
+				ZooplaMethods.enSuite,
+			],
+			deepScoreMethods: []
+		},
+		{
+			name: "Studio flat Bills Included",
+			shallowRequirements: [
 				ZooplaMethods.availabilityRequirement,
 				ZooplaMethods.isNotAParkingSpace,
 				ZooplaMethods.priceLowerThan(priceConfig.studioPriceWithBills),
-				//ZooplaMethods.includesBills,
 				ZooplaMethods.isStudio,
-			]
+			],
+			deepScoreMethods: [] // todo check for bills.
 		},
-		// {
-		// 	name: "Studio flat without Bills Included",
-		// 	requirements: [
-		// 		ZooplaMethods.availabilityRequirement,
-		// 		ZooplaMethods.isNotAParkingSpace,
-		// 		ZooplaMethods.priceLowerThan(priceConfig.studioPriceWithoutBills),
-		// 		ZooplaMethods.isStudio,
-		// 	]
-		// },
-
+		{
+			name: "Studio flat w/o Bills Included",
+			shallowRequirements: [
+				ZooplaMethods.availabilityRequirement,
+				ZooplaMethods.isNotAParkingSpace,
+				ZooplaMethods.priceLowerThan(priceConfig.studioPriceWithoutBills),
+				ZooplaMethods.isStudio,
+			],
+			deepScoreMethods: []
+		},
 		{
 			name: "Two bed flat",
-			requirements: [
+			shallowRequirements: [
 				ZooplaMethods.availabilityRequirement,
 				ZooplaMethods.isNotAParkingSpace,
 				ZooplaMethods.priceLowerThan(priceConfig.twoBedFlat),
 				ZooplaMethods.getIsNBedApartment(2)
-			]
+			],
+			deepScoreMethods: []
 		},
 		{
 			name: "Three bed flat",
-			requirements: [
+			shallowRequirements: [
 				ZooplaMethods.availabilityRequirement,
 				ZooplaMethods.isNotAParkingSpace,
 				ZooplaMethods.priceLowerThan(priceConfig.threeBedFlat),
 				ZooplaMethods.getIsNBedApartment(3)
-			]
+			],
+			deepScoreMethods: []
 		},
 	]
 

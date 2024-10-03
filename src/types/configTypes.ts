@@ -14,18 +14,19 @@ export type CustomSelector = {
 
 export type AttributeSelector = SimpleSelector | CustomSelector
 
-export type ValueCheckerRequirement = {
+export type ValueCheckerRequirement<N> = {
     name: string,
     selector: AttributeSelector,
-    booleanTest: (input : string) => boolean
+    booleanTest: (input : string) => N
 }
 
 export type mustNotBePresentRequirement = AttributeSelector & {name : string}
 
 export type Category = {
     name : string,
-    requirements : ValueCheckerRequirement[];
+    shallowRequirements : ValueCheckerRequirement<boolean>[];
     mustNotBePresentRequirements? : mustNotBePresentRequirement[];
+    deepScoreMethods: ValueCheckerRequirement<number>[];
 }
 
 export enum EndOfPagesIndicator {
@@ -47,7 +48,7 @@ export interface SearchConfig {
     identifierOfElementOfInterest: {
         selector?: AttributeSelector,
         extractor: (element : HTMLElement) => string,
-        getURIBasedOnID?: (id : string) => string,
+        getURIBasedOnID: (id : string) => string,
     }
     endOfPagesIndicator: EndOfPagesIndicator,
     endOfPagesElement?: AttributeSelector,
