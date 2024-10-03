@@ -6,22 +6,23 @@ const rl = readline.createInterface({
 });
 
 const getUserInput = async (question : string) => {
-	const answer = await rl.question(question);
-	return answer;
+	return await rl.question(question);
 };
 
 export const getUserInputBoolean = async (question : string) => {
+
+	const ans_valid = (extractedFirstLetter : string) => {
+		return extractedFirstLetter === "y" || extractedFirstLetter === "n";};
+
 	let answer = "";
 	let extractedFirstLetter = answer.slice(0,1).toLowerCase();
-	while (extractedFirstLetter !== "y" && extractedFirstLetter !== "n") {
+	while (!ans_valid(extractedFirstLetter)) {
 		answer = await getUserInput("[?] " + question + " [y/n] ");
 		extractedFirstLetter = answer.slice(0,1).toLowerCase();
-		if (extractedFirstLetter==="y") {
-			return true;
-		} else if (extractedFirstLetter==="n") {
-			return false;
+		if (ans_valid(extractedFirstLetter)) {
+			return extractedFirstLetter==="y";
 		} else {
-			console.log("Invalid answer, please try again."); //allow
+			console.log("Invalid answer, please try again.");
 		}
 	}
 	throw new Error("Incorrect input, function terminated");

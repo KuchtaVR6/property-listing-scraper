@@ -1,6 +1,6 @@
 import {EndOfPagesIndicator, SearchConfig} from "../../../types/configTypes";
 import gumtreeCategories from "../gumtreeCategories";
-import {adCountSelector, adSelector, idContainer} from "../gumtree-rent/gumtree-rentSearchConfig";
+import {adCountSelector, adSelector, idContainer, nearbyAdsSelector} from "../gumtree-rent/gumtree-rentSearchConfig";
 import {absolute_max} from "../../priceConfig";
 import {locationConfig} from "../../locationConfig";
 
@@ -43,19 +43,9 @@ const gumtreeShareSearchConfig : SearchConfig = {
 		}
 	},
 	endOfPagesIndicator: EndOfPagesIndicator.EndOfListElement,
-	endOfPagesElement: {
-		isCustomSelector: false,
-		attributeName: "data-q",
-		expectedValue: "nearby-results-title",
-		exactMatch: true
-	},
+	endOfPagesElement: nearbyAdsSelector,
 	optional_tests: {
-		expectedNumberOfElementsOfInterest: {
-			isCustomSelector: false,
-			attributeName: "data-q",
-			expectedValue: "ads-count",
-			exactMatch: true
-		}
+		expectedNumberOfElementsOfInterest: adCountSelector
 	},
 	categories: gumtreeCategories
 };

@@ -31,7 +31,8 @@ export type Category = {
 export enum EndOfPagesIndicator {
     NoPointsOfInterestPresent,
     AllPointOfInterestIDsRepeated,
-    EndOfListElement
+    EndOfListElement,
+    DidNotSeeNextPageElement,
 }
 
 export interface SearchConfig {

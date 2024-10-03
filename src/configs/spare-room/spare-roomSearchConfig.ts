@@ -52,7 +52,13 @@ const spareRoomSearchConfig : SearchConfig = {
 			return "https://www.spareroom.co.uk/flatshare/flatshare_detail.pl?flatshare_id=" + id;
 		}
 	},
-	endOfPagesIndicator : EndOfPagesIndicator.AllPointOfInterestIDsRepeated,
+	endOfPagesIndicator : EndOfPagesIndicator.DidNotSeeNextPageElement,
+	endOfPagesElement: {
+		isCustomSelector: false,
+		attributeName: "id",
+		expectedValue: "paginationNextPageLink",
+		exactMatch: true
+	},
 
 	optional_tests: {
 		expectedNumberOfElementsOfInterest: resultsSelector,

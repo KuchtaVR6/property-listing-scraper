@@ -10,6 +10,13 @@ export const adCountSelector : AttributeSelector = {
 	exactMatch: true
 };
 
+export const nearbyAdsSelector : AttributeSelector = {
+	isCustomSelector: false,
+	attributeName: "data-q",
+	expectedValue: "nearby-results-title",
+	exactMatch: true
+};
+
 export const adSelector : AttributeSelector = {
 	isCustomSelector: false,
 	attributeName: "data-q",
@@ -63,12 +70,7 @@ const gumtreeRentSearchConfig : SearchConfig = {
 		}
 	},
 	endOfPagesIndicator: EndOfPagesIndicator.EndOfListElement,
-	endOfPagesElement: {
-		isCustomSelector: false,
-		attributeName: "data-q",
-		expectedValue: "nearby-results-title",
-		exactMatch: true
-	},
+	endOfPagesElement: nearbyAdsSelector,
 	optional_tests: {
 		expectedNumberOfElementsOfInterest: adCountSelector,
 		/*

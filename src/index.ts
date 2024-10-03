@@ -47,7 +47,7 @@ const main = async () => {
 						}
 					}
 					return elementsOfInterest;
-				},40);
+				},100);
 		} catch (e) {
 			if ((e as NoProceedInterrupt).message === noProceedInterruptMessage) {
 				console.log("HALT! Stopped On First Saved As Seen");

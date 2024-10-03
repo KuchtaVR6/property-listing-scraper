@@ -20,23 +20,87 @@ const getFullURLBasedOnConfigWithPageNumber = (givenConfig : SearchConfig, pageN
 	return url;
 };
 
-const checkIfDocumentMeetsParsingRequirements = (givenConfig : SearchConfig, element : HTMLElement) => {
+const correctDocumentTermination = (givenConfig : SearchConfig, element : HTMLElement) : {
+	element: HTMLElement | null,
+	nextPage: boolean
+} => {
 	switch (givenConfig.endOfPagesIndicator) {
 		case EndOfPagesIndicator.NoPointsOfInterestPresent: {
-			return getElementsMatchingSelector(element, givenConfig.selectElementsOfInterest).length !== 0;
+			if (getElementsMatchingSelector(element, givenConfig.selectElementsOfInterest).length !== 0) {
+				return {
+					element: element,
+					nextPage: true
+				};
+			}
+			return {
+				element: null,
+				nextPage: false
+			};
 
 		}
 		case EndOfPagesIndicator.AllPointOfInterestIDsRepeated: {
 			const elementsInteresting = getElementsMatchingSelector(element, givenConfig.selectElementsOfInterest);
 			for (const element of elementsInteresting) {
 				if(!seenIdsStorage.includes(extractElementId(givenConfig,element))) {
-					return true;
+					return {
+						element: element,
+						nextPage: true
+					};
 				}
 			}
-			return false;
+			return {
+				element: null,
+				nextPage: false
+			};
 		}
-		case EndOfPagesIndicator.EndOfListElement:
-			return true; //TODO NEEDS TO BE IMPLEMENTED
+		case EndOfPagesIndicator.EndOfListElement: {
+			if (givenConfig.endOfPagesElement) {
+				// Find the end of pages element in the document
+				const endElement = getElementsMatchingSelector(element, givenConfig.endOfPagesElement)[0];
+
+				if (!endElement) {
+					return {
+						element: element,
+						nextPage: true
+					};
+				}
+
+				// Remove all siblings after the end of pages element
+				let sibling = endElement.nextElementSibling;
+
+				// Loop through and remove all subsequent siblings
+				while (sibling) {
+					const nextSibling = sibling.nextElementSibling;
+					sibling.remove();  // Remove the sibling
+					sibling = nextSibling;  // Move to the next sibling
+				}
+
+				return {
+					element: element,
+					nextPage: false
+				};
+			} else {
+				throw new Error("endOfPagesElement must be defined for EndOfListElement.");
+			}
+		}
+		case EndOfPagesIndicator.DidNotSeeNextPageElement: {
+			if (givenConfig.endOfPagesElement) {
+				if (getElementsMatchingSelector(element, givenConfig.endOfPagesElement).length !== 0) {
+					return {
+						element: element,
+						nextPage: true
+					};
+				}
+			}
+			else {
+				throw new Error("endOfPagesElement must be defined for DidNotSeeNextPageElement.");
+			}
+			return {
+				element: element,
+				nextPage: false
+			};
+		}
+
 	}
 
 };
@@ -45,6 +109,8 @@ const iterateThroughPages = async (
 	givenConfig : SearchConfig,
 	processElement : (element : HTMLElement) => HTMLElement[],
 	limit? : number) => {
+
+	const beginSeenStorageSize = seenIdsStorage.length;
 
 	let currentPage = (givenConfig.page_step? 0 : 1);
 	let arrayOfPages : HTMLElement[]= [];
@@ -56,7 +122,9 @@ const iterateThroughPages = async (
 
 	limit = limit * pageStep;
 
-	while (currentPage <= limit) {
+	let seeNextPage = true;
+
+	while (currentPage <= limit && seeNextPage) {
 
 		const document = await fetchWebsiteHTML(givenConfig,
 			getFullURLBasedOnConfigWithPageNumber(givenConfig, currentPage));
@@ -65,8 +133,11 @@ const iterateThroughPages = async (
 			setTestingInformationFromFirstPage(givenConfig, document);
 		}
 
-		if (checkIfDocumentMeetsParsingRequirements(givenConfig, document)) {
-			arrayOfPages = [...arrayOfPages, ...processElement(document)];
+		const terminated_document = correctDocumentTermination(givenConfig, document);
+		seeNextPage = terminated_document.nextPage;
+
+		if (terminated_document.element) {
+			arrayOfPages = [...arrayOfPages, ...processElement(terminated_document.element)];
 		} else {
 			break;
 		}
@@ -80,7 +151,7 @@ const iterateThroughPages = async (
 
 	await TestingStorage.getInstance().produceReport({
 		numberOfPages : Math.ceil(currentPage/pageStep),
-		numberOfElementsOfInterest: arrayOfPages.length,
+		numberOfElementsOfInterest: seenIdsStorage.length - beginSeenStorageSize,
 	}, givenConfig.name);
 };
 

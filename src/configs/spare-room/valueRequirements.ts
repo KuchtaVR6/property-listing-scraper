@@ -67,7 +67,7 @@ export class SpareRoomMethods {
 			customSelector: ".listingPrice abbr"
 		},
 		booleanTest: (input) => {
-			return input === "pcm";
+			return input.replace(" ", "") === "pcm";
 		}
 	};
 	public static priceMeasuredWeekly : ValueCheckerRequirement = {
@@ -77,7 +77,7 @@ export class SpareRoomMethods {
 			customSelector: ".listingPrice abbr"
 		},
 		booleanTest: (input) => {
-			return input === "pw";
+			return input.replace(" ", "") === "pw";
 		}
 	};
 	public static getIsNBedApartment = (numberOfBedrooms : number) : ValueCheckerRequirement => {
