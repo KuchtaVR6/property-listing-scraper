@@ -68,13 +68,11 @@ export default class TestingStorage {
 			encountered : number
 		}[] = [];
 
-		console.log("Testing " + configName + " in progress...");
-
 		if(this.expectedNumberOfPages) {
 			const difference = Math.abs(this.expectedNumberOfPages - encountered.numberOfPages);
 			if(difference > 0) {
-				console.warn("[!] Number of index pages does not match the expected by " + difference +
-					" pages. Expected: " + this.expectedNumberOfPages);
+				console.warn("⚠️ Number of index pages does not match the expected value. " +
+					"Encountered" + encountered.numberOfPages + " pages. Expected: " + this.expectedNumberOfPages);
 			}
 
 			testsArray.push(
@@ -123,40 +121,41 @@ export default class TestingStorage {
 
 		for(const [requirementName, [passed, tried]] of Array.from(this.requirementsFulfilledRegistry)) {
 			const rate = Math.floor((passed / tried) * 100);
-			const multipleCheckDivider = encountered.numberOfElementsOfInterest / tried;
+			const multipleCheckDivider = Math.min(encountered.numberOfElementsOfInterest / tried, 1);
 			if (rate <= 20) {
 				if (rate <= 5) {
-					console.error("[!!] '" + requirementName + "' has a very low pass rate of " + rate +
+					console.error("🚨 " + requirementName + "' has a VERY LOW pass rate of " + rate +
 						"%. Make sure it is defined correctly.");
 				} else {
-					console.warn("[!] '" + requirementName + "' has a low pass rate of " + rate +
+					console.warn("⚠️ " + requirementName + "' has a LOW pass rate of " + rate +
 						"%. Check if it is defined correctly.");
 				}
 			}
 
 			requirementTestsArray.push(
-				"name: " + requirementName + "\n" +
-				"fulfilled: " + Math.floor(passed * multipleCheckDivider) + "\n" +
-				"tested: " + Math.floor(tried * multipleCheckDivider) + "\n" +
-				"rate: " + Math.floor((passed / tried) * 100) + "%"
+				"	name: " + requirementName + "\n" +
+				"	fulfilled: " + Math.floor(passed * multipleCheckDivider) + "\n" +
+				"	tested: " + Math.floor(tried * multipleCheckDivider) + "\n" +
+				"	rate: " + Math.floor((passed / tried) * 100) + "%"
 			);
 		}
 
 		let testsArrayString = "";
 		for(const test of testsArray) {
 			testsArrayString +=
-				"====BAS===" + "\n" +
-				"test: " + test.test + "\n" +
-				"encountered: " + test.encountered + "\n" +
-				"expected: " + test.expected + "\n";
+				"type: BAS\n" +
+				"	test: " + test.test + "\n" +
+				"	encountered: " + test.encountered + "\n" +
+				"	expected: " + test.expected + "\n";
 		}
 
 		fs.appendFileSync("debug-output/tests.txt",
-			"\n\n\n>>>>>>>>>>>>>>>>>>>> " + configName
+			"\n\n\n>>> " + configName
 			+ " on " + (new Date())
-			+ " >>>>>>>>>>>>>>>>>>>> \n\n" +
-			testsArrayString + "\n====REQ====\n" +
-			requirementTestsArray.join("\n====REQ====\n") + "\n"
+			+ " >>> \n\n" +
+			testsArrayString + "\ntype: REQ\n" +
+			requirementTestsArray.join("\ntype: REQ\n") + "\n" +
+			"\n\n<<< END <<<\n\n"
 		);
 
 		console.log("Testing " + configName + " finished.");
