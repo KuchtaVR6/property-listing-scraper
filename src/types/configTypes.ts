@@ -17,7 +17,7 @@ export type AttributeSelector = SimpleSelector | CustomSelector
 export type ValueCheckerRequirement<N> = {
     name: string,
     selector: AttributeSelector,
-    booleanTest: (input : string) => N
+    valueTest: (input : string) => N
 }
 
 export type mustNotBePresentRequirement = AttributeSelector & {name : string}
@@ -44,6 +44,7 @@ export interface SearchConfig {
     page_param: string,
     page_step?: number,
     requireToEstablishAsLoaded: AttributeSelector,
+    requireToEstablishListingAsLoaded: AttributeSelector,
     selectElementsOfInterest: AttributeSelector,
     identifierOfElementOfInterest: {
         selector?: AttributeSelector,

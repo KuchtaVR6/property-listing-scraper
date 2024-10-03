@@ -29,6 +29,12 @@ const zooplaSearchConfig : SearchConfig = {
 		expectedValue : "portalLight",
 		exactMatch : true
 	},
+	requireToEstablishListingAsLoaded: {
+		isCustomSelector: false,
+		attributeName : "aria-labelledby",
+		expectedValue: "listing-gallery-heading",
+		exactMatch : true
+	},
 	selectElementsOfInterest : {
 		isCustomSelector: false,
 		attributeName : "id",

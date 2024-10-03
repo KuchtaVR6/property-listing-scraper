@@ -11,7 +11,7 @@ export class ZooplaMethods {
 			isCustomSelector: false,
 			exactMatch: true
 		},
-		booleanTest: (input: string) => {
+		valueTest: (input: string) => {
 			const wordSplit = input.split(" ");
 			if(wordSplit[0]==="Available" && wordSplit.length === 5) {
 				const day = Number(wordSplit[2].slice(0,-2));
@@ -29,7 +29,7 @@ export class ZooplaMethods {
 			isCustomSelector: false,
 			exactMatch: true
 		},
-		booleanTest: (input: string) => {
+		valueTest: (input: string) => {
 			return !input.toLowerCase().includes("parking");
 		}
 	};
@@ -42,7 +42,7 @@ export class ZooplaMethods {
 				expectedValue: "listing-price",
 				exactMatch: true
 			},
-			booleanTest: (input: string) => {
+			valueTest: (input: string) => {
 				return findFirstNumber(input) <= limit;
 			}
 		};
@@ -55,7 +55,7 @@ export class ZooplaMethods {
 			expectedValue: "_1p8nftv0",
 			exactMatch: false
 		},
-		booleanTest: (input: string) => {
+		valueTest: (input: string) => {
 			return input.toLowerCase() === "bills included";
 		}
 	};
@@ -68,7 +68,7 @@ export class ZooplaMethods {
 			expectedValue: "_1vvnr3j3",
 			exactMatch: false
 		},
-		booleanTest: (input: string) => {
+		valueTest: (input: string) => {
 			return input.toLowerCase().includes("ensuite")
 				|| input.toLowerCase().includes("en-suite");
 		}
@@ -83,7 +83,7 @@ export class ZooplaMethods {
 				expectedValue: "listing-title",
 				exactMatch: true
 			},
-			booleanTest: (input: string) => {
+			valueTest: (input: string) => {
 				const inputLowered = input.toLowerCase();
 				if (inputLowered.includes("flat")) {
 					return findFirstNumber(inputLowered, true) === numberOfBedrooms;
@@ -101,7 +101,7 @@ export class ZooplaMethods {
 			expectedValue: "listing-title",
 			exactMatch: true
 		},
-		booleanTest: (input: string) => {
+		valueTest: (input: string) => {
 			const inputLowered = input.toLowerCase();
 			if (inputLowered.includes("flat")) {
 				return findFirstNumber(inputLowered) === 1;

@@ -38,10 +38,10 @@ const main = async () => {
 		try {
 			await iterateThroughPages(
 				config,
-				(element) => {
+				async (element) => {
 					const elementsOfInterest = splitElementsOfInterest(config, element);
 					for (const interestingElement of elementsOfInterest) {
-						const proceedFlag = categoriseElementAndReturnIfProceed(config, interestingElement);
+						const proceedFlag = await categoriseElementAndReturnIfProceed(config, interestingElement);
 						if (!proceedFlag) {
 							throw new NoProceedInterrupt;
 						}

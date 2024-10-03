@@ -35,6 +35,19 @@ export const check_date_against_config = (day: number, month: string): boolean =
 	return false;
 };
 
+export const check_date_against_config_formatted = (date_string : string): boolean => {
+	const considered_timestamp = (new Date(date_string)).getTime();
+	if (considered_timestamp < all_dates_config.end_stamp) {
+		if (available_now_accept) {
+			return true;
+		}
+		else {
+			return considered_timestamp > all_dates_config.start_stamp;
+		}
+	}
+	return false;
+};
+
 const all_dates_config = {
 	available_now_accept: available_now_accept,
 	date_start: date_start,

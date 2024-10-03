@@ -1,6 +1,6 @@
 import {HTMLElement} from "node-html-parser";
 import {getElementsMatchingSelector} from "../requirementMatcherHelpers";
-import {fetchWebsiteHTML} from "./fetchPages";
+import {fetchHTML} from "./fetchPages";
 import {setTestingInformationFromFirstPage} from "../testing/firstPageTest";
 import TestingStorage from "../testing/testingStorage";
 import {EndOfPagesIndicator, SearchConfig} from "../types/configTypes";
@@ -117,7 +117,7 @@ const correctDocumentTermination = (givenConfig : SearchConfig, element : HTMLEl
 
 const iterateThroughPages = async (
 	givenConfig : SearchConfig,
-	processElement : (element : HTMLElement) => HTMLElement[],
+	processElement : (element : HTMLElement) => Promise<HTMLElement[]>,
 	limit? : number) => {
 
 	const beginSeenStorageSize = seenIdsStorage.length;
@@ -136,8 +136,9 @@ const iterateThroughPages = async (
 
 	while (currentPage <= limit && seeNextPage) {
 
-		const document = await fetchWebsiteHTML(givenConfig,
-			getFullURLBasedOnConfigWithPageNumber(givenConfig, currentPage));
+		const document = await fetchHTML(
+			getFullURLBasedOnConfigWithPageNumber(givenConfig, currentPage),
+			givenConfig.requireToEstablishAsLoaded);
 
 		if([0,1].includes(currentPage) && givenConfig.optional_tests) {
 			setTestingInformationFromFirstPage(givenConfig, document);
@@ -147,7 +148,7 @@ const iterateThroughPages = async (
 		seeNextPage = terminated_document.nextPage;
 
 		if (terminated_document.element) {
-			arrayOfPages = [...arrayOfPages, ...processElement(terminated_document.element)];
+			arrayOfPages = [...arrayOfPages, ...(await processElement(terminated_document.element))];
 		} else {
 			break;
 		}

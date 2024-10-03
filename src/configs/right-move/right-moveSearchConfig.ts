@@ -34,6 +34,12 @@ const rightMoveSearchConfig : SearchConfig = {
 		expectedValue: "l-searchResults",
 		exactMatch: true
 	},
+	requireToEstablishListingAsLoaded: {
+		isCustomSelector: false,
+		attributeName : "data-style",
+		expectedValue: "photoCollage",
+		exactMatch : true
+	},
 
 	selectElementsOfInterest : {
 		isCustomSelector: false,

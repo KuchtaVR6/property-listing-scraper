@@ -28,14 +28,18 @@ const spareRoomSearchConfig : SearchConfig = {
 		isCustomSelector: true,
 		customSelector: ".listing-results"
 	},
-
+	requireToEstablishListingAsLoaded: {
+		isCustomSelector: false,
+		attributeName : "class",
+		expectedValue: "photo-gallery__main-image-dt",
+		exactMatch : true
+	},
 	selectElementsOfInterest : {
 		isCustomSelector: false,
 		attributeName: "class",
 		expectedValue: "panel-listing-result",
 		exactMatch: false
 	},
-
 	identifierOfElementOfInterest: {
 		selector: {
 			isCustomSelector: false,

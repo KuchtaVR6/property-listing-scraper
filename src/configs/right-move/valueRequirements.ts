@@ -1,6 +1,7 @@
 
 import {AttributeSelector, ValueCheckerRequirement} from "../../types/configTypes";
 import {findFirstNumber} from "../../testing/firstPageTest";
+import timeConfig, {check_date_against_config_formatted} from "../timeConfig";
 
 export class RightMoveMethods {
 	// availability is not listed on rightMove
@@ -16,7 +17,7 @@ export class RightMoveMethods {
 	public static isNotAParkingSpace : ValueCheckerRequirement<boolean> = {
 		name : "Omit parking ads",
 		selector: RightMoveMethods.typeSelector,
-		booleanTest: (input) => {
+		valueTest: (input) => {
 			const loweredInput = input.toLowerCase();
 			return 	!loweredInput.includes("parking") &&
 					!loweredInput.includes("garages") &&
@@ -32,7 +33,7 @@ export class RightMoveMethods {
 				expectedValue: "propertyCard-priceValue",
 				exactMatch: true
 			},
-			booleanTest: (input) => {
+			valueTest: (input) => {
 				return findFirstNumber(input) <= limit;
 			}
 		};
@@ -40,7 +41,7 @@ export class RightMoveMethods {
 	public static includesBills : ValueCheckerRequirement<boolean> = {
 		name: "Must include bills.",
 		selector: RightMoveMethods.descriptionSelector,
-		booleanTest: (input) => {
+		valueTest: (input) => {
 			return input.toLowerCase() === "bills included";
 		}
 	};
@@ -48,7 +49,7 @@ export class RightMoveMethods {
 	public static enSuite : ValueCheckerRequirement<boolean> = {
 		name: "Room must be en-suite",
 		selector: RightMoveMethods.descriptionSelector,
-		booleanTest: (input) => {
+		valueTest: (input) => {
 			return input.toLowerCase().includes("ensuite")
                 || input.toLowerCase().includes("en-suite");
 		}
@@ -56,7 +57,7 @@ export class RightMoveMethods {
 	public static isNotAHouseShare : ValueCheckerRequirement<boolean> = {
 		name: "Must not be a house share",
 		selector: RightMoveMethods.typeSelector,
-		booleanTest: (input) => {
+		valueTest: (input) => {
 			const loweredInput = input.toLowerCase();
 			return !loweredInput.includes("share");
 		}
@@ -68,7 +69,7 @@ export class RightMoveMethods {
 				isCustomSelector: true,
 				customSelector: "div.property-information :nth-child(3)"
 			},
-			booleanTest: (input) => {
+			valueTest: (input) => {
 				return findFirstNumber(input) === numberOfBedrooms;
 			}
 		};
@@ -77,9 +78,29 @@ export class RightMoveMethods {
 	public static isStudio : ValueCheckerRequirement<boolean> = {
 		name: "Must be a studio.",
 		selector: RightMoveMethods.typeSelector,
-		booleanTest: (input) => {
+		valueTest: (input) => {
 			const inputLowered = input.toLowerCase();
 			return inputLowered.includes("studio");
+		}
+	};
+
+	/* deep methods */
+
+	public static mustBeAvailableWithin : ValueCheckerRequirement<number> = {
+		name: `Must be available ${timeConfig.formatted_string}`,
+		selector: {
+			isCustomSelector: true,
+			customSelector: "div._2RnXSVJcWbWv4IpBC1Sng6:nth-child(1) > dd:nth-child(2)"
+		},
+		valueTest: (input) => {
+			let date_ok;
+			if (input.includes("Now")) {
+				date_ok = timeConfig.available_now_accept;
+			}
+			else {
+				date_ok = check_date_against_config_formatted(input);
+			}
+			if (date_ok) {return 0;} else {return Infinity;}
 		}
 	};
 }

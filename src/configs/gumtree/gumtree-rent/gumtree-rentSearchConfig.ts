@@ -31,6 +31,13 @@ export const idContainer : AttributeSelector = {
 	exactMatch: true
 };
 
+export const listingLoaded : AttributeSelector = {
+	isCustomSelector: false,
+	attributeName: "data-testid",
+	expectedValue: "slider",
+	exactMatch: true
+};
+
 const gumtreeRentSearchConfig : SearchConfig = {
 	name: "gumtree-rent",
 	url: "https://www.gumtree.com/",
@@ -55,6 +62,7 @@ const gumtreeRentSearchConfig : SearchConfig = {
 	],
 	page_param: "page",
 	requireToEstablishAsLoaded : adCountSelector,
+	requireToEstablishListingAsLoaded: listingLoaded,
 	selectElementsOfInterest : adSelector,
 	identifierOfElementOfInterest : {
 		selector : idContainer,

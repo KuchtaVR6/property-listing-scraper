@@ -22,7 +22,7 @@ export const extractElementId = (givenConfig : SearchConfig, element : HTMLEleme
 
 const compareToRequirement = (elementsToInspect : HTMLElement[], requirement : ValueCheckerRequirement<boolean>) => {
 	for(const element of elementsToInspect) {
-		if (requirement.booleanTest(element.textContent)) {
+		if (requirement.valueTest(element.textContent)) {
 			TestingStorage.getInstance().addFulfilledRequirement(requirement.name);
 			return true;
 		}
@@ -58,31 +58,33 @@ const shallowCheckSuitabilityToCategory = (
 	return answer;
 };
 
-export const categoriseElementAndReturnIfProceed = (givenConfig : SearchConfig, element : HTMLElement): boolean => {
-	const elementID = extractElementId(givenConfig, element);
-	const categoryStorageInstance = CategoryStorage.getInstance();
-	if(seenIdsStorage.includes(elementID)) {
-		return true;
-	}
-	if(stopOnFirstSeenAdvert) {
-		if(categoryStorageInstance.hasBeenSeen({prefix: givenConfig.name, main: elementID})) {
-			return false;
+export const categoriseElementAndReturnIfProceed =
+	async (givenConfig : SearchConfig, element : HTMLElement): Promise<boolean> => {
+		const elementID = extractElementId(givenConfig, element);
+		const categoryStorageInstance = CategoryStorage.getInstance();
+		if(seenIdsStorage.includes(elementID)) {
+			return true;
 		}
-	}
-	seenIdsStorage.push(elementID);
-	for (const category of givenConfig.categories) {
-		if(shallowCheckSuitabilityToCategory(element, category.shallowRequirements, category.mustNotBePresentRequirements)) {
-			const score = deepScoring(
-				givenConfig.identifierOfElementOfInterest.getURIBasedOnID(elementID),
-				category.deepScoreMethods
-			);
-			if (score >= 0) {
-				CategoryStorage.getInstance().addToCategory(category.name, {
-					prefix: givenConfig.name,
-					main: elementID
-				});
+		if(stopOnFirstSeenAdvert) {
+			if(categoryStorageInstance.hasBeenSeen({prefix: givenConfig.name, main: elementID})) {
+				return false;
 			}
 		}
-	}
-	return true;
-};
+		seenIdsStorage.push(elementID);
+		for (const category of givenConfig.categories) {
+			if(shallowCheckSuitabilityToCategory(element, category.shallowRequirements, category.mustNotBePresentRequirements)) {
+				const score = await deepScoring(
+					givenConfig.identifierOfElementOfInterest.getURIBasedOnID(elementID),
+					category.deepScoreMethods,
+					givenConfig.requireToEstablishListingAsLoaded
+				);
+				if (score >= 0) {
+					CategoryStorage.getInstance().addToCategory(category.name, {
+						prefix: givenConfig.name,
+						main: elementID
+					});
+				}
+			}
+		}
+		return true;
+	};

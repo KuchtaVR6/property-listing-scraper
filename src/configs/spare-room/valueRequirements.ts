@@ -23,7 +23,7 @@ export class SpareRoomMethods {
 			isCustomSelector: true,
 			customSelector: ".advertDescription strong"
 		},
-		booleanTest: (input) => {
+		valueTest: (input) => {
 			const wordSplit = input.split(" ");
 			if (wordSplit[0] === "Available" && wordSplit.length === 3) {
 				const day = Number(wordSplit[1]);
@@ -43,7 +43,7 @@ export class SpareRoomMethods {
 				exactMatch: true
 			}
 			,
-			booleanTest: (input) => {
+			valueTest: (input) => {
 				return (findFirstNumber(input) * (adjustPerWeek? 4.3 : 1)) <= price;
 			}
 		};
@@ -56,7 +56,7 @@ export class SpareRoomMethods {
 			expectedValue: "listingPriceDetails",
 			exactMatch: true
 		},
-		booleanTest: (input) => {
+		valueTest: (input) => {
 			return input.toLowerCase() === "bills inc.";
 		}
 	};
@@ -66,7 +66,7 @@ export class SpareRoomMethods {
 			isCustomSelector: true,
 			customSelector: ".listingPrice abbr"
 		},
-		booleanTest: (input) => {
+		valueTest: (input) => {
 			return input.replace(" ", "") === "pcm";
 		}
 	};
@@ -76,7 +76,7 @@ export class SpareRoomMethods {
 			isCustomSelector: true,
 			customSelector: ".listingPrice abbr"
 		},
-		booleanTest: (input) => {
+		valueTest: (input) => {
 			return input.replace(" ", "") === "pw";
 		}
 	};
@@ -89,7 +89,7 @@ export class SpareRoomMethods {
 				expectedValue: "shortDescription",
 				exactMatch: true
 			},
-			booleanTest: (input) => {
+			valueTest: (input) => {
 				const inputLowered = input.toLowerCase();
 				if (inputLowered.includes("flat")) {
 					return findFirstNumber(inputLowered, true) === numberOfBedrooms;
@@ -101,7 +101,7 @@ export class SpareRoomMethods {
 	public static isEnSuite : ValueCheckerRequirement<boolean> = {
 		name: "Room is en-suite",
 		selector: SpareRoomMethods.titleSelector,
-		booleanTest: (input) => {
+		valueTest: (input) => {
 			return input.toLowerCase().includes("ensuite")
                 || input.toLowerCase().includes("en-suite");
 		}

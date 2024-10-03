@@ -1,7 +1,17 @@
-import {ValueCheckerRequirement} from "../types/configTypes";
+import {AttributeSelector, ValueCheckerRequirement} from "../types/configTypes";
+import {fetchHTML} from "../procuringTheHTML/fetchPages";
 
-const deepScoring = (url: string, methods: ValueCheckerRequirement<number>[]) => {
-	return 0;
-};
+const deepScoring =
+	async (
+		url: string,
+		methods: ValueCheckerRequirement<number>[],
+		listingLoaded : AttributeSelector) : Promise<number> => {
+
+		const listingDetailed = await fetchHTML(url, listingLoaded);
+
+		listingDetailed.id;
+
+		return 0;
+	};
 
 export default deepScoring;

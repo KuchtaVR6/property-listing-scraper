@@ -17,7 +17,7 @@ export class GumtreeMethods {
 			isCustomSelector: true,
 			customSelector: "[data-q=\"tile-description\"] > div:nth-child(1) > span:nth-child(2)"
 		},
-		booleanTest: (input : string) => {
+		valueTest: (input : string) => {
 			const wordSplit = input.split(" ");
 			if (wordSplit.length === 5) {
 				const day = Number(wordSplit[2]);
@@ -37,7 +37,7 @@ export class GumtreeMethods {
 				exactMatch: true
 			}
 			,
-			booleanTest: (input) => {
+			valueTest: (input) => {
 				let adjustPerWeek = true;
 				if(input.includes("pm")) {
 					adjustPerWeek = false;
@@ -50,7 +50,7 @@ export class GumtreeMethods {
 		return {
 			name: `Must be a ${numberOfBedrooms} bed apartment.`,
 			selector: GumtreeMethods.titleSelector,
-			booleanTest: (input) => {
+			valueTest: (input) => {
 				const inputLowered = input.toLowerCase();
 				if (inputLowered.includes("flat") || inputLowered.includes("apartment")) {
 					return findFirstNumber(inputLowered, true) === numberOfBedrooms;
@@ -63,7 +63,7 @@ export class GumtreeMethods {
 	public static isStudio : ValueCheckerRequirement<boolean> = {
 		name: "Must be a studio flat.",
 		selector: GumtreeMethods.titleSelector,
-		booleanTest: (input) => {
+		valueTest: (input) => {
 			const inputLowered = input.toLowerCase();
 			if (inputLowered.includes("flat") || inputLowered.includes("apartment")) {
 				if (findFirstNumber(inputLowered, true) === 1) {
@@ -77,7 +77,7 @@ export class GumtreeMethods {
 	public static includesBills : ValueCheckerRequirement<boolean> = {
 		name: "Must include bills.",
 		selector: GumtreeMethods.titleSelector,
-		booleanTest: (input) => {
+		valueTest: (input) => {
 			return input.toLowerCase().includes("bills")
 				|| input.toLowerCase().includes("inc") ;
 		}
@@ -85,7 +85,7 @@ export class GumtreeMethods {
 	public static isEnSuite : ValueCheckerRequirement<boolean> = {
 		name: "Room is en-suite",
 		selector: GumtreeMethods.titleSelector,
-		booleanTest: (input) => {
+		valueTest: (input) => {
 			return input.toLowerCase().includes("ensuite")
                 || input.toLowerCase().includes("en-suite");
 		}
