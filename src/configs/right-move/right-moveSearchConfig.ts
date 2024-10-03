@@ -90,12 +90,12 @@ const rightMoveSearchConfig : SearchConfig = {
 		{
 			name: "Room Bills Included",
 			shallowRequirements: [
-				RightMoveMethods.includesBills, // todo this is dodgy i.e 0%
 				RightMoveMethods.priceLowerThan(priceConfig.roomWithBills),
 				RightMoveMethods.isNotAParkingSpace
 			],
 			deepScoreMethods: [
-				RightMoveMethods.mustBeAvailableWithin
+				RightMoveMethods.mustBeAvailableWithin,
+				RightMoveMethods.mustIncludeBills
 			]
 		},
 		{
@@ -111,13 +111,13 @@ const rightMoveSearchConfig : SearchConfig = {
 		{
 			name: "EnSuite Room Bills Included",
 			shallowRequirements: [
-				RightMoveMethods.includesBills,
 				RightMoveMethods.priceLowerThan(priceConfig.enSuiteWithBills),
 				RightMoveMethods.isNotAParkingSpace,
 				RightMoveMethods.enSuite
 			],
 			deepScoreMethods: [
-				RightMoveMethods.mustBeAvailableWithin
+				RightMoveMethods.mustBeAvailableWithin,
+				RightMoveMethods.mustIncludeBills
 			]
 		},
 		{
@@ -135,14 +135,14 @@ const rightMoveSearchConfig : SearchConfig = {
 		{
 			name: "Studio flat Bills Included",
 			shallowRequirements: [
-				RightMoveMethods.includesBills,
 				RightMoveMethods.priceLowerThan(priceConfig.studioPriceWithBills),
 				RightMoveMethods.isNotAParkingSpace,
 				RightMoveMethods.isStudio,
 				RightMoveMethods.isNotAHouseShare
 			],
 			deepScoreMethods: [
-				RightMoveMethods.mustBeAvailableWithin
+				RightMoveMethods.mustBeAvailableWithin,
+				RightMoveMethods.mustIncludeBills
 			]
 		},
 		{
@@ -161,14 +161,14 @@ const rightMoveSearchConfig : SearchConfig = {
 		{
 			name: "Studio flat Bills Included", // 1 bed is treated the same as studio flat
 			shallowRequirements: [
-				RightMoveMethods.includesBills,
 				RightMoveMethods.priceLowerThan(priceConfig.studioPriceWithBills),
 				RightMoveMethods.isNotAParkingSpace,
 				RightMoveMethods.getIsNBedApartment(1),
 				RightMoveMethods.isNotAHouseShare
 			],
 			deepScoreMethods: [
-				RightMoveMethods.mustBeAvailableWithin
+				RightMoveMethods.mustBeAvailableWithin,
+				RightMoveMethods.mustIncludeBills
 			]
 		},
 		{

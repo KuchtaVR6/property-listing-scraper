@@ -68,7 +68,9 @@ const zooplaSearchConfig : SearchConfig = {
 				ZooplaMethods.isNotAParkingSpace,
 				ZooplaMethods.priceLowerThan(priceConfig.roomWithBills),
 			],
-			deepScoreMethods: [] // todo check for bills.
+			deepScoreMethods: [
+				ZooplaMethods.mustIncludeBills
+			]
 		},
 		{
 			name: "Room w/o Bills Included",
@@ -87,7 +89,9 @@ const zooplaSearchConfig : SearchConfig = {
 				ZooplaMethods.priceLowerThan(priceConfig.enSuiteWithBills),
 				ZooplaMethods.enSuite,
 			],
-			deepScoreMethods: [] // todo check for bills.
+			deepScoreMethods: [
+				ZooplaMethods.mustIncludeBills
+			]
 		},
 		{
 			name: "EnSuite Room w/o Bills Included",
@@ -107,7 +111,9 @@ const zooplaSearchConfig : SearchConfig = {
 				ZooplaMethods.priceLowerThan(priceConfig.studioPriceWithBills),
 				ZooplaMethods.isStudio,
 			],
-			deepScoreMethods: [] // todo check for bills.
+			deepScoreMethods: [
+				ZooplaMethods.mustIncludeBills
+			]
 		},
 		{
 			name: "Studio flat w/o Bills Included",

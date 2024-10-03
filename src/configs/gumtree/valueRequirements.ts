@@ -11,6 +11,13 @@ export class GumtreeMethods {
 		exactMatch: true
 	};
 
+	private static descriptionSelector : AttributeSelector = {
+		isCustomSelector: false,
+		attributeName: "itemprop",
+		expectedValue: "description",
+		exactMatch: true
+	};
+
 	public static availabilityRequirement: ValueCheckerRequirement<boolean> = {
 		name: `Availability date must be between ${timeConfig.formatted_string}`,
 		selector: {
@@ -74,20 +81,26 @@ export class GumtreeMethods {
 		}
 	};
 
-	public static includesBills : ValueCheckerRequirement<boolean> = {
-		name: "Must include bills.",
-		selector: GumtreeMethods.titleSelector,
-		valueTest: (input) => {
-			return input.toLowerCase().includes("bills")
-				|| input.toLowerCase().includes("inc") ;
-		}
-	};
 	public static isEnSuite : ValueCheckerRequirement<boolean> = {
 		name: "Room is en-suite",
 		selector: GumtreeMethods.titleSelector,
 		valueTest: (input) => {
 			return input.toLowerCase().includes("ensuite")
                 || input.toLowerCase().includes("en-suite");
+		}
+	};
+
+	/* deep methods */
+
+	public static mustIncludeBills : ValueCheckerRequirement<number> = {
+		name: "Must include bills.",
+		selector: GumtreeMethods.descriptionSelector,
+		valueTest: (input) => {
+			if (input.toLowerCase().includes("inc") && input.toLowerCase().includes("bills")) {
+				return 0;
+			} else {
+				return -Infinity;
+			}
 		}
 	};
 }

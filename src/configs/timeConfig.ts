@@ -57,8 +57,7 @@ const all_dates_config = {
 	start_stamp: getTimestamp(date_start.day, date_start.month),
 	date_end: date_end,
 	end_stamp: getTimestamp(date_end.day, date_end.month),
-	formatted_string: `${date_start.day} ${date_start.month} and ${date_end.day} ${date_end.month} 
-    ${available_now_accept ? "or immediately" : ""}`
+	formatted_string: `${date_start.day} ${date_start.month} and ${date_end.day} ${date_end.month} ${available_now_accept ? "or immediately" : ""}`
 };
 
 export default all_dates_config;

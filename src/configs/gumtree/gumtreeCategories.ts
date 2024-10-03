@@ -10,9 +10,10 @@ const gumtreeCategories : Category[] = [
 			GumtreeMethods.isEnSuite,
 			GumtreeMethods.getPriceLowerThanArgumentReq(
 				priceConfig.enSuiteWithBills),
-			GumtreeMethods.includesBills // todo this would be better if it was a scoring requirement
 		],
-		deepScoreMethods: []
+		deepScoreMethods: [
+			GumtreeMethods.mustIncludeBills
+		]
 	},
 	{
 		name: "EnSuite Room w/o Bills Included",
@@ -30,9 +31,10 @@ const gumtreeCategories : Category[] = [
 			GumtreeMethods.availabilityRequirement,
 			GumtreeMethods.getPriceLowerThanArgumentReq(
 				priceConfig.roomWithBills),
-			GumtreeMethods.includesBills
 		],
-		deepScoreMethods: []
+		deepScoreMethods: [
+			GumtreeMethods.mustIncludeBills
+		]
 	},
 	{
 		name: "Room w/o Bills Included",
@@ -48,11 +50,12 @@ const gumtreeCategories : Category[] = [
 		shallowRequirements: [
 			GumtreeMethods.availabilityRequirement,
 			GumtreeMethods.isStudio,
-			GumtreeMethods.includesBills,
 			GumtreeMethods.getPriceLowerThanArgumentReq(
 				priceConfig.studioPriceWithBills),
 		],
-		deepScoreMethods: []
+		deepScoreMethods: [
+			GumtreeMethods.mustIncludeBills
+		]
 	},
 	{
 		name: "Studio flat w/o Bills Included",

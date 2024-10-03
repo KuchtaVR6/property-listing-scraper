@@ -1,8 +1,16 @@
-import {ValueCheckerRequirement} from "../../types/configTypes";
+import {AttributeSelector, ValueCheckerRequirement} from "../../types/configTypes";
 import {findFirstNumber} from "../../testing/firstPageTest";
 import timeConfig, {check_date_against_config} from "../timeConfig";
 
 export class ZooplaMethods {
+
+	private static listingDescriptionAndFeaturesSelector : AttributeSelector = {
+		isCustomSelector: false,
+		attributeName: "aria-labelledby",
+		expectedValue: "listing-features-heading",
+		exactMatch: true
+	};
+
 	public static availabilityRequirement : ValueCheckerRequirement<boolean> = {
 		name : `Availability date must be between ${timeConfig.formatted_string}`,
 		selector: {
@@ -46,18 +54,6 @@ export class ZooplaMethods {
 				return findFirstNumber(input) <= limit;
 			}
 		};
-	};
-	public static includesBills : ValueCheckerRequirement<boolean> = {
-		name: "Must include bills.",
-		selector: {
-			isCustomSelector: false,
-			attributeName: "class",
-			expectedValue: "_1p8nftv0",
-			exactMatch: false
-		},
-		valueTest: (input: string) => {
-			return input.toLowerCase() === "bills included";
-		}
 	};
 
 	public static enSuite : ValueCheckerRequirement<boolean> = {
@@ -107,6 +103,20 @@ export class ZooplaMethods {
 				return findFirstNumber(inputLowered) === 1;
 			}
 			return inputLowered.includes("studio");
+		}
+	};
+
+	/* deep methods */
+
+	public static mustIncludeBills : ValueCheckerRequirement<number> = {
+		name: "Must include bills.",
+		selector: ZooplaMethods.listingDescriptionAndFeaturesSelector,
+		valueTest: (input) => {
+			if (input.toLowerCase().includes("inc") && input.toLowerCase().includes("bills")) {
+				return 0;
+			} else {
+				return -Infinity;
+			}
 		}
 	};
 }

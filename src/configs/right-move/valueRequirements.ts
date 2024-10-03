@@ -14,6 +14,12 @@ export class RightMoveMethods {
 		isCustomSelector: true,
 		customSelector: "a.propertyCard-link span span"
 	};
+
+	private static listingDescriptionSelector : AttributeSelector = {
+		isCustomSelector: true,
+		customSelector: ".STw8udCxUaBUMfOOZu0iL"
+	};
+
 	public static isNotAParkingSpace : ValueCheckerRequirement<boolean> = {
 		name : "Omit parking ads",
 		selector: RightMoveMethods.typeSelector,
@@ -37,13 +43,6 @@ export class RightMoveMethods {
 				return findFirstNumber(input) <= limit;
 			}
 		};
-	};
-	public static includesBills : ValueCheckerRequirement<boolean> = {
-		name: "Must include bills.",
-		selector: RightMoveMethods.descriptionSelector,
-		valueTest: (input) => {
-			return input.toLowerCase() === "bills included";
-		}
 	};
 
 	public static enSuite : ValueCheckerRequirement<boolean> = {
@@ -93,7 +92,6 @@ export class RightMoveMethods {
 			customSelector: "div._2RnXSVJcWbWv4IpBC1Sng6:nth-child(1) > dd:nth-child(2)"
 		},
 		valueTest: (input) => {
-			console.log(input);
 			let date_ok;
 			if (input.includes("Now")) {
 				date_ok = timeConfig.available_now_accept;
@@ -103,6 +101,18 @@ export class RightMoveMethods {
 				date_ok = check_date_against_config_formatted(input);
 			}
 			if (date_ok) {return 0;} else {return -Infinity;}
+		}
+	};
+
+	public static mustIncludeBills : ValueCheckerRequirement<number> = {
+		name: "Must include the Bills.",
+		selector: RightMoveMethods.listingDescriptionSelector,
+		valueTest: (input) => {
+			if (input.toLowerCase().includes("inc") && input.toLowerCase().includes("bills")) {
+				return 0;
+			} else {
+				return -Infinity;
+			}
 		}
 	};
 }

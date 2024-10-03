@@ -80,15 +80,7 @@ const gumtreeRentSearchConfig : SearchConfig = {
 	endOfPagesIndicator: EndOfPagesIndicator.EndOfListElement,
 	endOfPagesElement: nearbyAdsSelector,
 	optional_tests: {
-		expectedNumberOfElementsOfInterest: adCountSelector,
-		/*
-		expectedNumberOfPages : {
-			isCustomSelector: false,
-			attributeName: "data-analytics",
-			expectedValue: "gaEvent:PaginationPage",
-			exactMatch: true
-		}
-		 */
+		expectedNumberOfElementsOfInterest: adCountSelector
 	},
 	categories: gumtreeCategories
 };
