@@ -10,6 +10,8 @@ const date_end = {
 	month: "Nov"
 };
 
+/* Methods */
+
 const getTimestamp = (day: number, month: string): number => {
 	const currentYear = new Date().getFullYear();
 	const fullDateStr = `${day} ${month} ${currentYear}`;
@@ -36,7 +38,8 @@ export const check_date_against_config = (day: number, month: string): boolean =
 };
 
 export const check_date_against_config_formatted = (date_string : string): boolean => {
-	const considered_timestamp = (new Date(date_string)).getTime();
+	// Convert the date_string into a standardized 'YYYY-MM-DD' format
+	const considered_timestamp = (new Date(date_string.replace(/(\d{2})\/(\d{2})\/(\d{4})/, "$3-$2-$1"))).getTime();
 	if (considered_timestamp < all_dates_config.end_stamp) {
 		if (available_now_accept) {
 			return true;

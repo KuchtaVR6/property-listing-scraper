@@ -93,14 +93,16 @@ export class RightMoveMethods {
 			customSelector: "div._2RnXSVJcWbWv4IpBC1Sng6:nth-child(1) > dd:nth-child(2)"
 		},
 		valueTest: (input) => {
+			console.log(input);
 			let date_ok;
 			if (input.includes("Now")) {
 				date_ok = timeConfig.available_now_accept;
-			}
-			else {
+			} else if (input.includes("Ask agent")) {
+				return -Infinity;
+			} else {
 				date_ok = check_date_against_config_formatted(input);
 			}
-			if (date_ok) {return 0;} else {return Infinity;}
+			if (date_ok) {return 0;} else {return -Infinity;}
 		}
 	};
 }

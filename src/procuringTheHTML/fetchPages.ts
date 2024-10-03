@@ -16,12 +16,9 @@ const getBrowser = async () => {
 		globalBrowser = await puppeteer.launch({
 			headless: false,  // Set to false to ensure the browser window is visible
 			defaultViewport: {
-				width: 1280,     // Define a viewport width for the browser
-				height: 720,     // Define a viewport height
-			},
-			args: [
-				"--window-position=-1920,0"  // Adjust x, y coordinates to position the window on the second screen
-			]
+				width: 1920,     // Define a viewport width for the browser
+				height: 1200,     // Define a viewport height
+			}
 		});
 	}
 	return globalBrowser;

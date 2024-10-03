@@ -94,7 +94,9 @@ const rightMoveSearchConfig : SearchConfig = {
 				RightMoveMethods.priceLowerThan(priceConfig.roomWithBills),
 				RightMoveMethods.isNotAParkingSpace
 			],
-			deepScoreMethods: [] // Todo availability check
+			deepScoreMethods: [
+				RightMoveMethods.mustBeAvailableWithin
+			]
 		},
 		{
 			name: "Room w/o Bills Included",
@@ -102,7 +104,9 @@ const rightMoveSearchConfig : SearchConfig = {
 				RightMoveMethods.priceLowerThan(priceConfig.roomWithoutBills),
 				RightMoveMethods.isNotAParkingSpace
 			],
-			deepScoreMethods: [] // Todo availability check
+			deepScoreMethods: [
+				RightMoveMethods.mustBeAvailableWithin
+			]
 		},
 		{
 			name: "EnSuite Room Bills Included",
@@ -112,7 +116,9 @@ const rightMoveSearchConfig : SearchConfig = {
 				RightMoveMethods.isNotAParkingSpace,
 				RightMoveMethods.enSuite
 			],
-			deepScoreMethods: [] // Todo availability check
+			deepScoreMethods: [
+				RightMoveMethods.mustBeAvailableWithin
+			]
 		},
 		{
 			name: "EnSuite Room w/o Bills Included",
@@ -121,7 +127,9 @@ const rightMoveSearchConfig : SearchConfig = {
 				RightMoveMethods.isNotAParkingSpace,
 				RightMoveMethods.enSuite
 			],
-			deepScoreMethods: [] // Todo availability check
+			deepScoreMethods: [
+				RightMoveMethods.mustBeAvailableWithin
+			]
 		},
 
 		{
@@ -133,7 +141,9 @@ const rightMoveSearchConfig : SearchConfig = {
 				RightMoveMethods.isStudio,
 				RightMoveMethods.isNotAHouseShare
 			],
-			deepScoreMethods: [] // Todo availability check
+			deepScoreMethods: [
+				RightMoveMethods.mustBeAvailableWithin
+			]
 		},
 		{
 			name: "Studio flat w/o Bills Included",
@@ -143,7 +153,9 @@ const rightMoveSearchConfig : SearchConfig = {
 				RightMoveMethods.isStudio,
 				RightMoveMethods.isNotAHouseShare
 			],
-			deepScoreMethods: [] // Todo availability check
+			deepScoreMethods: [
+				RightMoveMethods.mustBeAvailableWithin
+			]
 		},
 
 		{
@@ -155,7 +167,9 @@ const rightMoveSearchConfig : SearchConfig = {
 				RightMoveMethods.getIsNBedApartment(1),
 				RightMoveMethods.isNotAHouseShare
 			],
-			deepScoreMethods: [] // Todo availability check
+			deepScoreMethods: [
+				RightMoveMethods.mustBeAvailableWithin
+			]
 		},
 		{
 			name: "Studio flat w/o Bills Included", // 1 bed is treated the same as studio flat
@@ -165,7 +179,9 @@ const rightMoveSearchConfig : SearchConfig = {
 				RightMoveMethods.getIsNBedApartment(1),
 				RightMoveMethods.isNotAHouseShare
 			],
-			deepScoreMethods: [] // Todo availability check
+			deepScoreMethods: [
+				RightMoveMethods.mustBeAvailableWithin
+			]
 		},
 
 		{
@@ -176,7 +192,9 @@ const rightMoveSearchConfig : SearchConfig = {
 				RightMoveMethods.getIsNBedApartment(2),
 				RightMoveMethods.isNotAHouseShare
 			],
-			deepScoreMethods: [] // Todo availability check
+			deepScoreMethods: [
+				RightMoveMethods.mustBeAvailableWithin
+			]
 		},
 
 		{
@@ -187,7 +205,9 @@ const rightMoveSearchConfig : SearchConfig = {
 				RightMoveMethods.getIsNBedApartment(3),
 				RightMoveMethods.isNotAHouseShare
 			],
-			deepScoreMethods: [] // Todo availability check
+			deepScoreMethods: [
+				RightMoveMethods.mustBeAvailableWithin
+			]
 		},
 	]
 };
