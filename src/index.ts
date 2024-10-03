@@ -4,13 +4,13 @@ import {categoriseElementAndReturnIfProceed} from "./splitAndCategorise/categori
 import CategoryStorage from "./splitAndCategorise/categoryStorage";
 import {SearchConfig} from "./types/configTypes";
 import TestingStorage from "./testing/testingStorage";
-import {getUserInputBoolean} from "./getUserInput";
 import GumtreeRentSearchConfig from "./configs/gumtree/gumtree-rent/gumtree-rentSearchConfig";
 import GumtreeShareSearchConfig from "./configs/gumtree/gumtree-share/gumtree-shareSearchConfig";
 import RightMoveSearchConfig from "./configs/right-move/right-moveSearchConfig";
 import ZooplaSearchConfig from "./configs/zoopla/zooplaSearchConfig";
 import SpareRoomSearchConfig from "./configs/spare-room/spare-roomSearchConfig";
 import NoProceedInterrupt, {noProceedInterruptMessage} from "./types/noProceedInterrupt";
+import configsToInclude from "./configsToInclude";
 
 const possibleConfigs = [
 	GumtreeRentSearchConfig,
@@ -21,14 +21,11 @@ const possibleConfigs = [
 ];
 export const configs = new Map<string, SearchConfig>();
 
-export let stopOnFirstSeenAdvert = false;
-
 const main = async () => {
 	for(const possibleConfig of possibleConfigs) {
-		if(await getUserInputBoolean("Would you like to include "+possibleConfig.name+" in the search?"))
+		if (configsToInclude.get(possibleConfig.name))
 			configs.set(possibleConfig.name, possibleConfig);
 	}
-	stopOnFirstSeenAdvert = await getUserInputBoolean("Would you like to include stop searching as soon as first seen add is encountered in the search?");
 
 	if(configs.size === 0)
 		return;

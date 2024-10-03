@@ -8,7 +8,7 @@ import {getElementsMatchingSelector} from "../requirementMatcherHelpers";
 import TestingStorage from "../testing/testingStorage";
 import CategoryStorage from "./categoryStorage";
 import {seenIdsStorage} from "../procuringTheHTML/pageFlow";
-import {stopOnFirstSeenAdvert} from "../index";
+import {stopOnFirstSeenAdvert} from "../configsToInclude";
 import deepScoring from "./deepScoring";
 
 export const extractElementId = (givenConfig : SearchConfig, element : HTMLElement) => {
