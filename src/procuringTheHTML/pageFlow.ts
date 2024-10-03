@@ -85,11 +85,21 @@ const correctDocumentTermination = (givenConfig : SearchConfig, element : HTMLEl
 		}
 		case EndOfPagesIndicator.DidNotSeeNextPageElement: {
 			if (givenConfig.endOfPagesElement) {
-				if (getElementsMatchingSelector(element, givenConfig.endOfPagesElement).length !== 0) {
-					return {
-						element: element,
-						nextPage: true
-					};
+				const nextButtonElements = getElementsMatchingSelector(element, givenConfig.endOfPagesElement);
+				if (nextButtonElements.length !== 0) {
+					const nextButton = nextButtonElements[0];  // Assume the first one is the "next" button
+
+					// Check if the button is disabled (via the `disabled` attribute or other common indicators)
+					const isDisabled = nextButton.hasAttribute("disabled") ||
+						nextButton.getAttribute("aria-disabled") === "true" ||
+						nextButton.classList.contains("disabled");
+
+					if (!isDisabled) {
+						return {
+							element: element,
+							nextPage: true
+						};
+					}
 				}
 			}
 			else {

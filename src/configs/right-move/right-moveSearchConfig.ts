@@ -58,11 +58,20 @@ const rightMoveSearchConfig : SearchConfig = {
 			return "https://www.rightmove.co.uk/properties/" + id;
 		}
 	},
-	endOfPagesIndicator : EndOfPagesIndicator.AllPointOfInterestIDsRepeated,
-
+	endOfPagesIndicator : EndOfPagesIndicator.DidNotSeeNextPageElement,
+	endOfPagesElement: {
+		isCustomSelector: false,
+		attributeName: "data-test",
+		expectedValue: "pagination-next",
+		exactMatch: true
+	},
 	optional_tests: {
-		expectedNumberOfElementsOfInterest: undefined,
-		// I don't know why but the number displayed on the website is wrong :/
+		expectedNumberOfElementsOfInterest: {
+			isCustomSelector: false,
+			attributeName: "class",
+			expectedValue: "searchHeader-resultCount",
+			exactMatch: true
+		},
 		expectedNumberOfPages : {
 			isCustomSelector: false,
 			attributeName: "data-bind",
