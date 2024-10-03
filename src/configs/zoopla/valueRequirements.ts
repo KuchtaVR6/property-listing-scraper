@@ -1,12 +1,13 @@
 import {ValueCheckerRequirement} from "../../types/configTypes";
 import {findFirstNumber} from "../../testing/firstPageTest";
+import timeConfig, {check_date_against_config} from "../timeConfig";
 
 export class ZooplaMethods {
 	public static availabilityRequirement : ValueCheckerRequirement = {
-		name : "Availability date must be between 22 Aug and 13 Sep or immediately",
+		name : `Availability date must be between ${timeConfig.formatted_string}`,
 		selector: {
 			attributeName: "class",
-			expectedValue: "_65yptp1",
+			expectedValue: "jlg7241",
 			isCustomSelector: false,
 			exactMatch: true
 		},
@@ -15,13 +16,9 @@ export class ZooplaMethods {
 			if(wordSplit[0]==="Available" && wordSplit.length === 5) {
 				const day = Number(wordSplit[2].slice(0,-2));
 				const month = wordSplit[3];
-				if (month === "Aug") {
-					return day >= 22;
-				} else if (month === "Sep") {
-					return day <= 13;
-				}
+				return check_date_against_config(day, month);
 			}
-			return true;
+			return timeConfig.available_now_accept;
 		}
 	};
 	public static isNotAParkingSpace : ValueCheckerRequirement = {

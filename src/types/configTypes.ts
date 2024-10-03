@@ -30,7 +30,8 @@ export type Category = {
 
 export enum EndOfPagesIndicator {
     NoPointsOfInterestPresent,
-    AllPointOfInterestIDsRepeated
+    AllPointOfInterestIDsRepeated,
+    EndOfListElement
 }
 
 export interface SearchConfig {
@@ -48,6 +49,7 @@ export interface SearchConfig {
         getURIBasedOnID?: (id : string) => string,
     }
     endOfPagesIndicator: EndOfPagesIndicator,
+    endOfPagesElement?: AttributeSelector,
     optional_tests?: {
         // only run on the first page
         // both extract the numerical value from the last matching element.

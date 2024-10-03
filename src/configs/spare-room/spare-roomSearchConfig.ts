@@ -15,7 +15,7 @@ const spareRoomSearchConfig : SearchConfig = {
 	getParams: [
 		{
 			parameter : "search_id",
-			value : "1243779385"
+			value : "1325991173"
 		},
 		{
 			parameter : "sort_by",
@@ -25,10 +25,8 @@ const spareRoomSearchConfig : SearchConfig = {
 	page_param: "offset",
 	page_step: 10,
 	requireToEstablishAsLoaded : {
-		isCustomSelector: false,
-		attributeName: "class",
-		expectedValue: "listing-results",
-		exactMatch: false
+		isCustomSelector: true,
+		customSelector: ".listing-results"
 	},
 
 	selectElementsOfInterest : {

@@ -1,11 +1,13 @@
 import {AttributeSelector, EndOfPagesIndicator, SearchConfig} from "../../../types/configTypes";
 import gumtreeCategories from "../gumtreeCategories";
+import {absolute_max} from "../../priceConfig";
+import {locationConfig} from "../../locationConfig";
 
 export const adCountSelector : AttributeSelector = {
 	isCustomSelector: false,
 	attributeName: "class",
-	expectedValue: "css-1yuhvjn",
-	exactMatch: false
+	expectedValue: "css-19squc8",
+	exactMatch: true
 };
 
 export const adSelector : AttributeSelector = {
@@ -29,7 +31,7 @@ const gumtreeRentSearchConfig : SearchConfig = {
 	getParams: [
 		{
 			parameter: "max_price",
-			value: "500"
+			value: `${absolute_max}`
 		},
 		{
 			parameter: "search_category",
@@ -37,7 +39,11 @@ const gumtreeRentSearchConfig : SearchConfig = {
 		},
 		{
 			parameter: "search_location",
-			value: "Edinburgh"
+			value: `${locationConfig.postcode}`
+		},
+		{
+			parameter: "distance",
+			value: `${locationConfig.distance}`
 		}
 	],
 	page_param: "page",
@@ -48,8 +54,7 @@ const gumtreeRentSearchConfig : SearchConfig = {
 		extractor : (element) => {
 			const hrefAttribute = element.getAttribute("href");
 			if(hrefAttribute) {
-				const finalString = hrefAttribute.split("/").slice(3).join("/");
-				return finalString;
+				return hrefAttribute.split("/").slice(3).join("/");
 			}
 			else throw new Error("Id cannot be established!");
 		},
@@ -57,7 +62,13 @@ const gumtreeRentSearchConfig : SearchConfig = {
 			return "https://www.gumtree.com/p/property-to-rent/" + id;
 		}
 	},
-	endOfPagesIndicator: EndOfPagesIndicator.AllPointOfInterestIDsRepeated,
+	endOfPagesIndicator: EndOfPagesIndicator.EndOfListElement,
+	endOfPagesElement: {
+		isCustomSelector: false,
+		attributeName: "data-q",
+		expectedValue: "nearby-results-title",
+		exactMatch: true
+	},
 	optional_tests: {
 		expectedNumberOfElementsOfInterest: adCountSelector,
 		/*

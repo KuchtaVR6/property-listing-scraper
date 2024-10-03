@@ -1,6 +1,8 @@
 import {EndOfPagesIndicator, SearchConfig} from "../../../types/configTypes";
 import gumtreeCategories from "../gumtreeCategories";
 import {adCountSelector, adSelector, idContainer} from "../gumtree-rent/gumtree-rentSearchConfig";
+import {absolute_max} from "../../priceConfig";
+import {locationConfig} from "../../locationConfig";
 
 const gumtreeShareSearchConfig : SearchConfig = {
 	name: "gumtree-share",
@@ -9,7 +11,7 @@ const gumtreeShareSearchConfig : SearchConfig = {
 	getParams: [
 		{
 			parameter: "max_price",
-			value: "500"
+			value: `${absolute_max}`
 		},
 		{
 			parameter: "search_category",
@@ -17,7 +19,11 @@ const gumtreeShareSearchConfig : SearchConfig = {
 		},
 		{
 			parameter: "search_location",
-			value: "edinburgh"
+			value: `${locationConfig.postcode}`
+		},
+		{
+			parameter: "distance",
+			value: `${locationConfig.distance}`
 		}
 	],
 	page_param: "page",
@@ -28,8 +34,7 @@ const gumtreeShareSearchConfig : SearchConfig = {
 		extractor : (element) => {
 			const hrefAttribute = element.getAttribute("href");
 			if(hrefAttribute) {
-				const finalString = hrefAttribute.split("/").slice(3).join("/");
-				return finalString;
+				return hrefAttribute.split("/").slice(3).join("/");
 			}
 			else throw new Error("Id cannot be established!");
 		},
@@ -37,22 +42,20 @@ const gumtreeShareSearchConfig : SearchConfig = {
 			return "https://www.gumtree.com/p/property-to-share/" + id;
 		}
 	},
-	endOfPagesIndicator: EndOfPagesIndicator.AllPointOfInterestIDsRepeated,
+	endOfPagesIndicator: EndOfPagesIndicator.EndOfListElement,
+	endOfPagesElement: {
+		isCustomSelector: false,
+		attributeName: "data-q",
+		expectedValue: "nearby-results-title",
+		exactMatch: true
+	},
 	optional_tests: {
 		expectedNumberOfElementsOfInterest: {
 			isCustomSelector: false,
 			attributeName: "data-q",
 			expectedValue: "ads-count",
 			exactMatch: true
-		},
-		/*
-		expectedNumberOfPages : {
-			isCustomSelector: false,
-			attributeName: "data-analytics",
-			expectedValue: "gaEvent:PaginationPage",
-			exactMatch: true
 		}
-		 */
 	},
 	categories: gumtreeCategories
 };

@@ -10,16 +10,22 @@ import * as fs from "fs";
 puppeteer.use(StealthPlugin());
 puppeteer.use(AdblockerPlugin());
 
-let globalBrowser : null | Browser = null;
+let globalBrowser: null | Browser = null;
 
 const getBrowser = async () => {
 	if (!globalBrowser) {
 		globalBrowser = await puppeteer.launch({
-			headless: "new"
+			headless: false,  // Set to false to ensure the browser window is visible
+			defaultViewport: {
+				width: 1280,     // Define a viewport width for the browser
+				height: 720,     // Define a viewport height
+			},
+			args: ["--start-maximized"]  // Starts the browser maximized for better preview
 		});
 	}
 	return globalBrowser;
 };
+
 
 export async function fetchWebsiteHTML(givenConfig: SearchConfig, url : string): Promise<HTMLElement> {
 	const browser = await getBrowser();

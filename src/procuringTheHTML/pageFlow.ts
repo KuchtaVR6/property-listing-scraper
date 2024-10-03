@@ -23,10 +23,8 @@ const getFullURLBasedOnConfigWithPageNumber = (givenConfig : SearchConfig, pageN
 const checkIfDocumentMeetsParsingRequirements = (givenConfig : SearchConfig, element : HTMLElement) => {
 	switch (givenConfig.endOfPagesIndicator) {
 		case EndOfPagesIndicator.NoPointsOfInterestPresent: {
-			if(getElementsMatchingSelector(element, givenConfig.selectElementsOfInterest).length === 0) {
-				return false;
-			}
-			return true;
+			return getElementsMatchingSelector(element, givenConfig.selectElementsOfInterest).length !== 0;
+
 		}
 		case EndOfPagesIndicator.AllPointOfInterestIDsRepeated: {
 			const elementsInteresting = getElementsMatchingSelector(element, givenConfig.selectElementsOfInterest);
@@ -37,7 +35,8 @@ const checkIfDocumentMeetsParsingRequirements = (givenConfig : SearchConfig, ele
 			}
 			return false;
 		}
-
+		case EndOfPagesIndicator.EndOfListElement:
+			return true; //TODO NEEDS TO BE IMPLEMENTED
 	}
 
 };

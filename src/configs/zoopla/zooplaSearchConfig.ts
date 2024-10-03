@@ -1,12 +1,13 @@
 import {EndOfPagesIndicator, SearchConfig} from "../../types/configTypes";
 import {findFirstNumber} from "../../testing/firstPageTest";
 import {ZooplaMethods} from "./valueRequirements";
-import priceConfig from "../priceConfig";
+import priceConfig, {absolute_max} from "../priceConfig";
+import {locationConfig} from "../locationConfig";
 
 const zooplaSearchConfig : SearchConfig = {
 	name: "zoopla-for-rent",
 	url: "https://www.zoopla.co.uk",
-	subDirectory : "/to-rent/property/edinburgh/",
+	subDirectory : "/to-rent/property/manchester/hilton-street-m1/m1-2eh",
 	getParams : [
 		{
 			parameter : "price_frequency",
@@ -14,7 +15,11 @@ const zooplaSearchConfig : SearchConfig = {
 		},
 		{
 			parameter: "price_max",
-			value: "1500"
+			value: `${absolute_max}`
+		},
+		{
+			parameter: "radius",
+			value: `${locationConfig.distance}`
 		}
 	],
 	page_param : "pn",

@@ -13,4 +13,4 @@ node_modules/
 .env
 htmlDump.html
 saves/seenIdentifiers.txt
-debug-output/tests.txt
+debug-output/*.txt

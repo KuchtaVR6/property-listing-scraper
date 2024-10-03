@@ -1,5 +1,6 @@
 import {AttributeSelector, mustNotBePresentRequirement, ValueCheckerRequirement} from "../../types/configTypes";
 import {findFirstNumber} from "../../testing/firstPageTest";
+import timeConfig, {check_date_against_config} from "../timeConfig";
 
 export class SpareRoomMethods {
 
@@ -17,7 +18,7 @@ export class SpareRoomMethods {
 	};
 
 	public static availabilityRequirement: ValueCheckerRequirement = {
-		name: "Availability date must be between 22 Aug and 13 Sep or immediately",
+		name: `Availability date must be between ${timeConfig.formatted_string}`,
 		selector: {
 			isCustomSelector: true,
 			customSelector: ".advertDescription strong"
@@ -27,14 +28,9 @@ export class SpareRoomMethods {
 			if (wordSplit[0] === "Available" && wordSplit.length === 3) {
 				const day = Number(wordSplit[1]);
 				const month = wordSplit[2];
-				if (month === "Aug") {
-					return day >= 22;
-				} else if (month === "Sep") {
-					return day <= 13;
-				}
-				return !["Oct", "Nov", "Dec"].includes(month);
+				return check_date_against_config(day, month);
 			}
-			return true;
+			return timeConfig.available_now_accept;
 		}
 	};
 	public static getPriceLowerThanArgumentReq = (price: number, adjustPerWeek : boolean): ValueCheckerRequirement => {

@@ -1,5 +1,6 @@
 import {AttributeSelector, ValueCheckerRequirement} from "../../types/configTypes";
 import {findFirstNumber} from "../../testing/firstPageTest";
+import timeConfig, {check_date_against_config} from "../timeConfig";
 
 export class GumtreeMethods {
 
@@ -11,7 +12,7 @@ export class GumtreeMethods {
 	};
 
 	public static availabilityRequirement: ValueCheckerRequirement = {
-		name: "Availability date must be between 25 Aug and 13 Sep or immediately",
+		name: `Availability date must be between ${timeConfig.formatted_string}`,
 		selector: {
 			isCustomSelector: true,
 			customSelector: "[data-q=\"tile-description\"] > div:nth-child(1) > span:nth-child(2)"
@@ -21,12 +22,9 @@ export class GumtreeMethods {
 			if (wordSplit.length === 5) {
 				const day = Number(wordSplit[2]);
 				const month = wordSplit[3];
-				if (month === "Sep") {
-					return day <= 13;
-				}
-				return !(["Oct", "Nov", "Dec"].includes(month));
+				return check_date_against_config(day, month);
 			}
-			return true;
+			return timeConfig.available_now_accept;
 		}
 	};
 	public static getPriceLowerThanArgumentReq = (price: number): ValueCheckerRequirement => {

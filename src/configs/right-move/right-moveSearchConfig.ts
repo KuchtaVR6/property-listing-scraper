@@ -1,7 +1,8 @@
 import {EndOfPagesIndicator, SearchConfig} from "../../types/configTypes";
 import {findFirstNumber} from "../../testing/firstPageTest";
 import RightMoveMethods from "./valueRequirements";
-import priceConfig from "../priceConfig";
+import priceConfig, {absolute_max} from "../priceConfig";
+import {locationConfig} from "../locationConfig";
 
 const rightMoveSearchConfig : SearchConfig = {
 	name: "right-move-for-rent",
@@ -10,23 +11,27 @@ const rightMoveSearchConfig : SearchConfig = {
 	getParams: [
 		{
 			parameter : "locationIdentifier",
-			value : "REGION^475"
+			value : `${locationConfig.rightMoveIdentifier}`
 		},
 		{
 			parameter: "maxPrice",
-			value: "2000"
+			value: `${absolute_max}`
 		},
 		{
 			parameter: "includeLetAgreed",
 			value: "false"
+		},
+		{
+			parameter: "radius",
+			value: `${locationConfig.distance}.0`
 		}
 	],
 	page_param: "index",
 	page_step: 24,
 	requireToEstablishAsLoaded : {
 		isCustomSelector: false,
-		attributeName: "class",
-		expectedValue: "l-propertySearch-main",
+		attributeName: "id",
+		expectedValue: "l-searchResults",
 		exactMatch: true
 	},
 
