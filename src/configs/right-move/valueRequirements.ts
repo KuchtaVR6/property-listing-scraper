@@ -1,7 +1,7 @@
 
 import {AttributeSelector, ValueCheckerRequirement} from "../../types/configTypes";
 import {findFirstNumber} from "../../testing/firstPageTest";
-import timeConfig, {check_date_against_config_formatted} from "../timeConfig";
+import timeConfig, {checkDateAgainstConfigFormatted} from "../timeConfig";
 
 export class RightMoveMethods {
 	// availability is not listed on rightMove
@@ -86,7 +86,7 @@ export class RightMoveMethods {
 	/* deep methods */
 
 	public static mustBeAvailableWithin : ValueCheckerRequirement<number> = {
-		name: `Must be available ${timeConfig.formatted_string}`,
+		name: `Must be available ${timeConfig.formattedString}`,
 		selector: {
 			isCustomSelector: true,
 			customSelector: "div._2RnXSVJcWbWv4IpBC1Sng6:nth-child(1) > dd:nth-child(2)"
@@ -94,11 +94,11 @@ export class RightMoveMethods {
 		valueTest: (input) => {
 			let date_ok;
 			if (input.includes("Now")) {
-				date_ok = timeConfig.available_now_accept;
+				date_ok = timeConfig.availableNowAccept;
 			} else if (input.includes("Ask agent")) {
 				return -Infinity;
 			} else {
-				date_ok = check_date_against_config_formatted(input);
+				date_ok = checkDateAgainstConfigFormatted(input);
 			}
 			if (date_ok) {return 0;} else {return -Infinity;}
 		}
@@ -114,6 +114,25 @@ export class RightMoveMethods {
 				return -Infinity;
 			}
 		}
+	};
+
+	public static termLookup = (terms: { term: string; value: number }[], initialScore: number):
+		ValueCheckerRequirement<number> => {
+		return {
+			name: `Check for terms and assign values, terms considered: ${
+				terms.map(entry => `${entry.term}(${entry.value})`).join(";")}`,
+			selector: RightMoveMethods.listingDescriptionSelector,
+			valueTest: (input: string) => {
+				let score = initialScore;
+				input = input.toLowerCase();
+				for (const { term, value } of terms) {
+					if (input.includes(term.toLowerCase())) {
+						score += value;
+					}
+				}
+				return score;
+			},
+		};
 	};
 }
 

@@ -1,6 +1,6 @@
 import {AttributeSelector, ValueCheckerRequirement} from "../../types/configTypes";
 import {findFirstNumber} from "../../testing/firstPageTest";
-import timeConfig, {check_date_against_config} from "../timeConfig";
+import timeConfig, {checkDateAgainstConfig} from "../timeConfig";
 
 export class GumtreeMethods {
 
@@ -19,7 +19,7 @@ export class GumtreeMethods {
 	};
 
 	public static availabilityRequirement: ValueCheckerRequirement<boolean> = {
-		name: `Availability date must be between ${timeConfig.formatted_string}`,
+		name: `Availability date must be between ${timeConfig.formattedString}`,
 		selector: {
 			isCustomSelector: true,
 			customSelector: "[data-q=\"tile-description\"] > div:nth-child(1) > span:nth-child(2)"
@@ -29,9 +29,9 @@ export class GumtreeMethods {
 			if (wordSplit.length === 5) {
 				const day = Number(wordSplit[2]);
 				const month = wordSplit[3];
-				return check_date_against_config(day, month);
+				return checkDateAgainstConfig(day, month);
 			}
-			return timeConfig.available_now_accept;
+			return timeConfig.availableNowAccept;
 		}
 	};
 	public static getPriceLowerThanArgumentReq = (price: number): ValueCheckerRequirement<boolean> => {

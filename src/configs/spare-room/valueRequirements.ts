@@ -1,6 +1,6 @@
 import {AttributeSelector, mustNotBePresentRequirement, ValueCheckerRequirement} from "../../types/configTypes";
 import {findFirstNumber} from "../../testing/firstPageTest";
-import timeConfig, {check_date_against_config} from "../timeConfig";
+import timeConfig, {checkDateAgainstConfig} from "../timeConfig";
 
 export class SpareRoomMethods {
 
@@ -18,7 +18,7 @@ export class SpareRoomMethods {
 	};
 
 	public static availabilityRequirement: ValueCheckerRequirement<boolean> = {
-		name: `Availability date must be between ${timeConfig.formatted_string}`,
+		name: `Availability date must be between ${timeConfig.formattedString}`,
 		selector: {
 			isCustomSelector: true,
 			customSelector: ".advertDescription strong"
@@ -28,9 +28,9 @@ export class SpareRoomMethods {
 			if (wordSplit[0] === "Available" && wordSplit.length === 3) {
 				const day = Number(wordSplit[1]);
 				const month = wordSplit[2];
-				return check_date_against_config(day, month);
+				return checkDateAgainstConfig(day, month);
 			}
-			return timeConfig.available_now_accept;
+			return timeConfig.availableNowAccept;
 		}
 	};
 	public static getPriceLowerThanArgumentReq = (price: number, adjustPerWeek : boolean): ValueCheckerRequirement<boolean> => {

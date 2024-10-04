@@ -1,6 +1,6 @@
 import {AttributeSelector, ValueCheckerRequirement} from "../../types/configTypes";
 import {findFirstNumber} from "../../testing/firstPageTest";
-import timeConfig, {check_date_against_config} from "../timeConfig";
+import timeConfig, {checkDateAgainstConfig} from "../timeConfig";
 
 export class ZooplaMethods {
 
@@ -12,7 +12,7 @@ export class ZooplaMethods {
 	};
 
 	public static availabilityRequirement : ValueCheckerRequirement<boolean> = {
-		name : `Availability date must be between ${timeConfig.formatted_string}`,
+		name : `Availability date must be between ${timeConfig.formattedString}`,
 		selector: {
 			attributeName: "class",
 			expectedValue: "jlg7241",
@@ -24,9 +24,9 @@ export class ZooplaMethods {
 			if(wordSplit[0]==="Available" && wordSplit.length === 5) {
 				const day = Number(wordSplit[2].slice(0,-2));
 				const month = wordSplit[3];
-				return check_date_against_config(day, month);
+				return checkDateAgainstConfig(day, month);
 			}
-			return timeConfig.available_now_accept;
+			return timeConfig.availableNowAccept;
 		}
 	};
 	public static isNotAParkingSpace : ValueCheckerRequirement<boolean> = {
