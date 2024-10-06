@@ -14,8 +14,8 @@ const config: DateConfig = {
 	formattedString: `${startDate.day} ${startDate.month} and ${endDate.day} ${endDate.month} ${availableNowAccept ? "or immediately" : ""}`,
 };
 
-export const checkDateAgainstConfig = (day: number, month: string): boolean => {
-	const consideredTimestamp = getTimestamp(day, month);
+export const checkDateAgainstConfig = (day: number, month: string, year? : number): boolean => {
+	const consideredTimestamp = getTimestamp(day, month, year);
 	return isDateWithinConfigRange(consideredTimestamp, config);
 };
 
