@@ -71,5 +71,9 @@ export async function fetchHTML(
 
 	lastRequestCompleted = Date.now(); // Record the time when the request is completed
 
+	setTimeout(() => {
+		page.close();
+	}, 4000);
+
 	return parse(html);
 }
