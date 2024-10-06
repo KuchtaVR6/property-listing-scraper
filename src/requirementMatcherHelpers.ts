@@ -1,7 +1,7 @@
-import {AttributeSelector, mustNotBePresentRequirement} from "./types/configTypes";
+import {AttributeSelector, MustNotBePresentRequirement} from "./types/configTypes";
 import {HTMLElement} from "node-html-parser";
 
-export const getSelectorBasedOfSelector = (providedSelector : AttributeSelector | mustNotBePresentRequirement) => {
+export const getSelectorBasedOfSelector = (providedSelector : AttributeSelector | MustNotBePresentRequirement) => {
 	if (providedSelector.isCustomSelector) {
 		return providedSelector.customSelector;
 	}

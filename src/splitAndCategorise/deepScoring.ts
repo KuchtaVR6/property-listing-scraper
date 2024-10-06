@@ -1,4 +1,4 @@
-import {AttributeSelector, ValueCheckerRequirement} from "../types/configTypes";
+import {AttributeSelector, NormalDistributionArgs, ValueCheckerRequirement} from "../types/configTypes";
 import {fetchHTML} from "../procuringTheHTML/fetchPages";
 import {getElementsMatchingSelector} from "../requirementMatcherHelpers";
 import {HTMLElement} from "node-html-parser";
@@ -27,10 +27,12 @@ const deepScoring =
 	async (
 		url: string,
 		requirements: ValueCheckerRequirement<number>[],
-		listingLoaded : AttributeSelector) : Promise<number> => {
+		listingLoaded : AttributeSelector,
+		minDelay? : NormalDistributionArgs
+	) : Promise<number> => {
 
 		if (requirements.length > 0) {
-			const listingDetailed = await fetchHTML(url, listingLoaded);
+			const listingDetailed = await fetchHTML(url, listingLoaded, minDelay);
 
 			let score = 0;
 

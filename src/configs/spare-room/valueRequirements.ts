@@ -1,21 +1,27 @@
-import {AttributeSelector, mustNotBePresentRequirement, ValueCheckerRequirement} from "../../types/configTypes";
+import {AttributeSelector, MustNotBePresentRequirement, ValueCheckerRequirement} from "../../types/configTypes";
 import {findFirstNumber} from "../../testing/firstPageTest";
 import timeConfig, {checkDateAgainstConfig} from "../timeConfig";
 
 export class SpareRoomMethods {
+
+	/* Selectors */
 
 	private static titleSelector : AttributeSelector = {
 		isCustomSelector: true,
 		customSelector: "h2"
 	};
 
-	public static monFriSelector : mustNotBePresentRequirement = {
+	/* Omit Listings */
+
+	public static monFriSelector : MustNotBePresentRequirement = {
 		name: "Is not Monday to Friday let",
 		isCustomSelector: false,
 		attributeName: "class",
 		exactMatch: true,
 		expectedValue: "mon-fri",
 	};
+
+
 
 	public static availabilityRequirement: ValueCheckerRequirement<boolean> = {
 		name: `Availability date must be between ${timeConfig.formattedString}`,
@@ -106,4 +112,6 @@ export class SpareRoomMethods {
                 || input.toLowerCase().includes("en-suite");
 		}
 	};
+
+	/* Deep Methods */
 }

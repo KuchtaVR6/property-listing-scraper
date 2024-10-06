@@ -7,9 +7,10 @@ export interface DateConfig {
     formattedString: string;
 }
 
-export const getTimestamp = (day: number, month: string): number => {
-	const currentYear = new Date().getFullYear();
-	const dateStr = `${day} ${month} ${currentYear}`;
+export const getTimestamp = (day: number, month: string, year? : number): number => {
+	const year_final : number = year ? year : new Date().getFullYear();
+
+	const dateStr = `${day} ${month} ${year_final}`;
 	const date = new Date(dateStr);
 
 	if (isNaN(date.getTime())) {

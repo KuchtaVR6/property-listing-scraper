@@ -1,5 +1,5 @@
 const configsToInclude : Map<string, boolean> = new Map([
-	["gumtree-rent", true],
+	["gumtree-rent", false],
 	["gumtree-share", false],
 	["right-move-for-rent", false],
 	["spare-room", false],

@@ -20,12 +20,12 @@ export type ValueCheckerRequirement<N> = {
     valueTest: (input : string) => N
 }
 
-export type mustNotBePresentRequirement = AttributeSelector & {name : string}
+export type MustNotBePresentRequirement = AttributeSelector & {name : string}
 
 export type Category = {
     name : string,
     shallowRequirements : ValueCheckerRequirement<boolean>[];
-    mustNotBePresentRequirements? : mustNotBePresentRequirement[];
+    mustNotBePresentRequirements? : MustNotBePresentRequirement[];
     deepScoreMethods: ValueCheckerRequirement<number>[];
 }
 
@@ -34,6 +34,11 @@ export enum EndOfPagesIndicator {
     AllPointOfInterestIDsRepeated,
     EndOfListElement,
     DidNotSeeNextPageElement,
+}
+
+export type NormalDistributionArgs = {
+    mean: number,
+    std: number
 }
 
 export interface SearchConfig {
@@ -51,6 +56,7 @@ export interface SearchConfig {
         extractor: (element : HTMLElement) => string,
         getURIBasedOnID: (id : string) => string,
     }
+    minDelayConfig?: NormalDistributionArgs,
     endOfPagesIndicator: EndOfPagesIndicator,
     endOfPagesElement?: AttributeSelector,
     optional_tests?: {
@@ -59,6 +65,5 @@ export interface SearchConfig {
         expectedNumberOfElementsOfInterest? : AttributeSelector,
         expectedNumberOfPages? : AttributeSelector,
     }
-
     categories: Category[]
 }

@@ -138,7 +138,9 @@ const iterateThroughPages = async (
 
 		const document = await fetchHTML(
 			getFullURLBasedOnConfigWithPageNumber(givenConfig, currentPage),
-			givenConfig.requireToEstablishAsLoaded);
+			givenConfig.requireToEstablishAsLoaded,
+			givenConfig.minDelayConfig
+		);
 
 		if([0,1].includes(currentPage) && givenConfig.optional_tests) {
 			setTestingInformationFromFirstPage(givenConfig, document);

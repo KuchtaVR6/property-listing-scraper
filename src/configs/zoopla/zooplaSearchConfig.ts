@@ -20,6 +20,14 @@ const zooplaSearchConfig : SearchConfig = {
 		{
 			parameter: "radius",
 			value: `${locationConfig.distance}`
+		},
+		{
+			parameter: "is_retirement_home=false",
+			value: "false"
+		},
+		{
+			parameter: "is_student_accommodation",
+			value: "false"
 		}
 	],
 	page_param : "pn",
@@ -70,7 +78,8 @@ const zooplaSearchConfig : SearchConfig = {
 			],
 			deepScoreMethods: [
 				ZooplaMethods.mustIncludeBills
-			]
+			],
+			mustNotBePresentRequirements: [ZooplaMethods.mustNotHavePlaceholderPictures]
 		},
 		{
 			name: "Room w/o Bills Included",
@@ -79,7 +88,8 @@ const zooplaSearchConfig : SearchConfig = {
 				ZooplaMethods.isNotAParkingSpace,
 				ZooplaMethods.priceLowerThan(priceConfig.roomWithoutBills)
 			],
-			deepScoreMethods: []
+			deepScoreMethods: [],
+			mustNotBePresentRequirements: [ZooplaMethods.mustNotHavePlaceholderPictures]
 		},
 		{
 			name: "EnSuite Room Bills Included",
@@ -91,7 +101,8 @@ const zooplaSearchConfig : SearchConfig = {
 			],
 			deepScoreMethods: [
 				ZooplaMethods.mustIncludeBills
-			]
+			],
+			mustNotBePresentRequirements: [ZooplaMethods.mustNotHavePlaceholderPictures]
 		},
 		{
 			name: "EnSuite Room w/o Bills Included",
@@ -101,7 +112,8 @@ const zooplaSearchConfig : SearchConfig = {
 				ZooplaMethods.priceLowerThan(priceConfig.enSuiteWithoutBills),
 				ZooplaMethods.enSuite,
 			],
-			deepScoreMethods: []
+			deepScoreMethods: [],
+			mustNotBePresentRequirements: [ZooplaMethods.mustNotHavePlaceholderPictures]
 		},
 		{
 			name: "Studio flat Bills Included",
@@ -113,7 +125,8 @@ const zooplaSearchConfig : SearchConfig = {
 			],
 			deepScoreMethods: [
 				ZooplaMethods.mustIncludeBills
-			]
+			],
+			mustNotBePresentRequirements: [ZooplaMethods.mustNotHavePlaceholderPictures]
 		},
 		{
 			name: "Studio flat w/o Bills Included",
@@ -123,7 +136,8 @@ const zooplaSearchConfig : SearchConfig = {
 				ZooplaMethods.priceLowerThan(priceConfig.studioPriceWithoutBills),
 				ZooplaMethods.isStudio,
 			],
-			deepScoreMethods: []
+			deepScoreMethods: [],
+			mustNotBePresentRequirements: [ZooplaMethods.mustNotHavePlaceholderPictures]
 		},
 		{
 			name: "Two bed flat",
@@ -133,7 +147,8 @@ const zooplaSearchConfig : SearchConfig = {
 				ZooplaMethods.priceLowerThan(priceConfig.twoBedFlat),
 				ZooplaMethods.getIsNBedApartment(2)
 			],
-			deepScoreMethods: []
+			deepScoreMethods: [],
+			mustNotBePresentRequirements: [ZooplaMethods.mustNotHavePlaceholderPictures]
 		},
 		{
 			name: "Three bed flat",
@@ -143,9 +158,14 @@ const zooplaSearchConfig : SearchConfig = {
 				ZooplaMethods.priceLowerThan(priceConfig.threeBedFlat),
 				ZooplaMethods.getIsNBedApartment(3)
 			],
-			deepScoreMethods: []
+			deepScoreMethods: [],
+			mustNotBePresentRequirements: [ZooplaMethods.mustNotHavePlaceholderPictures]
 		},
-	]
+	],
+	minDelayConfig: {
+		mean: 1500,
+		std: 500
+	}
 
 };
 

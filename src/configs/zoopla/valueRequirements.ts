@@ -1,4 +1,4 @@
-import {AttributeSelector, ValueCheckerRequirement} from "../../types/configTypes";
+import {AttributeSelector, MustNotBePresentRequirement, ValueCheckerRequirement} from "../../types/configTypes";
 import {findFirstNumber} from "../../testing/firstPageTest";
 import timeConfig, {checkDateAgainstConfig} from "../timeConfig";
 
@@ -11,22 +11,30 @@ export class ZooplaMethods {
 		exactMatch: true
 	};
 
+	public static mustNotHavePlaceholderPictures : MustNotBePresentRequirement= {
+		name: "Must contain actual pictures of the property",
+		isCustomSelector: true,
+		customSelector: "img[alt=\"Property images coming soon\"]"
+	};
+
 	public static availabilityRequirement : ValueCheckerRequirement<boolean> = {
 		name : `Availability date must be between ${timeConfig.formattedString}`,
 		selector: {
-			attributeName: "class",
-			expectedValue: "jlg7241",
-			isCustomSelector: false,
-			exactMatch: true
+			isCustomSelector: true,
+			customSelector: "ul.jlg7240 > li.jlg7241:nth-child(2)\n"
 		},
 		valueTest: (input: string) => {
 			const wordSplit = input.split(" ");
-			if(wordSplit[0]==="Available" && wordSplit.length === 5) {
-				const day = Number(wordSplit[2].slice(0,-2));
-				const month = wordSplit[3];
-				return checkDateAgainstConfig(day, month);
+			if (wordSplit[0] === "Available") {
+				if (wordSplit.length === 5) {
+					const day = Number(wordSplit[2].slice(0, -2));
+					const month = wordSplit[3];
+					const year = Number(wordSplit[4]);
+					return checkDateAgainstConfig(day, month, year);
+				}
+				return timeConfig.availableNowAccept;
 			}
-			return timeConfig.availableNowAccept;
+			throw Error(`Availability not provided, "${wordSplit[0]} shown."`);
 		}
 	};
 	public static isNotAParkingSpace : ValueCheckerRequirement<boolean> = {

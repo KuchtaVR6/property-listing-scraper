@@ -1,6 +1,6 @@
 import {HTMLElement} from "node-html-parser";
 import {
-	mustNotBePresentRequirement,
+	MustNotBePresentRequirement,
 	SearchConfig,
 	ValueCheckerRequirement
 } from "../types/configTypes";
@@ -34,7 +34,7 @@ const compareToRequirement = (elementsToInspect : HTMLElement[], requirement : V
 const shallowCheckSuitabilityToCategory = (
 	element : HTMLElement,
 	requirements : ValueCheckerRequirement<boolean>[],
-	mustNotBePresentRequirements? : mustNotBePresentRequirement[]
+	mustNotBePresentRequirements? : MustNotBePresentRequirement[]
 ) => {
 	let answer = true;
 	for (const requirement of requirements) {
@@ -76,7 +76,8 @@ export const categoriseElementAndReturnIfProceed =
 				const score = await deepScoring(
 					givenConfig.identifierOfElementOfInterest.getURIBasedOnID(elementID),
 					category.deepScoreMethods,
-					givenConfig.requireToEstablishListingAsLoaded
+					givenConfig.requireToEstablishListingAsLoaded,
+					givenConfig.minDelayConfig
 				);
 				if (score >= 0) {
 					CategoryStorage.getInstance().addToCategory(category.name, {
