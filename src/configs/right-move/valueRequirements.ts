@@ -116,6 +116,20 @@ export class RightMoveMethods {
 		}
 	};
 
+	public static notASharedHouse : ValueCheckerRequirement<number> = {
+		name: "Property is not a house share.",
+		selector: {
+			isCustomSelector: true,
+			customSelector: "#info-reel > div:first-child dd p"
+		},
+		valueTest: (input: string) => {
+			if (input.includes("Share") || input.includes("Halls")) {
+				return -Infinity;
+			}
+			return 0;
+		}
+	};
+
 	public static termLookup = (terms: { term: string; value: number }[], initialScore: number):
 		ValueCheckerRequirement<number> => {
 		return {

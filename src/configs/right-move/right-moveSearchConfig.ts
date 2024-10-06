@@ -142,7 +142,8 @@ const rightMoveSearchConfig : SearchConfig = {
 			],
 			deepScoreMethods: [
 				RightMoveMethods.mustBeAvailableWithin,
-				RightMoveMethods.mustIncludeBills
+				RightMoveMethods.mustIncludeBills,
+				RightMoveMethods.notASharedHouse
 			]
 		},
 		{
@@ -154,7 +155,8 @@ const rightMoveSearchConfig : SearchConfig = {
 				RightMoveMethods.isNotAHouseShare
 			],
 			deepScoreMethods: [
-				RightMoveMethods.mustBeAvailableWithin
+				RightMoveMethods.mustBeAvailableWithin,
+				RightMoveMethods.notASharedHouse
 			]
 		},
 
@@ -168,7 +170,8 @@ const rightMoveSearchConfig : SearchConfig = {
 			],
 			deepScoreMethods: [
 				RightMoveMethods.mustBeAvailableWithin,
-				RightMoveMethods.mustIncludeBills
+				RightMoveMethods.mustIncludeBills,
+				RightMoveMethods.notASharedHouse
 			]
 		},
 		{
@@ -180,7 +183,8 @@ const rightMoveSearchConfig : SearchConfig = {
 				RightMoveMethods.isNotAHouseShare
 			],
 			deepScoreMethods: [
-				RightMoveMethods.mustBeAvailableWithin
+				RightMoveMethods.mustBeAvailableWithin,
+				RightMoveMethods.notASharedHouse
 			]
 		},
 
@@ -193,7 +197,8 @@ const rightMoveSearchConfig : SearchConfig = {
 				RightMoveMethods.isNotAHouseShare
 			],
 			deepScoreMethods: [
-				RightMoveMethods.mustBeAvailableWithin
+				RightMoveMethods.mustBeAvailableWithin,
+				RightMoveMethods.notASharedHouse
 			]
 		},
 
@@ -206,7 +211,8 @@ const rightMoveSearchConfig : SearchConfig = {
 				RightMoveMethods.isNotAHouseShare
 			],
 			deepScoreMethods: [
-				RightMoveMethods.mustBeAvailableWithin
+				RightMoveMethods.mustBeAvailableWithin,
+				RightMoveMethods.notASharedHouse
 			]
 		},
 	]
