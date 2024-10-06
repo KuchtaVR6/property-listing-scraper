@@ -52,7 +52,7 @@
     "@babel/traverse": "^7.23.2",
     "jquery": "^3.7.0",
     "node-html-parser": "^6.1.5",
-    "puppeteer": "^21.0.3",
+    "puppeteer": "^23.5.0",
     "puppeteer-extra": "^3.3.6",
     "puppeteer-extra-plugin-adblocker": "^2.13.6",
     "puppeteer-extra-plugin-stealth": "^2.11.2",
