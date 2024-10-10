@@ -32,7 +32,7 @@ export class SpareRoomMethods {
 		valueTest: (input) => {
 			const wordSplit = input.split(" ");
 			if (wordSplit[0] === "Available" && wordSplit.length === 3) {
-				const day = Number(wordSplit[1]);
+				const day = Number(wordSplit[1].slice(0, -2));
 				const month = wordSplit[2];
 				return checkDateAgainstConfig(day, month);
 			}

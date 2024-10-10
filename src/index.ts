@@ -44,7 +44,7 @@ const main = async () => {
 						}
 					}
 					return elementsOfInterest;
-				},10); //todo temp for testing, should be 100
+				},200);
 		} catch (e) {
 			if ((e as NoProceedInterrupt).message === noProceedInterruptMessage) {
 				console.log("HALT! Stopped On First Saved As Seen");
