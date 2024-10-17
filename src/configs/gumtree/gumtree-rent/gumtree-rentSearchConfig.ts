@@ -82,7 +82,11 @@ const gumtreeRentSearchConfig : SearchConfig = {
 	optional_tests: {
 		expectedNumberOfElementsOfInterest: adCountSelector
 	},
-	categories: gumtreeCategories
+	categories: gumtreeCategories,
+	minDelayConfig: {
+		mean: 2500,
+		std: 800
+	}
 };
 
 export default gumtreeRentSearchConfig;

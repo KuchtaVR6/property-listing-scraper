@@ -15,7 +15,7 @@ const spareRoomSearchConfig : SearchConfig = {
 	getParams: [
 		{
 			parameter : "search_id",
-			value : "1326557100"
+			value : "1328587613"
 		},
 		{
 			parameter : "sort_by",

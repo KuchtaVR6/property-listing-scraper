@@ -215,7 +215,11 @@ const rightMoveSearchConfig : SearchConfig = {
 				RightMoveMethods.notASharedHouse
 			]
 		},
-	]
+	],
+	minDelayConfig: {
+		mean: 2500,
+		std: 800
+	}
 };
 
 export default rightMoveSearchConfig;

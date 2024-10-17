@@ -1,6 +1,6 @@
 import {getTimestamp, isDateWithinConfigRange, DateConfig, isDateStringWithinConfigRange} from "./dateUtils";
 
-const availableNowAccept = false;
+const availableNowAccept = true;
 
 const startDate = { day: 18, month: "Oct" };
 const endDate = { day: 4, month: "Nov" };
