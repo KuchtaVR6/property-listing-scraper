@@ -1,6 +1,7 @@
 import {AttributeSelector, MustNotBePresentRequirement, ValueCheckerRequirement} from "../../types/configTypes";
 import {findFirstNumber} from "../../testing/firstPageTest";
 import timeConfig, {checkDateAgainstConfig} from "../timeConfig";
+import billsIncludedInDescription from "../functionUtils";
 
 export class ZooplaMethods {
 
@@ -119,12 +120,6 @@ export class ZooplaMethods {
 	public static mustIncludeBills : ValueCheckerRequirement<number> = {
 		name: "Must include bills.",
 		selector: ZooplaMethods.listingDescriptionAndFeaturesSelector,
-		valueTest: (input) => {
-			if (input.toLowerCase().includes("inc") && input.toLowerCase().includes("bills")) {
-				return 0;
-			} else {
-				return -Infinity;
-			}
-		}
+		valueTest: billsIncludedInDescription
 	};
 }

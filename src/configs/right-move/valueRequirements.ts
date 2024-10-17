@@ -2,6 +2,7 @@
 import {AttributeSelector, ValueCheckerRequirement} from "../../types/configTypes";
 import {findFirstNumber} from "../../testing/firstPageTest";
 import timeConfig, {checkDateAgainstConfigFormatted} from "../timeConfig";
+import billsIncludedInDescription from "../functionUtils";
 
 export class RightMoveMethods {
 	// availability is not listed on rightMove
@@ -107,13 +108,7 @@ export class RightMoveMethods {
 	public static mustIncludeBills : ValueCheckerRequirement<number> = {
 		name: "Must include the Bills.",
 		selector: RightMoveMethods.listingDescriptionSelector,
-		valueTest: (input) => {
-			if (input.toLowerCase().includes("inc") && input.toLowerCase().includes("bills")) {
-				return 0;
-			} else {
-				return -Infinity;
-			}
-		}
+		valueTest: billsIncludedInDescription
 	};
 
 	public static notASharedHouse : ValueCheckerRequirement<number> = {

@@ -1,6 +1,7 @@
 import {AttributeSelector, ValueCheckerRequirement} from "../../types/configTypes";
 import {findFirstNumber} from "../../testing/firstPageTest";
 import timeConfig, {checkDateAgainstConfig} from "../timeConfig";
+import billsIncludedInDescription from "../functionUtils";
 
 export class GumtreeMethods {
 
@@ -95,12 +96,6 @@ export class GumtreeMethods {
 	public static mustIncludeBills : ValueCheckerRequirement<number> = {
 		name: "Must include bills.",
 		selector: GumtreeMethods.descriptionSelector,
-		valueTest: (input) => {
-			if (input.toLowerCase().includes("inc") && input.toLowerCase().includes("bills")) {
-				return 0;
-			} else {
-				return -Infinity;
-			}
-		}
+		valueTest: billsIncludedInDescription
 	};
 }
