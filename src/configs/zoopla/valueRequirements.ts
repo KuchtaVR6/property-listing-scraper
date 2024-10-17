@@ -7,7 +7,7 @@ export class ZooplaMethods {
 	private static listingDescriptionAndFeaturesSelector : AttributeSelector = {
 		isCustomSelector: false,
 		attributeName: "aria-labelledby",
-		expectedValue: "listing-features-heading",
+		expectedValue: "about",
 		exactMatch: true
 	};
 
