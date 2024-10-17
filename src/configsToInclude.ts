@@ -1,8 +1,8 @@
 const configsToInclude : Map<string, boolean> = new Map([
-	["gumtree-rent", false],
-	["gumtree-share", false],
-	["right-move-for-rent", false],
-	["spare-room", false],
+	["gumtree-rent", true],
+	["gumtree-share", true],
+	["right-move-for-rent", true],
+	["spare-room", true],
 	["zoopla-for-rent", true],
 ]);
 

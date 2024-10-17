@@ -4,7 +4,12 @@ const billsIncludedInDescription = (input : string) => {
 	// Check if input contains "inc" and "bills"
 	if (lowerInput.includes("inc") && lowerInput.includes("bills")) {
 		// Check if input contains any phrases indicating exclusion
-		if (lowerInput.includes("bills not inc") || lowerInput.includes("no bills inc") || lowerInput.includes("no bill inc")) {
+		if (lowerInput.includes("bills not inc") ||
+			lowerInput.includes("no bills inc") ||
+			lowerInput.includes("no bill inc") ||
+			lowerInput.includes("no bills are inc") ||
+			lowerInput.includes("bills are not inc")
+		) {
 			return -Infinity;
 		}
 		// If the exclusion phrases are not present, return 0

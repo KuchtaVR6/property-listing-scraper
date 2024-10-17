@@ -102,7 +102,9 @@ export default class CategoryStorage {
 			console.log("--------------------- Multicategory Entries ---------------------");
 			for (const identifier of sortedIdentifiers) {
 				const [identifierKey, categories] = identifier;
-				if (multicategoryIdentifiers.has(identifierKey)) {
+				const isSeen = this.hasBeenSeen({ prefix: identifierKey.split("|")[0], main: identifierKey.split("|")[1] });
+
+				if (multicategoryIdentifiers.has(identifierKey) && (displaySeen === isSeen)) {
 					// Display the combined heading for multicategory entries
 					console.log(`Categories: ${categories.join("; ")}`);
 
@@ -114,9 +116,8 @@ export default class CategoryStorage {
 						console.log(identifierKey); // Directly print the identifier
 					}
 
-					// Ask if the user wants to save as seen
-					const isSeen = this.hasBeenSeen({ prefix: identifierKey.split("|")[0], main: identifierKey.split("|")[1] });
-					if (!isSeen) {
+					// Ask if the user wants to save as seen, only for new categories
+					if (!displaySeen && !isSeen) {
 						const answer = await getUserInputBoolean("Do you want to save this as seen?");
 						if (answer) {
 							this.addAsHasBeenSeen({ prefix: identifierKey.split("|")[0], main: identifierKey.split("|")[1] });
@@ -131,7 +132,9 @@ export default class CategoryStorage {
 			const identifiers = categoryEntries.get(categoryName);
 			if (identifiers) { // Check if identifiers exist
 				for (const identifier of identifiers) {
-					if (!multicategoryIdentifiers.has(identifier)) {
+					const isSeen = this.hasBeenSeen({ prefix: identifier.split("|")[0], main: identifier.split("|")[1] });
+
+					if (!multicategoryIdentifiers.has(identifier) && (displaySeen === isSeen)) {
 						const config = this.getConfig(identifier.split("|")[0]); // Get config based on prefix
 						console.log("--------------------- " + categoryName + " ---------------------");
 
@@ -142,8 +145,8 @@ export default class CategoryStorage {
 							console.log(identifier); // Directly print the identifier
 						}
 
-						const isSeen = this.hasBeenSeen({ prefix: identifier.split("|")[0], main: identifier.split("|")[1] });
-						if (!isSeen) {
+						// Ask if the user wants to save as seen, only for new categories
+						if (!displaySeen && !isSeen) {
 							const answer = await getUserInputBoolean("Do you want to save this as seen?");
 							if (answer) {
 								this.addAsHasBeenSeen({ prefix: identifier.split("|")[0], main: identifier.split("|")[1] });

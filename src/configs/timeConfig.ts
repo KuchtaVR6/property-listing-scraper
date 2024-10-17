@@ -2,8 +2,8 @@ import {getTimestamp, isDateWithinConfigRange, DateConfig, isDateStringWithinCon
 
 const availableNowAccept = false;
 
-const startDate = { day: 20, month: "Oct" };
-const endDate = { day: 5, month: "Nov" };
+const startDate = { day: 18, month: "Oct" };
+const endDate = { day: 4, month: "Nov" };
 
 const config: DateConfig = {
 	availableNowAccept,
