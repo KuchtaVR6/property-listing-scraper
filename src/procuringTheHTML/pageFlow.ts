@@ -5,6 +5,7 @@ import {setTestingInformationFromFirstPage} from "../testing/firstPageTest";
 import TestingStorage from "../testing/testingStorage";
 import {EndOfPagesIndicator, SearchConfig} from "../types/configTypes";
 import {extractElementId} from "../splitAndCategorise/categorise";
+import {pageEnd, pageStart} from "../configsToInclude";
 
 export const seenIdsStorage : string[] = [];
 
@@ -122,12 +123,14 @@ const iterateThroughPages = async (
 
 	const beginSeenStorageSize = seenIdsStorage.length;
 
-	let currentPage = (givenConfig.page_step? 0 : 1);
+	let currentPage = (givenConfig.page_step? pageStart * givenConfig.page_step : 1 + pageStart);
 	let arrayOfPages : HTMLElement[]= [];
 	const pageStep = (givenConfig.page_step? givenConfig.page_step : 1);
 
-	if (!limit) {
-		limit = 1000;
+	limit = 1000;
+
+	if (pageEnd) {
+		limit = pageEnd;
 	}
 
 	limit = limit * pageStep;

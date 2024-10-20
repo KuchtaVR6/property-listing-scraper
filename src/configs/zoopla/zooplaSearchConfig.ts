@@ -39,8 +39,8 @@ const zooplaSearchConfig : SearchConfig = {
 	},
 	requireToEstablishListingAsLoaded: {
 		isCustomSelector: false,
-		attributeName : "data-key",
-		expectedValue: "gallery-slide-0",
+		attributeName : "aria-labelledby",
+		expectedValue: "key-info",
 		exactMatch : true
 	},
 	selectElementsOfInterest : {
@@ -163,7 +163,7 @@ const zooplaSearchConfig : SearchConfig = {
 		},
 	],
 	minDelayConfig: {
-		mean: 2500,
+		mean: 3000,
 		std: 800
 	}
 

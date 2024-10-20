@@ -67,6 +67,9 @@ export async function fetchHTML(
 		throw new Error("Timeout! Check *requireToEstablishAsLoaded*");
 	}
 
+	// safety one second extra for any delays
+	await new Promise(resolve => setTimeout(resolve, 1000));
+
 	const html = await page.content();
 
 	lastRequestCompleted = Date.now(); // Record the time when the request is completed
