@@ -90,7 +90,7 @@ export class ZooplaMethods {
 			},
 			valueTest: (input: string) => {
 				const inputLowered = input.toLowerCase();
-				if (inputLowered.includes("flat")) {
+				if (inputLowered.includes("flat") && !inputLowered.includes("flats")) {
 					return findFirstNumber(inputLowered, true) === numberOfBedrooms;
 				}
 				return false;
@@ -108,7 +108,7 @@ export class ZooplaMethods {
 		},
 		valueTest: (input: string) => {
 			const inputLowered = input.toLowerCase();
-			if (inputLowered.includes("flat")) {
+			if (inputLowered.includes("flat") && !inputLowered.includes("flats")) {
 				return findFirstNumber(inputLowered) === 1;
 			}
 			return inputLowered.includes("studio");

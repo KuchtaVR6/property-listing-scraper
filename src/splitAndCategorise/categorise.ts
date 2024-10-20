@@ -73,12 +73,15 @@ export const categoriseElementAndReturnIfProceed =
 		seenIdsStorage.push(elementID);
 		for (const category of givenConfig.categories) {
 			if(shallowCheckSuitabilityToCategory(element, category.shallowRequirements, category.mustNotBePresentRequirements)) {
-				const score = await deepScoring(
-					givenConfig.identifierOfElementOfInterest.getURIBasedOnID(elementID),
-					category.deepScoreMethods,
-					givenConfig.requireToEstablishListingAsLoaded,
-					givenConfig.minDelayConfig
-				);
+				let score = -Infinity;
+				if(!categoryStorageInstance.hasBeenSeen({prefix: givenConfig.name, main: elementID})) {
+					score = await deepScoring(
+						givenConfig.identifierOfElementOfInterest.getURIBasedOnID(elementID),
+						category.deepScoreMethods,
+						givenConfig.requireToEstablishListingAsLoaded,
+						givenConfig.minDelayConfig
+					);
+				}
 				if (score >= 0) {
 					CategoryStorage.getInstance().addToCategory(category.name, {
 						prefix: givenConfig.name,
